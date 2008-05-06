@@ -11,19 +11,16 @@ task :clean do
   FileUtils.rm "soup.db" if File.exist?("soup.db")
 end
 
-def load_snips(kind)
-  Dir[File.join(File.dirname(__FILE__), 'vanilla', kind, '*.rb')].each do |f|
-    load f
-  end
-end
-
 task :bootstrap do
   Soup.prepare 
   
-  require File.join(File.dirname(__FILE__), *%w[vanilla snip_helper])
+  require 'vanilla/snip_helper'
 
   Dynasnip.persist_all!
-  load_snips('snips')
+  
+  Dir[File.join(File.dirname(__FILE__), 'vanilla', kind, '*.rb')].each do |f|
+    load f
+  end  
   
   load File.join(File.dirname(__FILE__), *%w[vanilla test_snips.rb])
   
