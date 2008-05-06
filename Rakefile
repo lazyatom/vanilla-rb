@@ -1,3 +1,4 @@
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'vanilla'
 
 desc "Open an irb session preloaded with this library"
