@@ -22,7 +22,7 @@ task :bootstrap do
     load f
   end  
   
-  load File.join(File.dirname(__FILE__), *%w[vanilla test_snips.rb])
+  load File.join(File.dirname(__FILE__), *%w[lib vanilla test_snips.rb])
   
   puts "The soup is simmering. Loaded #{Soup.tuple_class.count} tuples"
 end
