@@ -18,7 +18,7 @@ task :bootstrap do
 
   Dynasnip.persist_all!
   
-  Dir[File.join(File.dirname(__FILE__), 'vanilla', kind, '*.rb')].each do |f|
+  Dir[File.join(File.dirname(__FILE__), 'lib', 'vanilla', 'snips', '*.rb')].each do |f|
     load f
   end  
   
