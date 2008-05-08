@@ -17,6 +17,11 @@ describe Vanilla::App, "when detecting the snip renderer" do
     @app.renderer_for(snip).should == Vanilla::Renderers::Base
   end
   
+  it "should return Vanilla::Renderers::Base if the render_as property is blank" do
+    snip = create_snip(:name => "blah", :render_as => '')
+    @app.renderer_for(snip).should == Vanilla::Renderers::Base
+  end
+  
   it "should raise an error if the specified renderer doesn't exist" do
     snip = create_snip(:render_as => "NonExistentClass")
     lambda { @app.renderer_for(snip) }.should raise_error

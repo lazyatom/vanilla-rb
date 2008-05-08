@@ -53,7 +53,7 @@ module Vanilla
 
     # Returns the renderer class for a given snip
     def renderer_for(snip)
-      return Renderers::Base unless snip.render_as
+      return Renderers::Base unless snip.render_as && !snip.render_as.empty?
       Vanilla::Renderers.const_get(snip.render_as)
     end
 

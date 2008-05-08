@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require "vanilla"
 require "spec"
+require "fileutils"
 
 module Vanilla
   module Test
