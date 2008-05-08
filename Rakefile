@@ -1,6 +1,8 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'vanilla'
 
+Soup.prepare 
+
 desc "Open an irb session preloaded with this library"
 task :console do
   sh "irb -Ilib -rvanilla"
@@ -12,11 +14,9 @@ task :clean do
 end
 
 task :bootstrap do
-  Soup.prepare 
-  
   require 'vanilla/snip_helper'
 
-  Dynasnip.persist_all!
+  Dynasnip.persist_all!(overwrite=true)
   
   Dir[File.join(File.dirname(__FILE__), 'lib', 'vanilla', 'snips', '*.rb')].each do |f|
     load f
@@ -26,6 +26,19 @@ task :bootstrap do
   
   puts "The soup is simmering. Loaded #{Soup.tuple_class.count} tuples"
 end
+
+desc 'Resets the soup to contain the base snips only. Dangerous!'
+task :reset => [:clean, :bootstrap]
+
+namespace :upgrade do
+  desc 'Upgrade the dynasnips'
+  task :dynasnips do
+    Dynasnip.persist_all!
+  end
+end
+
+desc 'Upgrade dynasnips and system snips'
+task :upgrade => ["upgrade:dynasnips"]
 
 require 'spec'
 require 'spec/rake/spectask'
