@@ -1,12 +1,49 @@
 require 'vanilla/dynasnip'
+require 'atom'
 
 class Kind < Dynasnip
-  def handle(kind, limit=10)
-    Soup.sieve(:kind => kind)[0...limit].sort_by { |s| s.created_at || '' }.reverse.map do |snip|
-      snip_template.gsub('SNIP', app.render(snip))
+  def handle(kind, limit=10, as=:html)
+    as = as.to_sym
+    snips = Soup.sieve(:kind => kind)
+    entries = snips[0...limit.to_i].sort_by { |s| s.created_at || '' }.reverse.map do |snip|
+      render_entry_in_template(snip, as)
+    end
+    render_entry_collection(snips, entries, as, kind)
+  end
+  
+  def render_entry_in_template(snip, as)
+    rendered_contents = app.render(snip)
+    case as
+    when :html
+      snip_template.gsub('SNIP', rendered_contents)
+    when :xml
+      Atom::Entry.new do |e|
+        e.published = snip.created_at
+        e.updated = snip.updated_at || snip.created_at
+        e.content = rendered_contents
+        e.title = snip.name
+        e.links << Atom::Link.new(:href => Vanilla::Routes.link_to(snip.name))
+        e.id = "tag:#{domain},#{(snip.created_at || "").split[0]}:#{snip.name}"
+      end
     end
   end
   
+  def render_entry_collection(snips, entries, as, kind)
+    case as
+    when :html
+      entries.join
+    when :xml
+      Atom::Feed.new do |f|
+        f.title = feed_title
+        f.updated = snips[0].updated_at
+        f.id = "tag:#{domain}:kind/#{kind}"
+        f.entries = entries
+      end.to_xml
+    end
+  end
+  
+  attribute :feed_title, "Your Blog"
+  attribute :domain, "yourdomain.com"
   attribute :snip_template, %{
     <div class="snip">SNIP</div>
   }

@@ -48,5 +48,4 @@ describe Vanilla::Renderers::Ruby, "when responding restfully" do
     @request.should_receive(:method).and_return(:post)
     @renderer.render(@dyna).should == 'post called'
   end
-  
 end
