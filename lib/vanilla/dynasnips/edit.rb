@@ -18,16 +18,16 @@ class EditSnip < Dynasnip
     return login_required unless logged_in?
     snip_attributes = cleaned_params
     snip_attributes.delete(:save_button)
-
     return 'no params' if snip_attributes.empty?
     snip = Vanilla.snip(snip_attributes[:name])
+    snip_attributes[:updated_at] = Time.now
     snip_attributes.each do |name, value|
       snip.__send__(:set_value, name, value)
     end
     snip.save
     %{Saved snip #{Vanilla::Routes.link_to snip_attributes[:name]} ok}
   rescue Exception => e
-    p snip_attributes
+    snip_attributes[:created_at] = Time.now
     Soup << snip_attributes
     %{Created snip #{Vanilla::Routes.link_to snip_attributes[:name]} ok}
   end
