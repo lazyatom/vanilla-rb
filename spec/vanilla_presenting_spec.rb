@@ -1,4 +1,4 @@
-require "spec_helper"
+require File.join(File.dirname(__FILE__), "spec_helper")
 require "vanilla/app"
 
 describe Vanilla::App do
@@ -56,7 +56,7 @@ describe Vanilla::App do
     before(:each) do 
       Vanilla::Test.setup_clean_environment
       create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
-      create_snip :name => "current_snip", :content => "CurrentSnip", :render_as => "Ruby"
+      CurrentSnip.persist!
       create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
       create_snip :name => "other_snip", :content => "blah!"
     end
@@ -87,7 +87,7 @@ describe Vanilla::App do
     before(:each) do 
       Vanilla::Test.setup_clean_environment
       create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
-      create_snip :name => "current_snip", :content => "CurrentSnip", :render_as => "Ruby"
+      CurrentSnip.persist!
       create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
       create_snip :name => "other_snip", :content => "blah!"
     end
@@ -113,7 +113,7 @@ describe Vanilla::App do
     before(:each) do 
       Vanilla::Test.setup_clean_environment
       create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
-      create_snip :name => "current_snip", :content => "CurrentSnip", :render_as => "Ruby"
+      CurrentSnip.persist!
       create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
       create_snip :name => "other_snip", :content => "blah!"
     end
@@ -133,6 +133,25 @@ describe Vanilla::App do
     it "should have a response code of 200" do
       response_code_for("/test.raw").should == 200
       response_code_for("/test/part.raw").should == 200
+    end
+  end
+  
+  describe "when a missing snip is requested" do
+    include VanillaResponseSpecHelper
+  
+    before(:each) do 
+      Vanilla::Test.setup_clean_environment
+      create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
+      CurrentSnip.persist!
+      LinkTo.persist!
+    end
+
+    it "should render missing snip content in the main template" do
+      response_body_for("/missing_snip").should == "<tag>Couldn't find snip #{LinkTo.new(nil).handle("missing_snip")}</tag>"
+    end
+    
+    it "should have a 404 response code" do
+      response_code_for("/missing_snip").should == 404
     end
   end
 end

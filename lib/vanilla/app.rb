@@ -29,6 +29,7 @@ module Vanilla
         render(request.snip, request.part || :content)
       else
         "Unknown format '#{request.format}'"
+        @response.status = 500
       end
       @response.write(output)
       @response.finish
