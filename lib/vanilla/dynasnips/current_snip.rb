@@ -21,7 +21,7 @@ class CurrentSnip < Dynasnip
         app.request.snip_name
       end
     else
-      app.render(app.request.snip)
+      app.render(app.request.snip, app.request.part)
     end
   end
 end

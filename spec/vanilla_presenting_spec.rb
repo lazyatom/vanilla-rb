@@ -34,21 +34,17 @@ describe Vanilla::App, "when detecting the snip renderer" do
     snip = create_snip(:render_as => "MyRenderer")
     @app.renderer_for(snip).should == MyRenderer      
   end
-  
-  # it "should be able to properly get namespaced constants" do
-  #   pending("this needs string splitting and a loop to work; it's not really needed at the moment") do
-  #     class ::MyRenderer
-  #       class Base
-  #       end
-  #     end
-  #     
-  #     snip = create_snip(:render_as => "MyRenderer::Base")
-  #     Vanilla.renderer_for(snip).should == MyRenderer::Base      
-  #   end
-  # end
+end
+
+module VanillaResponseSpecHelper
+  def response(app)
+    app.present[2].body[0]
+  end
 end
 
 describe Vanilla::App, "when presenting as HTML" do
+  include VanillaResponseSpecHelper
+  
   before(:each) do 
     Vanilla::Test.setup_clean_environment
     create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
@@ -58,24 +54,26 @@ describe Vanilla::App, "when presenting as HTML" do
   end
   
   it "should render the snip's content in the system template if no format or part is given" do
-    # request = mock_request("/test")
-    # Vanilla::App.new(request).present.should == "<tag>blah blah!</tag>"
+    request = mock_request("/test")
+    response(Vanilla::App.new(request)).should == "<tag>blah blah!</tag>"
   end
   
-  # it "should render the snip's content in the system template if the HTML format is given" do
-  #   request = mock_request("/test.html")
-  #   Vanilla.present(params).should == "<tag>blah blah!</tag>"
-  # end
-  # 
-  # it "should render the requested part within the main template when a part is given" do
-  #   request = mock_request("/test/part")
-  #   Vanilla.present(params).should == "<tag>part content</tag>"
-  # end
+  it "should render the snip's content in the system template if the HTML format is given" do
+    request = mock_request("/test.html")
+    response(Vanilla::App.new(request)).should == "<tag>blah blah!</tag>"
+  end
+  
+  it "should render the requested part within the main template when a part is given" do
+    request = mock_request("/test/part")
+    response(Vanilla::App.new(request)).should == "<tag>part content</tag>"
+  end
 end
 
-__END__
 
+__END__
 describe Vanilla, "when presenting content as text" do
+  include VanillaResponseSpecHelper
+  
   before(:each) do 
     Vanilla::Test.setup_clean_environment
     create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
@@ -83,7 +81,7 @@ describe Vanilla, "when presenting content as text" do
   end
   
   it "should render the snip's content outside of the main template with its default renderer" do
-    params = {:snip => 'test', :format => "text"}
+    
     Vanilla.present(params).should == "blah blah!"
   end
   
