@@ -45,6 +45,9 @@ describe Vanilla::App do
     def response_body_for(request)
       response_for(request)[2].body[0]
     end
+    def response_code_for(request)
+      response_for(request)[0]
+    end
   end
 
   describe "when presenting as HTML" do
@@ -69,6 +72,13 @@ describe Vanilla::App do
     it "should render the requested part within the main template when a part is given" do
       response_body_for("/test/part").should == "<tag>part content</tag>"
     end
+    
+    it "should have a response code of 200" do
+      response_code_for("/test").should == 200
+      response_code_for("/test.html").should == 200
+      response_code_for("/test/part").should == 200
+      response_code_for("/test/part.html").should == 200
+    end
   end
 
   describe "when presenting content as text" do
@@ -88,6 +98,11 @@ describe Vanilla::App do
   
     it "should render the snip part outside the main template when a format is given" do
       response_body_for("/test/part.text").should == "part content"
+    end
+    
+    it "should have a response code of 200" do
+      response_code_for("/test.text").should == 200
+      response_code_for("/test/part.text").should == 200
     end
   end
 
@@ -113,6 +128,11 @@ describe Vanilla::App do
   
     it "should render a snips part if requested" do
       response_body_for("/test/part.raw").should == "part content"
+    end
+    
+    it "should have a response code of 200" do
+      response_code_for("/test.raw").should == 200
+      response_code_for("/test/part.raw").should == 200
     end
   end
 end
