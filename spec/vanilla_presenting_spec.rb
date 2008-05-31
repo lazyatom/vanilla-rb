@@ -37,8 +37,8 @@ describe Vanilla::App, "when detecting the snip renderer" do
 end
 
 module VanillaResponseSpecHelper
-  def response(app)
-    app.present[2].body[0]
+  def response_for(request)
+    Vanilla::App.new(mock_request(request)).present[2].body[0]
   end
 end
 
@@ -54,62 +54,64 @@ describe Vanilla::App, "when presenting as HTML" do
   end
   
   it "should render the snip's content in the system template if no format or part is given" do
-    request = mock_request("/test")
-    response(Vanilla::App.new(request)).should == "<tag>blah blah!</tag>"
+    response_for("/test").should == "<tag>blah blah!</tag>"
   end
   
   it "should render the snip's content in the system template if the HTML format is given" do
-    request = mock_request("/test.html")
-    response(Vanilla::App.new(request)).should == "<tag>blah blah!</tag>"
+    response_for("/test.html").should == "<tag>blah blah!</tag>"
   end
   
   it "should render the requested part within the main template when a part is given" do
-    request = mock_request("/test/part")
-    response(Vanilla::App.new(request)).should == "<tag>part content</tag>"
+    response_for("/test/part").should == "<tag>part content</tag>"
   end
 end
 
-
-__END__
 describe Vanilla, "when presenting content as text" do
   include VanillaResponseSpecHelper
   
   before(:each) do 
     Vanilla::Test.setup_clean_environment
+    create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
+    create_snip :name => "current_snip", :content => "CurrentSnip", :render_as => "Ruby"
     create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
     create_snip :name => "other_snip", :content => "blah!"
   end
   
   it "should render the snip's content outside of the main template with its default renderer" do
-    
-    Vanilla.present(params).should == "blah blah!"
+    response_for("/test.text").should == "blah blah!"
   end
   
   it "should render the snip part outside the main template when a format is given" do
-    params = {:snip => 'test', :part => "part", :format => "text"}
-    Vanilla.present(params).should == "part content"
+    response_for("/test/part.text").should == "part content"
   end
 end
 
+
 describe Vanilla, "when presenting raw content" do
-  before(:each) { Vanilla::Test.setup_clean_environment }
+  include VanillaResponseSpecHelper
+  
+  before(:each) do 
+    Vanilla::Test.setup_clean_environment
+    create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
+    create_snip :name => "current_snip", :content => "CurrentSnip", :render_as => "Ruby"
+    create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
+    create_snip :name => "other_snip", :content => "blah!"
+  end
   
   it "should render the snips contents exactly as they are" do
-    create_snip(:name => 'test', :content => 'hello')
-    Vanilla.present(:format => 'raw', :snip => 'test').should == 'hello'
+    response_for("/test.raw").should == "blah {other_snip}"
   end
   
   it "should render the snip content exactly even if a render_as attribute exists" do
-    create_snip(:name => 'test', :content => 'hello', :render_as => "Bold")
-    Vanilla.present(:format => 'raw', :snip => 'test').should == 'hello'    
+    response_for("/current_snip.raw").should == "CurrentSnip"
   end
   
   it "should render a snips part if requested" do
-    create_snip(:name => 'test', :content => 'hello', :colour => 'red and black')
-    Vanilla.present(:format => 'raw', :snip => 'test', :part => 'colour').should == 'red and black'
+    response_for("/test/part.raw").should == "part content"
   end
 end
 
+__END__
 describe Vanilla, "when asked to present a snip that doesnt exist" do
   before(:each) do
     Vanilla::Test.setup_clean_environment
