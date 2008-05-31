@@ -28,8 +28,8 @@ module Vanilla
       when 'text'
         render(request.snip, request.part || :content)
       else
-        "Unknown format '#{request.format}'"
         @response.status = 500
+        "Unknown format '#{request.format}'"
       end
       @response.write(output)
       @response.finish
