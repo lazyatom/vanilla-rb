@@ -24,7 +24,7 @@ class Kind < Dynasnip
       Atom::Entry.new do |e|
         e.published = snip.created_at
         e.updated = snip.updated_at || snip.created_at
-        e.content = rendered_contents
+        e.content = Atom::Content::Html.new(rendered_contents)
         e.title = snip.name
         e.links << Atom::Link.new(:href => "http://#{domain}#{Vanilla::Routes.url_to(snip.name)}")
         e.id = "tag:#{domain},#{snip.id}:#{snip.name}"
