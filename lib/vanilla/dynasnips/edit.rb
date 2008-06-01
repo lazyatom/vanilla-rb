@@ -27,7 +27,7 @@ class EditSnip < Dynasnip
     snip.save
     %{Saved snip #{Vanilla::Routes.link_to snip_attributes[:name]} ok}
   rescue Exception => e
-    snip_attributes[:created_at] = Time.now
+    snip_attributes[:created_at] ||= Time.now
     Soup << snip_attributes
     %{Created snip #{Vanilla::Routes.link_to snip_attributes[:name]} ok}
   end
