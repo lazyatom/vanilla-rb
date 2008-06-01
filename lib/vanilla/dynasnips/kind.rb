@@ -27,7 +27,7 @@ class Kind < Dynasnip
         e.content = rendered_contents
         e.title = snip.name
         e.links << Atom::Link.new(:href => Vanilla::Routes.link_to(snip.name))
-        e.id = "tag:#{domain},#{(snip.created_at || "").split[0]}:#{snip.name}"
+        e.id = "tag:#{domain},#{snip.id}:#{snip.name}"
       end
     end
   end
