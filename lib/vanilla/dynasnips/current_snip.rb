@@ -21,9 +21,9 @@ class CurrentSnip < Dynasnip
         app.request.snip_name
       end
     else
-      begin
+      if app.request.snip
         app.render(app.request.snip, app.request.part)
-      rescue Vanilla::MissingSnipException => e
+      else
         app.response.status = 404
         "Couldn't find snip {link_to #{app.request.snip_name}}"
       end

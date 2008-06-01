@@ -17,9 +17,14 @@ module Vanilla
   def self.snip(name)
     snip = Soup[name]
     if snip.is_a?(Array) && snip.empty?
-      raise MissingSnipException, "can't find '#{name}'"
+      return nil
     end
     snip
+  end
+  
+  def self.snip!(name)
+    snip = snip(name)
+    raise MissingSnipException, "can't find '#{name}'" unless snip
   end
   
   def self.snip_exists?(name)

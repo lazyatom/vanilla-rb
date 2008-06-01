@@ -9,8 +9,12 @@ describe Vanilla, "when loading a snip" do
     Vanilla.snip('name').should == :snip
   end
   
-  it "should raise an exception if the snip cannot be found" do
-    lambda { Vanilla.snip('missing') }.should raise_error(Vanilla::MissingSnipException)
+  it "should return nil if the snip cannot be found" do
+    Vanilla.snip('missing').should be_nil
+  end
+  
+  it "should raise an exception if the snip cannot be when calling snip!" do
+    lambda { Vanilla.snip!('missing') }.should raise_error(Vanilla::MissingSnipException)
   end
 end
 
