@@ -23,9 +23,9 @@ module Vanilla
       output = case request.format
       when 'html', nil
         Renderers::Erb.new(self).render(Vanilla.snip('system'), :main_template)
-      when 'raw'
+      when 'raw', 'css', 'js'
         Renderers::Raw.new(self).render(request.snip, request.part || :content)
-      when 'text'
+      when 'text', 'atom'
         render(request.snip, request.part || :content)
       else
         @response.status = 500
