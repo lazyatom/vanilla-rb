@@ -41,7 +41,7 @@ class Kind < Dynasnip
     when :xml
       Atom::Feed.new do |f|
         f.title = feed_title
-        f.updated = snips[0].updated_at
+        f.updated = DateTime.parse(snips[0].updated_at)
         f.id = "tag:#{domain},2008-06-01:kind/#{kind}"
         f.entries = entries
       end.to_xml
