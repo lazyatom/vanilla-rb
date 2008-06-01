@@ -29,7 +29,7 @@ class Kind < Dynasnip
         e.title = snip.name
         e.authors = [Atom::Person.new(:name => snip.author || domain)]
         e.links << Atom::Link.new(:href => "http://#{domain}#{Vanilla::Routes.url_to(snip.name)}")
-        e.id = "tag:#{domain},#{snip.id}:/#{snip.name}"
+        e.id = "tag:#{domain},#{(snip.created_at || Date.today.to_s).split[0]}:/#{snip.name}"
       end
     end
   end
