@@ -5,7 +5,11 @@ require 'md5'
 class Login < Dynasnip
   module Helper
     def logged_in?
-      !app.request.cookies['logged_in_as'].nil?
+      !current_user.nil?
+    end
+    
+    def current_user
+      app.request.cookies['logged_in_as']
     end
   
     def login_required

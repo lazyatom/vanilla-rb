@@ -8,6 +8,7 @@ class NewSnip < Dynasnip
   
   def handle(*arg)
     return login_required unless logged_in?
-    editor = EditSnip.new(app).edit(Snip.new(:name => 'newsnip', :render_as => '', :content => ''))
+    base_params = {:name => 'newsnip', :render_as => '', :content => '', :author => current_user}
+    editor = EditSnip.new(app).edit(Snip.new(base_params))
   end
 end
