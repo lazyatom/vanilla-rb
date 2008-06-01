@@ -25,7 +25,7 @@ module Vanilla
         Renderers::Erb.new(self).render(Vanilla.snip('system'), :main_template)
       when 'raw', 'css', 'js'
         Renderers::Raw.new(self).render(request.snip, request.part || :content)
-      when 'text', 'atom'
+      when 'text', 'atom', 'xml'
         render(request.snip, request.part || :content)
       else
         @response.status = 500
