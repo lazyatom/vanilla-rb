@@ -1,5 +1,6 @@
 require 'vanilla/dynasnip'
 require 'atom'
+require 'date'
 
 class Kind < Dynasnip
   def handle(kind, limit=10, as=:html)
@@ -22,8 +23,8 @@ class Kind < Dynasnip
         gsub('SNIP_CONTENT', rendered_contents)
     when :xml
       Atom::Entry.new do |e|
-        e.published = snip.created_at
-        e.updated = snip.updated_at || snip.created_at
+        e.published = DateTime.parse(snip.created_at)
+        e.updated = DateTime.parse(snip.updated_at || snip.created_at)
         e.content = Atom::Content::Html.new(rendered_contents)
         e.title = snip.name
         e.authors = [Atom::Person.new(:name => snip.author || domain)]
