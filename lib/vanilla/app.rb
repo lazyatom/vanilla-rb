@@ -31,6 +31,7 @@ module Vanilla
         @response.status = 500
         "Unknown format '#{request.format}'"
       end
+      @response['Content-Type'] = "text/#{request.format}"
       @response.write(output)
       @response.finish
     end
