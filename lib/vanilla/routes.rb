@@ -1,7 +1,7 @@
 module Vanilla
   module Routes
-    def link_to(snip_name, part=nil)
-      %{<a href="#{Vanilla::Routes.url_to(snip_name, part)}">#{snip_name}</a>}
+    def link_to(link_text, snip_name=link_text, part=nil)
+      %{<a href="#{Vanilla::Routes.url_to(snip_name, part)}">#{link_text}</a>}
     end
   
     def url_to(snip_name, part=nil)
