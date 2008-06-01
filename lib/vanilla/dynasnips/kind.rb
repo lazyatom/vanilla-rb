@@ -6,16 +6,20 @@ class Kind < Dynasnip
     as = as.to_sym
     snips = Soup.sieve(:kind => kind)
     entries = snips[0...limit.to_i].sort_by { |s| s.created_at || '' }.reverse.map do |snip|
-      render_entry_in_template(snip, as)
+      render_entry_in_template(snip, as, kind)
     end
     render_entry_collection(snips, entries, as, kind)
   end
   
-  def render_entry_in_template(snip, as)
+  def render_entry_in_template(snip, as, kind)
     rendered_contents = app.render(snip)
     case as
     when :html
-      snip_template.gsub('SNIP', rendered_contents)
+      snip_template.
+        gsub('SNIP_KIND', kind).
+        gsub('SNIP_NAME', snip.name).
+        gsub('CREATED_AT', snip.created_at || '').
+        gsub('SNIP_CONTENT', rendered_contents)
     when :xml
       Atom::Entry.new do |e|
         e.published = snip.created_at
@@ -45,6 +49,14 @@ class Kind < Dynasnip
   attribute :feed_title, "Your Blog"
   attribute :domain, "yourdomain.com"
   attribute :snip_template, %{
-    <div class="snip">SNIP</div>
+    <div class="snip SNIP_KIND">
+      <div class="details">
+        #{Vanilla::Routes.link_to '#', 'SNIP_NAME'}
+        <p class="created_at">CREATED_AT</p>
+      </div>
+      <div class="content">
+        SNIP_CONTENT
+      </div>
+    </div>
   }
 end
