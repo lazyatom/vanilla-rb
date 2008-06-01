@@ -26,8 +26,9 @@ class Kind < Dynasnip
         e.updated = snip.updated_at || snip.created_at
         e.content = Atom::Content::Html.new(rendered_contents)
         e.title = snip.name
+        e.authors = [Atom::Author.new(:name => snip.author || domain)]
         e.links << Atom::Link.new(:href => "http://#{domain}#{Vanilla::Routes.url_to(snip.name)}")
-        e.id = "tag:#{domain},#{snip.id}:#{snip.name}"
+        e.id = "tag:#{domain},#{snip.id}:/#{snip.name}"
       end
     end
   end
@@ -40,7 +41,7 @@ class Kind < Dynasnip
       Atom::Feed.new do |f|
         f.title = feed_title
         f.updated = snips[0].updated_at
-        f.id = "tag:#{domain}:kind/#{kind}"
+        f.id = "tag:#{domain},2008-06-01:kind/#{kind}"
         f.entries = entries
       end.to_xml
     end
