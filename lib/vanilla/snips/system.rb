@@ -2,12 +2,14 @@ system = Snip.new(:name => "system")
 system.content = "You're in the system snip now. You probably want to {edit_link system,edit} it though."
 
 system.main_template = <<-HTML
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title>{current_snip name}</title>
-  <script language="javascript" src="/public/javascripts/jquery-1.2.3.js" />
-  <script language="javascript" src="/public/javascripts/vanilla.js" />
-  <link rel="stylesheet" type="text/css" media="screen"  href="<%= Vanilla::Routes.url_to_raw("system", "css") %>" />
+  <script language="javascript" src="/public/javascripts/jquery-1.2.3.js"></script>
+  <script language="javascript" src="/public/javascripts/vanilla.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen"  href="<%= Vanilla::Routes.url_to_raw("system", "css.css") %>" />
 </head>
 <body>
   <div id="content">
