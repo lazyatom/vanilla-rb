@@ -69,7 +69,9 @@ class Dynasnip < Vanilla::Renderers::Base
   end
   
   def method_missing(method, *args)
-    if part = self.class.attribute(method)
+    if snip = Vanilla.snip(snip_name)
+      snip.get_value(method)
+    elsif part = self.class.attribute(method)
       part
     else
       super
