@@ -6,7 +6,7 @@ class Kind < Dynasnip
   def handle(kind, limit=10, as=:html)
     as = as.to_sym
     snips = Soup.sieve(:kind => kind)
-    entries = snips[0...limit.to_i].sort_by { |s| s.created_at || '' }.reverse.map do |snip|
+    entries = snips.sort_by { |s| s.created_at || '' }.reverse[0...limit.to_i].map do |snip|
       render_entry_in_template(snip, as, kind)
     end
     render_entry_collection(snips, entries, as, kind)
