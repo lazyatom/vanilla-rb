@@ -16,11 +16,11 @@ class Comments < Dynasnip
     return usage if self.class.snip_name == snip_name
     comments = Soup.sieve(:commenting_on => snip_name)
     comments_html = if app.request.snip_name == snip_name
-      render_comments(comments)
+      render_comments(comments) + comment_form.gsub('SNIP_NAME', snip_name)
     else
      %{<a href="#{Vanilla::Routes.url_to(snip_name)}">#{comments.length} comments for #{snip_name}</a>}
     end
-    return comments_html + comment_form.gsub('SNIP_NAME', snip_name)
+    return comments_html
   end
   
   def post(*args)
