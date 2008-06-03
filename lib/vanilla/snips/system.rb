@@ -9,7 +9,7 @@ system.main_template = <<-HTML
   <title>{current_snip name}</title>
   <script language="javascript" src="/public/javascripts/jquery-1.2.3.js"></script>
   <script language="javascript" src="/public/javascripts/vanilla.js"></script>
-  <link rel="stylesheet" type="text/css" media="screen"  href="<%= Vanilla::Routes.url_to_raw("system", "css.css") %>" />
+  <link rel="stylesheet" type="text/css" media="screen"  href="<%= Vanilla::Routes.url_to("system", "css.css") %>" />
 </head>
 <body>
   <div id="content">
