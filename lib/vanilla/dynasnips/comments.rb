@@ -42,7 +42,7 @@ class Comments < Dynasnip
                                           gsub('COMMENT_DATE', comment.created_at)
       author = comment.author
       author = "Anonymous" unless author && author != ""
-      if comment.website
+      if comment.website && comment.website != ""
         rendered_comment.gsub!('COMMENT_AUTHOR', "<a href=\"#{comment.website}\">#{author}</a>")
       else
         rendered_comment.gsub!('COMMENT_AUTHOR', author)
