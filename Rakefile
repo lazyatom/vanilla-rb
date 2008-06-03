@@ -15,10 +15,13 @@ end
 
 task :bootstrap do
   require 'vanilla/snip_helper'
-
+  
+  Soup.prepare
+  
   Dynasnip.persist_all!(overwrite=true)
   
   Dir[File.join(File.dirname(__FILE__), 'lib', 'vanilla', 'snips', '*.rb')].each do |f|
+    p "loading #{f}"
     load f
   end  
   
