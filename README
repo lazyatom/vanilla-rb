@@ -36,15 +36,17 @@ $ rake bootstrap
 
 ... a bunch of stuff gets created
 
-$ rackup vanilla/vanilla.ru
+$ rackup lib/vanilla.ru
 
-... the wonki starts. THE PAIN BEGINS.
+... the wonki starts. THE PAIN BEGINS. 
 
-[$ gem install sinatra; ruby vanilla/snips_on_sinatra.rb # also kinda works.]
+(Try going to http://localhost:9292/vanilla-rb-tutorial to salve the chafing.)
 
 
-Usage
-=====
+Working with Vanilla
+====================
 
 Currently unknowable; soon I hope to compile such a nercronomicon as to allow mortal kind to
 conjure up Snips and Dynasnips and Renderers...
+
+For the moment, see http://interblah.net/vanilla-rb-tutorial
