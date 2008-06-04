@@ -3,3 +3,4 @@ pkg
 *.db
 .DS_Store
 *~
+vanilla-authorization.yml
