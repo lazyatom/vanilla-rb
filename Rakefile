@@ -70,6 +70,62 @@ end
 desc 'Upgrade dynasnips and system snips'
 task :upgrade => ["upgrade:dynasnips"]
 
+desc 'Add a user (or change an existing password)'
+task :add_user => :prepare do
+  puts "Adding a new user"
+  credentials = YAML.load(File.open("vanilla-authorization.yml")) rescue {}
+  print "Username: "
+  username = STDIN.gets.chomp.strip
+  print "Password: "
+  password = STDIN.gets.chomp.strip
+  print "Confirm password: "
+  confirm_password = STDIN.gets.chomp.strip
+  if password != confirm_password
+    raise "Passwords don't match!"
+  else
+    credentials[username] = MD5.md5(password).to_s
+    File.open("vanilla-authorization.yml", "w") { |f| f.write credentials.to_yaml }
+    puts "User '#{username}' added."
+  end
+end
+
+desc 'Prepare a new vanilla.rb installation'
+task :setup do
+  puts <<-EOM
+
+===================~ Vanilla.rb ~====================
+
+Congratulations! You have elected to try out the weirdest web thing ever.
+Lets get started. Firstly, I'm going to cook you some soup:
+
+
+EOM
+  Rake::Task[:bootstrap].invoke
+  puts <<-EOM
+
+
+Now that we've got our broth, you'll want to add a user, so you can edit stuff.
+Lets do that now:
+
+
+EOM
+  Rake::Task[:add_user].invoke
+  puts <<-EOM
+
+
+OK! You're ready to go. To start vanilla.rb, you'll want to get it running under
+a webserver that supports Rack. The easiest way to do this locally is via 'rackup':
+  
+  $ rackup lib/vanilla.ru
+  
+Then go to http://localhost:9292
+
+I'm going now, Goodbye!
+
+
+EOM
+end
+
 require 'spec'
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new do |t|
