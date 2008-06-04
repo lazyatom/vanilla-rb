@@ -34,7 +34,7 @@ class Kind < Dynasnip
     end
   end
   
-  def prepare_snip_content(snip)
+  def prepare_snip_contents(snip)
     rendered_snip = app.render(snip)
     # make all the links absolute
     rendered_snip.gsub(/href="\//, "href=\"http://#{domain}/")
