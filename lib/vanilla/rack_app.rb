@@ -21,13 +21,7 @@ module Vanilla
     
     # The call method required by all good Rack applications
     def call(env)
-      request = request_for(env)
-      if request.snip_name
-        Vanilla::App.new(request).present
-      else
-        # four_oh_four = Vanilla::App.new.present(:snip => 'system', :part => 'four_oh_four', :format => 'html')
-        [404, {"Content-Type" => "text/html"}, [four_oh_four]]
-      end
+      Vanilla::App.new(request_for(env)).present
     end
   end
 end
