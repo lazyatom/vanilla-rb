@@ -13,7 +13,7 @@ class Kind < Dynasnip
   end
   
   def render_entry_in_template(snip, as, kind)
-    rendered_contents = app.render(snip)
+    rendered_contents = prepare_snip_contents(snip)
     case as
     when :html
       snip_template.
@@ -32,6 +32,12 @@ class Kind < Dynasnip
         e.id = "tag:#{domain},#{(snip.created_at || Date.today.to_s).split[0]}:/#{snip.name}"
       end
     end
+  end
+  
+  def prepare_snip_content(snip)
+    rendered_snip = app.render(snip)
+    # make all the links absolute
+    rendered_snip.gsub(/href="\//, "href=\"http://#{domain}/")
   end
   
   def render_entry_collection(snips, entries, as, kind)
