@@ -20,6 +20,7 @@ module Vanilla
     #
     # Returns a Rack::Response object
     def present
+      response_format = request.format
       output = case request.format
       when 'html', nil
         Renderers::Erb.new(self).render(Vanilla.snip('system'), :main_template)
@@ -31,7 +32,8 @@ module Vanilla
         @response.status = 500
         "Unknown format '#{request.format}'"
       end
-      @response['Content-Type'] = "text/#{request.format}"
+      response_format = 'plain' if response_format == 'raw'
+      @response['Content-Type'] = "text/#{response_format}"
       @response.write(output)
       @response.finish
     end
