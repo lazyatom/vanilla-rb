@@ -10,7 +10,7 @@ class EditSnip < Dynasnip
   
   def get(snip_name=nil)
     return login_required unless logged_in?
-    snip = Vanilla.snip(snip_name || app.request.params[:snip_to_edit])
+    snip = Vanilla.snip(snip_name || app.request.params[:name])
     edit(snip)
   end
   
