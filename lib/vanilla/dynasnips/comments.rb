@@ -11,12 +11,14 @@ class Comments < Dynasnip
     with the number of comments.
   |
 
-  def get(snip_name=nil?)
+  def get(snip_name=nil, disable_new_comments=false)
     snip_name = snip_name || app.request.params[:snip]
     return usage if self.class.snip_name == snip_name
     comments = Soup.sieve(:commenting_on => snip_name)
     comments_html = if app.request.snip_name == snip_name
-      render_comments(comments) + comment_form.gsub('SNIP_NAME', snip_name)
+      rendered_comments = render_comments(comments)
+      rendered_comments += comment_form.gsub('SNIP_NAME', snip_name) unless disable_new_comments
+      rendered_comments
     else
      %{<a href="#{Vanilla::Routes.url_to(snip_name)}">#{comments.length} comments for #{snip_name}</a>}
     end
