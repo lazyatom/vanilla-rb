@@ -29,13 +29,17 @@ class Comments < Dynasnip
     snip_name = app.request.params[:snip]
     existing_comments = Soup.sieve(:commenting_on => snip_name)
     comment = app.request.params.reject { |k,v| ![:author, :email, :website, :content].include?(k) }
+    
     return "You need to add some details!" if comment.empty?
-    Soup << comment.merge({
-     :name => "#{snip_name}-comment-#{existing_comments.length + 1}", 
-     :commenting_on => snip_name,
-     :created_at => Time.now
-    })
-    "Thanks for your comment! Back to {link_to #{snip_name}}"
+
+    unless comment_is_spam?(comment)
+      Soup << comment.merge({
+       :name => "#{snip_name}-comment-#{existing_comments.length + 1}", 
+       :commenting_on => snip_name,
+       :created_at => Time.now
+      })
+      "Thanks for your comment! Back to {link_to #{snip_name}}"
+    end
   end
   
   def render_comments(comments)
@@ -51,6 +55,20 @@ class Comments < Dynasnip
       end
       rendered_comment
     end.join + "</ol>"    
+  end
+  
+  def comment_is_spam?(comment)
+    Defensio.configure(YAML.load(File.read('defensio.yml')))
+    defensio_params = {
+      :comment_author_email => comment[:email], 
+      :comment_author => comment[:author], 
+      :comment_author_url => comment[:website],
+      :comment_content => comment[:content],
+      :comment_type => "comment", 
+      :user_ip => app.request.ip, 
+      :article_date => Soup[app.request.params[:snip]].updated_at
+    }
+    Defensio.audit_comment(defensio_params)["defensio_result"]["spam"]
   end
   
   attribute :comment_template, %{

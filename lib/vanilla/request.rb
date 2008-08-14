@@ -27,6 +27,10 @@ module Vanilla
       @rack_request.cookies
     end
     
+    def ip
+      @rack_request.ip
+    end
+    
     private
     
     def determine_request_uri_parts
