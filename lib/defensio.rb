@@ -1,15 +1,15 @@
 class Defensio
-  cattr_accessor :format
+  class << self
+    attr_accessor :format
+    attr_accessor :service_type
+    attr_accessor :api_version
+    attr_accessor :api_key
+    attr_accessor :owner_url
+  end
+  
   self.format = :xml
-  
-  cattr_accessor :service_type
   self.service_type = :app # Can be :blog
-  
-  cattr_accessor :api_version
   self.api_version = '1.2'
-  
-  cattr_accessor :api_key
-  cattr_accessor :owner_url
   
   def self.configure(confhash)
     if confhash['test']
