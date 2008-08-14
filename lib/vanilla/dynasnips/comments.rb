@@ -1,4 +1,6 @@
 require 'vanilla/dynasnip'
+require 'defensio'
+require 'date'
 
 class Comments < Dynasnip
   usage %|
@@ -32,7 +34,9 @@ class Comments < Dynasnip
     
     return "You need to add some details!" if comment.empty?
 
-    unless comment_is_spam?(comment)
+    if comment_is_spam?(comment)
+      "Sorry - your comment looks like spam, according to Defensio :("
+    else
       Soup << comment.merge({
        :name => "#{snip_name}-comment-#{existing_comments.length + 1}", 
        :commenting_on => snip_name,
@@ -58,6 +62,7 @@ class Comments < Dynasnip
   end
   
   def comment_is_spam?(comment)
+    snip_date = Date.parse(Soup[app.request.params[:snip]].updated_at)
     Defensio.configure(YAML.load(File.read('defensio.yml')))
     defensio_params = {
       :comment_author_email => comment[:email], 
@@ -66,9 +71,10 @@ class Comments < Dynasnip
       :comment_content => comment[:content],
       :comment_type => "comment", 
       :user_ip => app.request.ip, 
-      :article_date => Soup[app.request.params[:snip]].updated_at
+      :article_date => snip_date.strftime("%Y/%m/%d")
     }
-    Defensio.audit_comment(defensio_params)["defensio_result"]["spam"]
+    audit = Defensio.audit_comment(defensio_params)
+    audit["defensio_result"]["spam"]
   end
   
   attribute :comment_template, %{

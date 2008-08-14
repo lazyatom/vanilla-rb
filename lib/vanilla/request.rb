@@ -28,7 +28,7 @@ module Vanilla
     end
     
     def ip
-      @rack_request.ip
+      @rack_request.env["REMOTE_ADDR"]
     end
     
     private
