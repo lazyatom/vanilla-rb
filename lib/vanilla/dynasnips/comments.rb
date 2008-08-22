@@ -37,6 +37,7 @@ class Comments < Dynasnip
     if comment_is_spam?(comment)
       "Sorry - your comment looks like spam, according to Defensio :("
     else
+      return "No spam today, thanks anyway" unless app.request.params[:human] == 'human'
       Soup << comment.merge({
        :name => "#{snip_name}-comment-#{existing_comments.length + 1}", 
        :commenting_on => snip_name,
@@ -90,6 +91,7 @@ class Comments < Dynasnip
       <label>Email: <input type="text" name="email"></input></label>
       <label>Website: <input type="text" name="website"></input></label>
       <textarea name="content"></textarea>
+      <label>Type 'human' if you are one: <input type="text" name="human"></input></label>
       <button>Submit</button>
     </form>
   }
