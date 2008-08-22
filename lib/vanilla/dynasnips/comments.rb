@@ -91,7 +91,7 @@ class Comments < Dynasnip
       <label>Email: <input type="text" name="email"></input></label>
       <label>Website: <input type="text" name="website"></input></label>
       <textarea name="content"></textarea>
-      <label>Type 'human' if you are one: <input type="text" name="human"></input></label>
+      <label class="human">Type 'human' if you are one: <input type="text" name="human"></input></label>
       <button>Submit</button>
     </form>
   }
