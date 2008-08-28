@@ -80,7 +80,7 @@ class Comments < Dynasnip
     
     # Augment the comment hash
     comment[:user_ip] = app.request.ip
-    comment[:spamminess] = audit["defensio_result"]["spamminess"]
+    comment[:spamminess] = audit["defensio_result"]["spaminess"]
     comment[:spam] = audit["defensio_result"]["spam"]
     comment[:defensio_signature] = audit["defensio_result"]["signature"]
     comment[:defensio_message] = audit["defensio_result"]["message"]
