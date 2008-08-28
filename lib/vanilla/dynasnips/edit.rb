@@ -50,7 +50,7 @@ class EditSnip < Dynasnip
     <dl class="attributes">
       <% @snip_to_edit.attributes.each do |name, value| %>
       <dt><%= name %></dt>
-      <% num_rows = value.split("\n").length + 1 %>
+      <% num_rows = (value || "").split("\n").length + 1 %>
       <dd><textarea name="<%= name %>" class="<%= name %>" rows="<%= num_rows %>"><%=h value %></textarea></dd>
       <% end %>
       <dt><input class="attribute_name" type="text"></input></dt>
