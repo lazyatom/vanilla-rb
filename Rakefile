@@ -73,7 +73,8 @@ task :upgrade => ["upgrade:dynasnips"]
 desc 'Add a user (or change an existing password)'
 task :add_user => :prepare do
   puts "Adding a new user"
-  credentials = YAML.load(File.open("vanilla-authorization.yml")) rescue {}
+  credential_file = File.join(Vanilla::App.root,'config','vanilla-authorization.yml')
+  credentials = YAML.load(File.open(credential_file)) rescue {}
   print "Username: "
   username = STDIN.gets.chomp.strip
   print "Password: "
@@ -84,10 +85,30 @@ task :add_user => :prepare do
     raise "Passwords don't match!"
   else
     credentials[username] = MD5.md5(password).to_s
-    File.open("vanilla-authorization.yml", "w") { |f| f.write credentials.to_yaml }
+    File.open(credential_file, "w") { |f| f.write credentials.to_yaml }
     puts "User '#{username}' added."
   end
 end
+
+desc 'Generate file containing secret for cookie-based session storage'
+task :generate_secret_file do
+  # Adapted from old rails secret generator.
+  require 'openssl'
+  if !File.exist?("/dev/urandom")
+    # OpenSSL transparently seeds the random number generator with
+    # data from /dev/urandom. On platforms where that is not
+    # available, such as Windows, we have to provide OpenSSL with
+    # our own seed. Unfortunately there's no way to provide a
+    # secure seed without OS support, so we'll have to do with
+    # rand() and Time.now.usec().
+    OpenSSL::Random.seed(rand(0).to_s + Time.now.usec.to_s)
+  end
+  data = OpenSSL::BN.rand(2048, -1, false).to_s
+  secret = OpenSSL::Digest::SHA512.new(data).hexdigest
+  File.open(File.join(Vanilla::App.root,'config','secret.yml'),'w') {|f| f.write({"secret" => secret}.to_yaml)}
+  puts "Secret file generated."
+end
+
 
 desc 'Prepare a new vanilla.rb installation'
 task :setup do
@@ -101,6 +122,13 @@ Lets get started. Firstly, I'm going to cook you some soup:
 
 EOM
   Rake::Task[:bootstrap].invoke
+  
+  puts <<-EOM
+  
+Generating the file that will contain the secret for cookie-based session storage.
+EOM
+  Rake::Task[:generate_secret_file].invoke
+  
   puts <<-EOM
 
 
