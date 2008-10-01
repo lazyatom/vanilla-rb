@@ -77,5 +77,9 @@ module Vanilla
       "[snip '#{snip_name}' cannot be found]"
     end
     
+    def self.root
+      File.dirname(__FILE__)
+    end
+    
   end
 end
