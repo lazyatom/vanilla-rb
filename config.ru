@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__))
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'vanilla/rack_app'
 
 use Rack::Session::Cookie, :key => 'vanilla.session',
