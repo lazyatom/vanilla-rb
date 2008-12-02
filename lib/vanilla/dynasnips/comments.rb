@@ -33,8 +33,10 @@ class Comments < Dynasnip
     comment = app.request.params.reject { |k,v| ![:author, :email, :website, :content].include?(k) }
     
     return "You need to add some details!" if comment.empty?
-
-    if comment_is_spam?(comment)
+    
+    comment = check_for_spam(comment)
+    
+    if comment[:spam]
       "Sorry - your comment looks like spam, according to Defensio :("
     else
       return "No spam today, thanks anyway" unless app.request.params[:human] == 'human'
@@ -62,7 +64,7 @@ class Comments < Dynasnip
     end.join + "</ol>"    
   end
   
-  def comment_is_spam?(comment)
+  def check_for_spam(comment)
     snip_date = Date.parse(Soup[app.request.params[:snip]].updated_at)
     Defensio.configure(YAML.load(File.read('defensio.yml')))
     defensio_params = {
@@ -75,7 +77,15 @@ class Comments < Dynasnip
       :article_date => snip_date.strftime("%Y/%m/%d")
     }
     audit = Defensio.audit_comment(defensio_params)
-    audit["defensio_result"]["spam"]
+    
+    # Augment the comment hash
+    comment[:user_ip] = app.request.ip
+    comment[:spamminess] = audit["defensio_result"]["spaminess"]
+    comment[:spam] = audit["defensio_result"]["spam"]
+    comment[:defensio_signature] = audit["defensio_result"]["signature"]
+    comment[:defensio_message] = audit["defensio_result"]["message"] if audit["defensio_result"]["message"]
+    comment[:defensio_status] = audit["defensio_result"]["status"]
+    comment
   end
   
   attribute :comment_template, %{
