@@ -22,9 +22,13 @@ describe Vanilla::Renderers::Erb, "when rendering" do
     response_body_for("/test").should == "donkey"
   end
   
-  it "should expose instance variables from within the renderer instance" do
+  it "should expose the snip as an instance variable" do
     erb_snip(:name => "test", :content => "<%= @snip.name %>")
     response_body_for("/test").should == "test"
   end
   
+  it "shoudl expose the app as an instance variable" do
+    erb_snip(:name => "test", :content => "<%= @app.class.name %>")
+    response_body_for("/test").should == "Vanilla::App"
+  end
 end
