@@ -2,66 +2,18 @@ require File.join(File.dirname(__FILE__), "spec_helper")
 require "vanilla/app"
 
 describe Vanilla::App do
-  
-  describe "when detecting the snip renderer" do
-    before(:each) do
-      Vanilla::Test.setup_clean_environment
-      @app = Vanilla::App.new(nil)
-    end
-
-    it "should return the constant refered to in the render_as property of the snip" do
-      snip = create_snip(:render_as => "Raw")
-      @app.renderer_for(snip).should == Vanilla::Renderers::Raw
-    end
-  
-    it "should return Vanilla::Renderers::Base if no render_as property exists" do
-      snip = create_snip(:name => "blah")
-      @app.renderer_for(snip).should == Vanilla::Renderers::Base
-    end
-  
-    it "should return Vanilla::Renderers::Base if the render_as property is blank" do
-      snip = create_snip(:name => "blah", :render_as => '')
-      @app.renderer_for(snip).should == Vanilla::Renderers::Base
-    end
-  
-    it "should raise an error if the specified renderer doesn't exist" do
-      snip = create_snip(:render_as => "NonExistentClass")
-      lambda { @app.renderer_for(snip) }.should raise_error
-    end
-  
-    it "should load constants outside of the Vanilla::Renderers module" do
-      class ::MyRenderer
-      end
-    
-      snip = create_snip(:render_as => "MyRenderer")
-      @app.renderer_for(snip).should == MyRenderer      
-    end
-  end
-  
-  
-  module VanillaResponseSpecHelper
-    def response_for(request)
-      Vanilla::App.new(mock_request(request)).present
-    end
-    def response_body_for(request)
-      response_for(request)[2].body[0]
-    end
-    def response_code_for(request)
-      response_for(request)[0]
-    end
-  end
+  include Vanilla::Test
   
   before(:each) do 
     Vanilla::Test.setup_clean_environment
-    create_snip :name => "system", :main_template => "<tag>{current_snip}</tag>"
     CurrentSnip.persist!
     LinkTo.persist!
+    set_main_template "<tag>{current_snip}</tag>"
     create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
     create_snip :name => "other_snip", :content => "blah!"
   end
   
   describe "when presenting as HTML" do
-    include VanillaResponseSpecHelper
   
     it "should render the snip's content in the system template if no format or part is given" do
       response_body_for("/test").should == "<tag>blah blah!</tag>"
@@ -84,7 +36,6 @@ describe Vanilla::App do
   end
 
   describe "when presenting content as text" do
-    include VanillaResponseSpecHelper
   
     it "should render the snip's content outside of the main template with its default renderer" do
       response_body_for("/test.text").should == "blah blah!"
@@ -102,7 +53,6 @@ describe Vanilla::App do
 
 
   describe "when presenting raw content" do
-    include VanillaResponseSpecHelper
   
     it "should render the snips contents exactly as they are" do
       response_body_for("/test.raw").should == "blah {other_snip}"
@@ -124,7 +74,6 @@ describe Vanilla::App do
   
   
   describe "when a missing snip is requested" do
-    include VanillaResponseSpecHelper
     
     it "should render missing snip content in the main template" do
       response_body_for("/missing_snip").should == "<tag>Couldn't find snip #{LinkTo.new(nil).handle("missing_snip")}</tag>"
@@ -136,7 +85,6 @@ describe Vanilla::App do
   end
   
   describe "when requesting an unknown format" do
-    include VanillaResponseSpecHelper
 
     it "should return a 500 status code" do
       response_code_for("/test.monkey").should == 500

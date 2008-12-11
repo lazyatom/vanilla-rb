@@ -6,9 +6,8 @@ module Vanilla
   class Request
     attr_reader :snip_name, :part, :format, :method
     
-    def initialize(rack_request, dreamhost_fix = false)
-      @rack_request = rack_request
-      @dreamhost_fix = dreamhost_fix
+    def initialize(env)
+      @rack_request = Rack::Request.new(env)
       determine_request_uri_parts
     end
 
@@ -39,9 +38,8 @@ module Vanilla
       @method = (params.delete(:_method) || @rack_request.request_method).downcase
     end
     
-    # TODO: this is ugly, but cgi on dreamhost doesn't give anything in path_info
     def uri_path(request)
-      @dreamhost_fix ? request.env["SCRIPT_URL"] : request.path_info
+      request.path_info
     end
     
     URL_ROOT          = /\A\/\Z/                                  # i.e. /

@@ -2,7 +2,7 @@ require "spec_helper"
 require "vanilla/request"
 
 describe Vanilla::Request, "when requesting urls" do
-  before(:each) { @request = mock_request("/snip") }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip")) }
   
   it "should use the first segement as the snip name" do
     @request.snip_name.should == "snip"
@@ -27,7 +27,7 @@ describe Vanilla::Request, "when requesting urls" do
 end
 
 describe Vanilla::Request, "when requesting a snip part" do
-  before(:each) { @request = mock_request("/snip/part") }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip/part")) }
   
   it "should use the first segment as the snip, and the second segment as the part" do
     @request.snip_name.should == "snip"
@@ -40,7 +40,7 @@ describe Vanilla::Request, "when requesting a snip part" do
 end
 
 describe Vanilla::Request, "when requesting a snip with a format" do
-  before(:each) { @request = mock_request("/snip.raw") }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip.raw")) }
   
   it "should use the extension as the format" do
     @request.format.should == "raw"
@@ -52,7 +52,7 @@ describe Vanilla::Request, "when requesting a snip with a format" do
 end
 
 describe Vanilla::Request, "when requesting a snip part with a format" do
-  before(:each) { @request = mock_request("/snip/part.raw") }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip/part.raw")) }
   
   it "should use the extension as the format" do
     @request.format.should == "raw"
@@ -69,6 +69,6 @@ end
 
 describe Vanilla::Request, "when requested with a _method paramter" do
   it "should return the method using the parameter" do
-    mock_request("/snip?_method=put").method.should == 'put'
+    Vanilla::Request.new(mock_env_for_url("/snip?_method=put")).method.should == 'put'
   end
 end
