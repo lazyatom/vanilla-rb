@@ -4,3 +4,5 @@ pkg
 .DS_Store
 *~
 vanilla-authorization.yml
+tmp
+defensio.yml
