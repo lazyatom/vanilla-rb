@@ -1,5 +1,3 @@
-require File.join(File.dirname(__FILE__), *%w[snip_helper])
-
 test = Snip.new(:name => "test")
 test.content =<<EOF
 Linking is good: {link_to bold}
@@ -75,10 +73,13 @@ EOF
 textile.render_as = "Markdown"
 textile.save
 
-dynasnip "bad_dynasnip", %{
+bad_dynasnip = Snip.new(:name => "bad_dynasnip", :render_as => "Ruby")
+bad_dynasnip.content = <<EOF
 class BadDynasnip
   def get(*args)
     raise "Oh no"
   end
 end
-BadDynasnip}
+BadDynasnip
+EOF
+bad_dynasnip.save

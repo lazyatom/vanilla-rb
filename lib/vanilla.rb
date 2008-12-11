@@ -30,13 +30,6 @@ module Vanilla
   end
 end
 
-def dynasnip(*args)
-  # do nothing
-end
-def snip(*args)
-  # do nothing
-end
-
 # Load all the other renderer subclasses
 Dir[File.join(File.dirname(__FILE__), 'vanilla', 'renderers', '*.rb')].each { |f| require f }  
 

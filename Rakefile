@@ -15,9 +15,7 @@ task :prepare do
   Soup.prepare
 end
 
-task :bootstrap => :prepare do
-  require 'vanilla/snip_helper'
-  
+task :bootstrap => :prepare do  
   Dynasnip.persist_all!(overwrite=true)
   
   Dir[File.join(File.dirname(__FILE__), 'lib', 'vanilla', 'snips', '*.rb')].each do |f|
