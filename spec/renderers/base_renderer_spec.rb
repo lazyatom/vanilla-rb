@@ -10,7 +10,7 @@ describe Vanilla::Renderers::Base do
   
   describe "in general" do
     before(:each) do
-      @snip = create_snip(:name => "test", :content => "content content", :part => "part content")
+      create_snip(:name => "test", :content => "content content", :part => "part content")
     end
 
     it "should render the contents part of the snip as it is" do
@@ -22,15 +22,13 @@ describe Vanilla::Renderers::Base do
     end
   
     it "should include the contents of a referenced snip" do
-      snip_with_inclusions = create_snip(:name => "snip_with_inclusions", :content => "loading {another_snip}")
-      create_snip(:name => "another_snip", :content => "blah blah")
-      response_body_for("/snip_with_inclusions").should == "loading blah blah"
+      create_snip(:name => "snip_with_inclusions", :content => "loading {test}")
+      response_body_for("/snip_with_inclusions").should == "loading content content"
     end
   
     it "should perform snip inclusion when rendering a part" do
-      snip_with_inclusions = create_snip(:name => "snip_with_inclusions", :content => "", :part => "loading {another_snip}")
-      create_snip(:name => "another_snip", :content => "blah blah")
-      response_body_for("/snip_with_inclusions/part").should == "loading blah blah"
+      create_snip(:name => "snip_with_inclusions", :content => "other content", :part => "loading {test}")
+      response_body_for("/snip_with_inclusions/part").should == "loading content content"
     end
   
     it "should include other snips using their renderers" do
@@ -41,11 +39,8 @@ describe Vanilla::Renderers::Base do
   end
   
   describe "when trying to include a missing snip" do
-    before(:each) do
-      @snip = create_snip(:name => 'blah', :content => 'include a {missing_snip}')
-    end
-  
     it "should return a string describing the missing snip" do
+      create_snip(:name => 'blah', :content => 'include a {missing_snip}')
       response_body_for("/blah").should == "include a [snip 'missing_snip' cannot be found]"
     end
   end
