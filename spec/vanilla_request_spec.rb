@@ -1,5 +1,4 @@
-require "spec_helper"
-require "vanilla/request"
+require File.join(File.dirname(__FILE__), "spec_helper")
 
 describe Vanilla::Request, "when requesting urls" do
   before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip")) }

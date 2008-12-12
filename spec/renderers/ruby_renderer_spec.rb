@@ -1,11 +1,6 @@
-require File.join(File.dirname(__FILE__), *%w[.. spec_helper])
+require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
 describe Vanilla::Renderers::Ruby do
-
-  before(:each) do
-    Vanilla::Test.setup_clean_environment
-  end
-  
   describe "when rendering normally" do
     class TestDyna < Dynasnip
       def handle(*args)

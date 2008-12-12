@@ -1,13 +1,6 @@
-require File.join(File.dirname(__FILE__), *%w[.. spec_helper])
-require "vanilla/renderers/erb"
+require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
 describe Vanilla::Renderers::Erb, "when rendering" do
-  include Vanilla::Test
-  
-  before(:each) do
-    Vanilla::Test.setup_clean_environment
-  end
-  
   def erb_snip(params)
     create_snip(params.merge(:render_as => "Erb"))
   end

@@ -1,8 +1,6 @@
-require "spec_helper"
-require "vanilla"
+require File.join(File.dirname(__FILE__), 'spec_helper')
 
 describe Vanilla, "when loading a snip" do
-  
   it "should delegate to Soup" do
     snip = :snip
     Soup.should_receive(:[]).with('name').and_return(snip)
@@ -19,10 +17,6 @@ describe Vanilla, "when loading a snip" do
 end
 
 describe Vanilla, "when checking a snip exists" do
-  before(:each) do
-    Vanilla::Test.setup_clean_environment
-  end
-  
   it "should return true if the snip exists" do
     create_snip(:name => 'blah')
     Vanilla.snip_exists?('blah').should be_true

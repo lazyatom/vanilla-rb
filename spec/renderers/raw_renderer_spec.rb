@@ -1,11 +1,7 @@
-require File.join(File.dirname(__FILE__), *%w[.. spec_helper])
-require "vanilla/renderers/raw"
+require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
 describe Vanilla::Renderers::Raw, "when rendering" do
-  include Vanilla::Test
-  
   before(:each) do
-    Vanilla::Test.setup_clean_environment
     @snip = create_snip(:name => "test", :content => "raw content", :part => "raw part")
     set_main_template "<tag>{current_snip}</tag>"
   end

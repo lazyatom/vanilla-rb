@@ -1,13 +1,6 @@
-require File.join(File.dirname(__FILE__), *%w[.. spec_helper])
-require "vanilla/renderers/markdown"
+require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
 describe Vanilla::Renderers::Markdown, "when rendering" do
-  include Vanilla::Test
-  
-  before(:each) do
-    Vanilla::Test.setup_clean_environment
-  end
-  
   def markdown_snip(attributes)
     create_snip(attributes.merge(:render_as => "Markdown"))
   end

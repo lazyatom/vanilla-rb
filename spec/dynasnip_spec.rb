@@ -7,7 +7,6 @@ describe Dynasnip, "when storing attributes" do
   end
   
   before(:each) do
-    Vanilla::Test.setup_clean_environment
     @fake_app = nil
   end
   

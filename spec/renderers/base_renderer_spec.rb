@@ -1,13 +1,6 @@
-require File.join(File.dirname(__FILE__), *%w[.. spec_helper])
-require 'vanilla/renderers/base'
+require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
 describe Vanilla::Renderers::Base do
-  include Vanilla::Test
-
-  before(:each) do
-    Vanilla::Test.setup_clean_environment
-  end
-  
   describe "in general" do
     before(:each) do
       create_snip(:name => "test", :content => "content content", :part => "part content")

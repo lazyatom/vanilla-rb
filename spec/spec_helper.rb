@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 require "vanilla"
 require "spec"
 require "fileutils"
+require "rack/mock"
 
 module Vanilla
   module Test
@@ -15,7 +16,6 @@ module Vanilla
       ActiveRecord::Migration.verbose = false
   
       Soup.prepare
-      # load 'vanilla/snips/system.rb'
       require "vanilla/dynasnips/current_snip"
       CurrentSnip.persist!
       create_snip :name => "system", :main_template => "{current_snip}"
@@ -39,22 +39,26 @@ module Vanilla
       system.save
     end
     
+    def create_snip(params)
+      s = Snip.new(params)
+      s.save
+      s
+    end
+    
+    def mock_env_for_url(url)
+      Rack::MockRequest.env_for(url)
+    end
+
+    def mock_request(url)
+      Rack::Request.new(mock_env_for_url(url))
+    end
+    
     extend self
   end
 end
 
-def create_snip(params)
-  s = Snip.new(params)
-  s.save
-  s
+Spec::Runner.configure do |config|
+  config.include(Vanilla::Test)
+  config.before { Vanilla::Test.setup_clean_environment }
 end
 
-require "rack/mock"
-
-def mock_env_for_url(url)
-  Rack::MockRequest.env_for(url)
-end
-
-def mock_request(url)
-  Rack::Request.new(mock_env_for_url(url))
-end

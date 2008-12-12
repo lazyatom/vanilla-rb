@@ -1,9 +1,7 @@
 require File.join(File.dirname(__FILE__), "..", "spec_helper")
-require "vanilla/app"
 
 describe "when detecting the snip renderer" do
   before(:each) do
-    Vanilla::Test.setup_clean_environment
     @app = Vanilla::App.new
   end
 

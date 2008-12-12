@@ -1,12 +1,7 @@
 require File.join(File.dirname(__FILE__), "spec_helper")
-require "vanilla/app"
 
-describe Vanilla::App do
-  include Vanilla::Test
-  
-  before(:each) do 
-    Vanilla::Test.setup_clean_environment
-    CurrentSnip.persist!
+describe Vanilla::App do  
+  before(:each) do
     LinkTo.persist!
     set_main_template "<tag>{current_snip}</tag>"
     create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
@@ -14,7 +9,6 @@ describe Vanilla::App do
   end
   
   describe "when presenting as HTML" do
-  
     it "should render the snip's content in the system template if no format or part is given" do
       response_body_for("/test").should == "<tag>blah blah!</tag>"
     end
@@ -36,7 +30,6 @@ describe Vanilla::App do
   end
 
   describe "when presenting content as text" do
-  
     it "should render the snip's content outside of the main template with its default renderer" do
       response_body_for("/test.text").should == "blah blah!"
     end
@@ -53,7 +46,6 @@ describe Vanilla::App do
 
 
   describe "when presenting raw content" do
-  
     it "should render the snips contents exactly as they are" do
       response_body_for("/test.raw").should == "blah {other_snip}"
     end
@@ -74,7 +66,6 @@ describe Vanilla::App do
   
   
   describe "when a missing snip is requested" do
-    
     it "should render missing snip content in the main template" do
       response_body_for("/missing_snip").should == "<tag>Couldn't find snip #{LinkTo.new(nil).handle("missing_snip")}</tag>"
     end
@@ -84,11 +75,10 @@ describe Vanilla::App do
     end
   end
   
+  
   describe "when requesting an unknown format" do
-
     it "should return a 500 status code" do
       response_code_for("/test.monkey").should == 500
-    end
-    
+    end  
   end
 end

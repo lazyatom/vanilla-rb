@@ -2,32 +2,10 @@ require 'rubygems'
 
 gem 'soup', '>= 0.1.4'
 require 'soup'
+require 'vanilla/snip_handling'
 
 module Vanilla
-  class MissingSnipException < Exception
-  end
-  
-  def self.snip(name)
-    snip = Soup[name]
-    if snip.is_a?(Array) && snip.empty?
-      return nil
-    end
-    snip
-  end
-  
-  def self.snip!(name)
-    snip = snip(name)
-    raise MissingSnipException, "can't find '#{name}'" unless snip
-  end
-  
-  def self.snip_exists?(name)
-    snip = Soup[name]
-    if snip.is_a?(Array) && snip.empty?
-      false
-    else
-      true
-    end
-  end
+  include SnipHandling
 end
 
 # Load all the other renderer subclasses
