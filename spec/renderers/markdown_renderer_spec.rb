@@ -27,4 +27,14 @@ and so lets include {another_snip}
     response_body_for("/test").gsub(/\s+/, ' ').should == "<h1>markdown</h1> <p>and so lets include <b>blah</b> </p>"
   end
   
+  it "should handle calls to including other snips with underscore characters" do
+    markdown_snip(:name => "test", :content => <<-Markdown
+# markdown
+
+include {yet_another_snip}    
+    Markdown
+    )
+    create_snip(:name => "yet_another_snip", :content => "blah", :render_as => "Bold")
+    response_body_for("/test").gsub(/\s+/, ' ').should == "<h1>markdown</h1> <p>include <b>blah</b></p>"
+  end
 end

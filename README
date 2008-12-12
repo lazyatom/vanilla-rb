@@ -36,7 +36,7 @@ $ rake bootstrap
 
 ... a bunch of stuff gets created
 
-$ rackup lib/vanilla.ru
+$ rackup
 
 ... the wonki starts. THE PAIN BEGINS. 
 

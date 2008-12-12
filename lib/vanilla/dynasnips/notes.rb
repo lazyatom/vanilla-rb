@@ -21,7 +21,7 @@ class Notes < Dynasnip
   private 
   
   def notes_snip
-    Snip['notes']
+    Snip[Notes.snip_name]
   end
   
   def all_notes
