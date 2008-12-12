@@ -5,13 +5,12 @@ class Notes < Dynasnip
     all_notes_content = all_notes.map { |snip| 
       render_note(snip) 
     }.join("")
-    notes_snip.main_template.
-      gsub('[notes]', all_notes_content)
+    snip.main_template.gsub('[notes]', all_notes_content)
   end
 
   def post(*args)
     new_note = Snip.new(cleaned_params)
-    new_note.name = "note_#{notes_snip.next_note_id}"
+    new_note.name = "note_#{snip.next_note_id}"
     new_note.kind = "note"
     new_note.save
     increment_next_id
@@ -20,24 +19,20 @@ class Notes < Dynasnip
   
   private 
   
-  def notes_snip
-    Snip[Notes.snip_name]
-  end
-  
   def all_notes
     Snip.with(:kind, "= 'note'")
   end
   
   def increment_next_id
-    s = notes_snip
+    s = snip
     s.next_note_id = s.next_note_id.to_i + 1
     s.save
   end
 
-  def render_note(snip)
-    note_link = Vanilla::Routes.link_to(snip.name)
-    note_content = Vanilla.render(snip.name, nil, context, [])
-    notes_snip.note_template.gsub('[note]', note_content).gsub('[link]', note_link)
+  def render_note(note)
+    note_link = Vanilla::Routes.link_to(note.name)
+    note_content = Vanilla.render(note.name, nil, context, [])
+    snip.note_template.gsub('[note]', note_content).gsub('[link]', note_link)
   end
   
   attribute :next_note_id, 1
