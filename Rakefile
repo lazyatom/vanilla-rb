@@ -142,7 +142,7 @@ EOM
 OK! You're ready to go. To start vanilla.rb, you'll want to get it running under
 a webserver that supports Rack. The easiest way to do this locally is via 'rackup':
   
-  $ rackup lib/vanilla.ru
+  $ rackup
   
 Then go to http://localhost:9292
 
