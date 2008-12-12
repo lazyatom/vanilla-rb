@@ -9,7 +9,7 @@ class Login < Dynasnip
     end
     
     def current_user
-      app.request.cookies['logged_in_as']
+      app.request.session['logged_in_as']
     end
   
     def login_required
@@ -27,10 +27,9 @@ class Login < Dynasnip
   end
   
   def post(*args)
-    credentials = YAML.load(File.open("vanilla-authorization.yml"))
+    credentials = YAML.load(File.open(File.join(Vanilla::App.root,'config','vanilla-authorization.yml')))
     if credentials[cleaned_params[:name]] == MD5.md5(cleaned_params[:password]).to_s
-      app.response.set_cookie('logged_in_as', cleaned_params[:name])
-      app.request.cookies['logged_in_as'] = cleaned_params[:name]
+      app.request.session['logged_in_as'] = cleaned_params[:name]
       login_controls
     else
       "login fail!"
@@ -38,7 +37,7 @@ class Login < Dynasnip
   end
   
   def delete(*args)
-    app.response.delete_cookie('logged_in_as')
+    app.request.session['logged_in_as'] = nil
     "Logged out"
   end
   
@@ -53,6 +52,6 @@ class Login < Dynasnip
   private
   
   def login_controls
-    "logged in as {link_to #{app.request.cookies['logged_in_as']}}; <a href='/login?_method=delete'>logout</a>"
+    "logged in as {link_to #{app.request.session['logged_in_as']}}; <a href='/login?_method=delete'>logout</a>"
   end
 end

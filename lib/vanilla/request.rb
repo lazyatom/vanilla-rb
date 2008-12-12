@@ -30,6 +30,10 @@ module Vanilla
       @rack_request.env["REMOTE_ADDR"]
     end
     
+    def session
+      @rack_request.env["rack.session"]
+    end
+    
     private
     
     def determine_request_uri_parts
