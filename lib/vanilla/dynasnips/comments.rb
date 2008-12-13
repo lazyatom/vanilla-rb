@@ -66,7 +66,7 @@ class Comments < Dynasnip
   
   def check_for_spam(comment)
     snip_date = Date.parse(Soup[app.request.params[:snip]].updated_at)
-    Defensio.configure(YAML.load(File.read('defensio.yml')))
+    Defensio.configure(app.config[:defensio])
     defensio_params = {
       :comment_author_email => comment[:email], 
       :comment_author => comment[:author], 
