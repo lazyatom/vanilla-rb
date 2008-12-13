@@ -71,8 +71,9 @@ task :upgrade => ["upgrade:dynasnips"]
 desc 'Add a user (or change an existing password)'
 task :add_user => :prepare do
   puts "Adding a new user"
-  credential_file = File.join(Vanilla::App.root,'config','vanilla-authorization.yml')
-  credentials = YAML.load(File.open(credential_file)) rescue {}
+  # config_file = ENV['VANILLA_CONFIG'] || 'config.yml'
+  # config_file = YAML.load(File.open(config_file)) rescue {}
+  app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
   print "Username: "
   username = STDIN.gets.chomp.strip
   print "Password: "
@@ -82,14 +83,15 @@ task :add_user => :prepare do
   if password != confirm_password
     raise "Passwords don't match!"
   else
-    credentials[username] = MD5.md5(password).to_s
-    File.open(credential_file, "w") { |f| f.write credentials.to_yaml }
+    app.config[:credentials] ||= {}
+    app.config[:credentials][username] = MD5.md5(password).to_s
+    app.config.save!
     puts "User '#{username}' added."
   end
 end
 
 desc 'Generate file containing secret for cookie-based session storage'
-task :generate_secret_file do
+task :generate_secret do
   # Adapted from old rails secret generator.
   require 'openssl'
   if !File.exist?("/dev/urandom")
@@ -103,8 +105,10 @@ task :generate_secret_file do
   end
   data = OpenSSL::BN.rand(2048, -1, false).to_s
   secret = OpenSSL::Digest::SHA512.new(data).hexdigest
-  File.open(File.join(Vanilla::App.root,'config','secret.yml'),'w') {|f| f.write({"secret" => secret}.to_yaml)}
-  puts "Secret file generated."
+  app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
+  app.config[:secret] = secret
+  app.config.save!
+  puts "Secret generated."
 end
 
 
@@ -123,7 +127,11 @@ EOM
   
   puts <<-EOM
   
-Generating the file that will contain the secret for cookie-based session storage.
+Now I'm going to generate your configuration. This will be stored either in
+'config.yml' in the current directory, or in the path you provide via the
+environment variable VANILLA_CONFIG.  
+
+Generating the secret for cookie-based session storage.
 EOM
   Rake::Task[:generate_secret_file].invoke
   

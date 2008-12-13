@@ -32,7 +32,7 @@ Thee Darke Invocation
 
 $ gem install soup sqlite3-ruby rack ratom RedCloth BlueCloth
 
-$ rake bootstrap
+$ rake setup
 
 ... a bunch of stuff gets created
 

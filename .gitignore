@@ -3,6 +3,5 @@ pkg
 *.db
 .DS_Store
 *~
-vanilla-authorization.yml
 tmp
-defensio.yml
+config.yml

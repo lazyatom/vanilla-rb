@@ -27,8 +27,7 @@ class Login < Dynasnip
   end
   
   def post(*args)
-    credentials = YAML.load(File.open(File.join(Vanilla::App.root,'config','vanilla-authorization.yml')))
-    if credentials[cleaned_params[:name]] == MD5.md5(cleaned_params[:password]).to_s
+    if app.config[:credentials][cleaned_params[:name]] == MD5.md5(cleaned_params[:password]).to_s
       app.request.session['logged_in_as'] = cleaned_params[:name]
       login_controls
     else

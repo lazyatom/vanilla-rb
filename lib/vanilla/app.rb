@@ -4,9 +4,10 @@ require 'vanilla/request'
 module Vanilla
   class App
     
-    attr_reader :request, :response
+    attr_reader :request, :response, :config
     
-    def initialize
+    def initialize(config_file=nil)
+      prepare_configuration(config_file)
       Soup.prepare
     end
     
@@ -83,9 +84,15 @@ module Vanilla
       "[snip '#{snip_name}' cannot be found]"
     end
     
-    def self.root
-      File.dirname(__FILE__)
-    end
+    private
     
+    def prepare_configuration(config_file)
+      config_file ||= "config.yml"
+      @config = YAML.load(File.open(config_file)) rescue {}
+      @config[:filename] = config_file
+      def @config.save!
+        File.open(self[:filename], 'w') { |f| f.puts self.to_yaml }
+      end
+    end
   end
 end

@@ -1,0 +1,5 @@
+--- 
+:filename: config.example.yml
+:secret: a6bc097eff86cabd92ee72ba4687c3f057b7556deaa3e4a6b284460871056b87ba3e91548c37dcc44fbc10241cee5b386556e6bcc2946fd9b609dc3bc1b24488
+:credentials: 
+  admin: 5f4dcc3b5aa765d61d8327deb882cf99
