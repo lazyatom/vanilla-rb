@@ -51,17 +51,6 @@ module Vanilla
       end
     end
 
-    # Render a snip using its given renderer, but do not perform any snip
-    # inclusion. I.e., ignore {snip arg} blocks of text in the snip content.
-    #
-    # TODO: suspect this isn't required.
-    #
-    # def render_without_including_snips(snip, part=:content, args=[])
-    #   rendering(snip) do |renderer|
-    #     renderer.render_without_including_snips(snip, part, args)
-    #   end
-    # end
-
     # Given the snip and parameters, yield an instance of the appropriate 
     # Vanilla::Render::Base subclass
     def rendering(snip)
