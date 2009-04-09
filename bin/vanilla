@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'rake'
+load File.join(File.dirname(__FILE__), *%w[.. lib tasks vanilla.rake])
+
+mkdir(ARGV[0])
+cd(ARGV[0])
+
+Rake::Task['vanilla:setup'].invoke
