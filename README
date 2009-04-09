@@ -30,12 +30,13 @@ It was MESSED. UP.
 Thee Darke Invocation
 =====================
 
-$ gem install soup sqlite3-ruby rack ratom RedCloth BlueCloth
+$ gem install vanilla
 
-$ rake setup
+$ vanilla my_app_name
 
 ... a bunch of stuff gets created
 
+$ cd my_app_name
 $ rackup
 
 ... the wonki starts. THE PAIN BEGINS. 

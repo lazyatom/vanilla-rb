@@ -24,7 +24,7 @@ spec = Gem::Specification.new do |s|
   
   # Change these as appropriate
   s.name              = "vanilla"
-  s.version           = "1.0.0"
+  s.version           = "1.0.1"
   s.summary           = "A bliki-type web content thing."
   s.author            = "James Adam"
   s.email             = "james@lazyatom.com.com"
@@ -39,9 +39,12 @@ spec = Gem::Specification.new do |s|
   s.executables       = ['vanilla']
   s.require_paths     = ["lib"]
   
-  # If you want to depend on other gems, add them here, along with any
-  # relevant versions
-  # s.add_dependency("some_other_gem", "~> 0.1.0")
+  # All the other gems we need.
+  s.add_dependency("rack", ">= 0.9.1")
+  s.add_dependency("soup", ">= 0.2.1")
+  s.add_dependency("ratom", ">= 0.3.5")
+  s.add_dependency("RedCloth", ">= 4.1.1")
+  s.add_dependency("BlueCloth", ">= 1.0.0")
   
   s.add_development_dependency("rspec") # add any other gems for testing/development
 
