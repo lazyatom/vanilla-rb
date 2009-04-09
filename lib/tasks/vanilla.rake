@@ -4,7 +4,7 @@ require 'vanilla'
 namespace :vanilla do
   desc "Open an irb session preloaded with this library"
   task :console do
-    sh "irb -Ilib -rvanilla/console"
+    sh "irb -Ilib -rubygems -rvanilla -rvanilla/console"
   end
 
   task :clean do
