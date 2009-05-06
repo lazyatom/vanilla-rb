@@ -20,7 +20,6 @@ namespace :vanilla do
     Dynasnip.persist_all!(overwrite=true)
   
     Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '*.rb')].each do |f|
-      p "loading #{f}"
       load f
     end  
   
@@ -105,7 +104,7 @@ namespace :vanilla do
       OpenSSL::Random.seed(rand(0).to_s + Time.now.usec.to_s)
     end
     data = OpenSSL::BN.rand(2048, -1, false).to_s
-    secret = OpenSSL::Digest::SHA512.new(data).hexdigest
+    secret = OpenSSL::Digest::SHA1.new(data).hexdigest
     app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
     app.config[:secret] = secret
     app.config.save!
@@ -114,8 +113,8 @@ namespace :vanilla do
 
   desc 'Prepare standard files to run Vanilla'
   task :prepare_files do
-    cp File.join(File.dirname(__FILE__), *%w[.. .. config.ru]), 'config.ru'
-    cp_r File.join(File.dirname(__FILE__), *%w[.. .. public]), 'public'
+    cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. config.ru])), 'config.ru'
+    cp_r File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. public])), 'public'
     mkdir 'tmp'
     File.open("Rakefile", "w") do |f|
       rakefile =<<-EOF
