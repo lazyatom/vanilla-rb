@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'vanilla'
+load File.join(File.dirname(__FILE__), *%w[lib tasks vanilla.rake])
 
 require 'spec'
 require 'spec/rake/spectask'
