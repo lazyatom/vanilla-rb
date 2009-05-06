@@ -53,7 +53,7 @@ class EditSnip < Dynasnip
       <% num_rows = (value || "").split("\n").length + 1 %>
       <dd><textarea name="<%= name %>" class="<%= name %>" rows="<%= num_rows %>"><%=h value %></textarea></dd>
       <% end %>
-      <dt><input class="attribute_name" type="text"></input></dt>
+      <dt><input class="attribute_name" type="text"></dt>
       <dd><textarea></textarea></dd>
     </dl>
     <a href="#" id="add">Add</a>
