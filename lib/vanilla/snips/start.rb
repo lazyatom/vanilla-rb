@@ -1,5 +1,14 @@
 start = Snip.new(:name => 'start')
 start.content = <<-START
+Welcome to Vanilla.rb
+=============
+
+Vanilla.rb is a web-experiment (a _websperiment_?) about storing and reusing data on a website. It can also function as a [bliki](http://www.wikipedia.com/wiki/Bliki). 
+
+The fundamental building block is the 'snip', which is a malleable object that can store content and arbitrary metadata.
+
+---
+
 This is the {link_to start} snip, which is the default home page.
 
 You might want to check out the {link_to vanilla-rb-tutorial} snip. 

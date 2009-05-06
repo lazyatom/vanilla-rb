@@ -4,18 +4,17 @@ tutorial.content = <<-END_OF_TUTORIAL
 Basic Concepts
 ------------
 
-Every piece of information displayed here is stored as a {link_to snip}. Snips, within their contents, can also reference other snips. 
+Every piece of information displayed here is stored as a {link_to snip}. Snips, within their contents, can also reference other snips. When you request a snip, it will render into a page (or another kind of response), and also render any snips that it internally references.
 
 For example, consider the snip {link_to tutorial-basic-snip-inclusion}:
 
 {raw tutorial-basic-snip-inclusion}
 
-is rendered into:
+When this snip is rendered, it appears like this:
 
 {tutorial-basic-snip-inclusion}
 
 Notice the use of curly brackets to reference one snip from inside another. Vanilla.rb finds these references to snips, then renders that snip and replaces it in the first snip. Neat!
-
 
 Renderers
 --------
