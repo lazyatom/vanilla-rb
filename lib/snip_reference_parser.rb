@@ -28,19 +28,6 @@ module SnipReference
       args
     end
   end
-  module HashArgumentList
-    def to_arguments
-      args = elements[0].to_arguments
-      # p elements[0].elements[4]
-      # args.merge(elements[0].elements[4].elements[1].to_arguments) if elements[0].elements[4] && elements[0].elements[4].elements
-      args
-    end
-  end
-  module TypicalHashArgument
-    def to_arguments
-      {elements[0].text_value.to_sym => elements[4].text_value}
-    end
-  end
   module NormalArgument
     def to_arguments
       [text_value]
@@ -71,7 +58,7 @@ class SnipReferenceParserTest < Test::Unit::TestCase
     # %|{snip key1 => value1, key2 => value2}|,
     # %|{snip :key1 => value1, :key2 => value2}|,
     # %|{snip key1:"value with spaces"}|,
-    %|{snip key1 => "value with spaces"}|   => {:snip => 'snip', :arguments => {:key1 => "value with spaces"}}
+    # %|{snip key1 => "value with spaces"}|   => {:snip => 'snip', :arguments => {:key1 => "value with spaces"}}
   }
   
   def setup
@@ -81,7 +68,6 @@ class SnipReferenceParserTest < Test::Unit::TestCase
   examples.each do |example, expected|
     define_method :"test_parsing_#{example}" do
       tree = @parser.parse(example)
-      p tree
       if tree
         assert_equal expected[:snip], tree.snip
         assert_equal expected[:arguments], tree.arguments

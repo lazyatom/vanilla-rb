@@ -99,6 +99,23 @@ module SnipReference
     return r0
   end
 
+  module ArgumentList0
+    def argument_separator
+      elements[0]
+    end
+
+    def argument_list
+      elements[1]
+    end
+  end
+
+  module ArgumentList1
+    def argument
+      elements[0]
+    end
+
+  end
+
   def _nt_argument_list
     start_index = index
     if node_cache[:argument_list].has_key?(index)
@@ -107,64 +124,20 @@ module SnipReference
       return cached
     end
 
-    i0 = index
-    r1 = _nt_hash_pair_list
-    if r1
-      r0 = r1
-    else
-      r2 = _nt_word_list
-      if r2
-        r0 = r2
-      else
-        self.index = i0
-        r0 = nil
-      end
-    end
-
-    node_cache[:argument_list][start_index] = r0
-
-    return r0
-  end
-
-  module WordList0
-    def argument_separator
-      elements[0]
-    end
-
-    def word_list
-      elements[1]
-    end
-  end
-
-  module WordList1
-    def word
-      elements[0]
-    end
-
-  end
-
-  def _nt_word_list
-    start_index = index
-    if node_cache[:word_list].has_key?(index)
-      cached = node_cache[:word_list][index]
-      @index = cached.interval.end if cached
-      return cached
-    end
-
     i0, s0 = index, []
-    r1 = _nt_word
+    r1 = _nt_argument
     s0 << r1
     if r1
       i3, s3 = index, []
       r4 = _nt_argument_separator
       s3 << r4
       if r4
-        r5 = _nt_word_list
+        r5 = _nt_argument_list
         s3 << r5
       end
       if s3.last
         r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
-        r3.extend(WordList0)
+        r3.extend(ArgumentList0)
       else
         self.index = i3
         r3 = nil
@@ -178,76 +151,13 @@ module SnipReference
     end
     if s0.last
       r0 = instantiate_node(ArgumentList,input, i0...index, s0)
-      r0.extend(WordList1)
+      r0.extend(ArgumentList1)
     else
       self.index = i0
       r0 = nil
     end
 
-    node_cache[:word_list][start_index] = r0
-
-    return r0
-  end
-
-  module HashPairList0
-    def argument_separator
-      elements[0]
-    end
-
-    def hash_pair_list
-      elements[1]
-    end
-  end
-
-  module HashPairList1
-    def hash_pair
-      elements[0]
-    end
-
-  end
-
-  def _nt_hash_pair_list
-    start_index = index
-    if node_cache[:hash_pair_list].has_key?(index)
-      cached = node_cache[:hash_pair_list][index]
-      @index = cached.interval.end if cached
-      return cached
-    end
-
-    i0, s0 = index, []
-    r1 = _nt_hash_pair
-    s0 << r1
-    if r1
-      i3, s3 = index, []
-      r4 = _nt_argument_separator
-      s3 << r4
-      if r4
-        r5 = _nt_hash_pair_list
-        s3 << r5
-      end
-      if s3.last
-        r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
-        r3.extend(HashPairList0)
-      else
-        self.index = i3
-        r3 = nil
-      end
-      if r3
-        r2 = r3
-      else
-        r2 = instantiate_node(SyntaxNode,input, index...index)
-      end
-      s0 << r2
-    end
-    if s0.last
-      r0 = instantiate_node(HashArgumentList,input, i0...index, s0)
-      r0.extend(HashPairList1)
-    else
-      self.index = i0
-      r0 = nil
-    end
-
-    node_cache[:hash_pair_list][start_index] = r0
+    node_cache[:argument_list][start_index] = r0
 
     return r0
   end
@@ -260,20 +170,8 @@ module SnipReference
       return cached
     end
 
-    i0 = index
-    r1 = _nt_hash_pair
-    if r1
-      r0 = r1
-    else
-      r2 = _nt_word
-      r2.extend(NormalArgument)
-      if r2
-        r0 = r2
-      else
-        self.index = i0
-        r0 = nil
-      end
-    end
+    r0 = _nt_word
+    r0.extend(NormalArgument)
 
     node_cache[:argument][start_index] = r0
 
@@ -316,145 +214,6 @@ module SnipReference
     end
 
     node_cache[:argument_separator][start_index] = r0
-
-    return r0
-  end
-
-  def _nt_hash_pair
-    start_index = index
-    if node_cache[:hash_pair].has_key?(index)
-      cached = node_cache[:hash_pair][index]
-      @index = cached.interval.end if cached
-      return cached
-    end
-
-    i0 = index
-    r1 = _nt_typical_hash_pair
-    if r1
-      r0 = r1
-    else
-      r2 = _nt_new_style_hash_pair
-      if r2
-        r0 = r2
-      else
-        self.index = i0
-        r0 = nil
-      end
-    end
-
-    node_cache[:hash_pair][start_index] = r0
-
-    return r0
-  end
-
-  module TypicalHashPair0
-    def word
-      elements[0]
-    end
-
-    def optional_spaces
-      elements[1]
-    end
-
-    def optional_spaces
-      elements[3]
-    end
-
-    def word
-      elements[4]
-    end
-  end
-
-  def _nt_typical_hash_pair
-    start_index = index
-    if node_cache[:typical_hash_pair].has_key?(index)
-      cached = node_cache[:typical_hash_pair][index]
-      @index = cached.interval.end if cached
-      return cached
-    end
-
-    i0, s0 = index, []
-    r1 = _nt_word
-    s0 << r1
-    if r1
-      r2 = _nt_optional_spaces
-      s0 << r2
-      if r2
-        if input.index("=>", index) == index
-          r3 = instantiate_node(SyntaxNode,input, index...(index + 2))
-          @index += 2
-        else
-          terminal_parse_failure("=>")
-          r3 = nil
-        end
-        s0 << r3
-        if r3
-          r4 = _nt_optional_spaces
-          s0 << r4
-          if r4
-            r5 = _nt_word
-            s0 << r5
-          end
-        end
-      end
-    end
-    if s0.last
-      r0 = instantiate_node(TypicalHashArgument,input, i0...index, s0)
-      r0.extend(TypicalHashPair0)
-    else
-      self.index = i0
-      r0 = nil
-    end
-
-    node_cache[:typical_hash_pair][start_index] = r0
-
-    return r0
-  end
-
-  module NewStyleHashPair0
-    def word
-      elements[0]
-    end
-
-    def word
-      elements[2]
-    end
-  end
-
-  def _nt_new_style_hash_pair
-    start_index = index
-    if node_cache[:new_style_hash_pair].has_key?(index)
-      cached = node_cache[:new_style_hash_pair][index]
-      @index = cached.interval.end if cached
-      return cached
-    end
-
-    i0, s0 = index, []
-    r1 = _nt_word
-    s0 << r1
-    if r1
-      if input.index(":", index) == index
-        r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
-        @index += 1
-      else
-        terminal_parse_failure(":")
-        r2 = nil
-      end
-      s0 << r2
-      if r2
-        r3 = _nt_word
-        s0 << r3
-      end
-    end
-    if s0.last
-      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
-      r0.extend(NewStyleHashPair0)
-    else
-      self.index = i0
-      r0 = nil
-    end
-
-    node_cache[:new_style_hash_pair][start_index] = r0
 
     return r0
   end

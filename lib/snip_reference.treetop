@@ -8,36 +8,15 @@ grammar SnipReference
   end
 
   rule argument_list
-    hash_pair_list / word_list
-  end
-
-  rule word_list
-    word (argument_separator word_list)? <ArgumentList>
-  end
-
-  rule hash_pair_list
-    hash_pair (argument_separator hash_pair_list)? <HashArgumentList>
+    argument (argument_separator argument_list)? <ArgumentList>
   end
 
   rule argument
-    hash_pair /
     word <NormalArgument>
   end
 
   rule argument_separator
     "," optional_spaces
-  end
-
-  rule hash_pair
-    typical_hash_pair / new_style_hash_pair
-  end
-
-  rule typical_hash_pair
-    word optional_spaces "=>" optional_spaces word <TypicalHashArgument>
-  end
-
-  rule new_style_hash_pair
-    word ":" word
   end
 
   rule word
