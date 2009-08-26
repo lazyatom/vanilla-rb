@@ -24,7 +24,7 @@ spec = Gem::Specification.new do |s|
   
   # Change these as appropriate
   s.name              = "vanilla"
-  s.version           = "1.0.1"
+  s.version           = "1.1.0"
   s.summary           = "A bliki-type web content thing."
   s.author            = "James Adam"
   s.email             = "james@lazyatom.com.com"
