@@ -84,6 +84,16 @@ module SnipReference
     return r0
   end
 
+  module SnipName0
+    def word
+      elements[0]
+    end
+
+    def word
+      elements[2]
+    end
+  end
+
   def _nt_snip_name
     start_index = index
     if node_cache[:snip_name].has_key?(index)
@@ -92,7 +102,43 @@ module SnipReference
       return cached
     end
 
-    r0 = _nt_word
+    i0 = index
+    i1, s1 = index, []
+    r2 = _nt_word
+    s1 << r2
+    if r2
+      if input.index(".", index) == index
+        r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
+        @index += 1
+      else
+        terminal_parse_failure(".")
+        r3 = nil
+      end
+      s1 << r3
+      if r3
+        r4 = _nt_word
+        s1 << r4
+      end
+    end
+    if s1.last
+      r1 = instantiate_node(SnipNameWithAttribute,input, i1...index, s1)
+      r1.extend(SnipName0)
+    else
+      self.index = i1
+      r1 = nil
+    end
+    if r1
+      r0 = r1
+    else
+      r5 = _nt_word
+      r5.extend(SnipName)
+      if r5
+        r0 = r5
+      else
+        self.index = i0
+        r0 = nil
+      end
+    end
 
     node_cache[:snip_name][start_index] = r0
 

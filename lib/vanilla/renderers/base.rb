@@ -1,4 +1,7 @@
 require 'vanilla/app'
+require 'treetop'
+require 'vanilla/snip_reference_parser'
+require 'vanilla/snip_reference'
 
 module Vanilla
   module Renderers
@@ -20,18 +23,16 @@ module Vanilla
       end
       
       def self.snip_regexp
-        %r{ \{
-          ([\w\-]+) (?: \.([\w\-]+) )?
-          (?: \s+ ([\w\-,]+) )?
-        \} }x
+        %r{(\{[^\}.]+\})}
       end
     
       # Default behaviour to include a snip's content
       def include_snips(content)
         content.gsub(Vanilla::Renderers::Base.snip_regexp) do
-          snip_name = $1
-          snip_attribute = $2
-          snip_args = $3 ? $3.split(',') : []
+          snip_tree = parse_snip_reference($1)
+          snip_name = snip_tree.snip
+          snip_attribute = snip_tree.attribute
+          snip_args = snip_tree.arguments
           
           # Render the snip or snip part with the given args, and the current
           # context, but with the default renderer for that snip. We dispatch
@@ -43,6 +44,11 @@ module Vanilla
             app.render_missing_snip(snip_name)
           end
         end
+      end
+      
+      def parse_snip_reference(string)
+        @parser ||= SnipReferenceParser.new
+        @parser.parse(string)
       end
       
       # Default rendering behaviour. Subclasses shouldn't really need to touch this.
