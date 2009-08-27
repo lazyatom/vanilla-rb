@@ -5,6 +5,7 @@ function vanillaPrepareEditor() {
     var textarea_for_this = dl_children[dt_index].childNodes[0];
     textarea_for_this.name = this.value;
   });
+  $('textarea').autogrow();
 }
 
 $(document).ready(function() {
