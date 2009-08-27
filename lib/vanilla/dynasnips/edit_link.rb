@@ -13,12 +13,8 @@ You can also give a custom piece of text for the link, like this:
   &#123;edit_link blah,link-name&#125;|
   
   def handle(*args)
-    if args.length < 2
-      show_usage
-    else
-      snip_name = args[0]
-      link_text = args[1]
-      Vanilla::Routes.edit_link(snip_name, link_text)
-    end
+    snip_name = args[0] || app.request.snip_name
+    link_text = args[1] || "Edit"
+    Vanilla::Routes.edit_link(snip_name, link_text)
   end
 end

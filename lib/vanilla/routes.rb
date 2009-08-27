@@ -5,7 +5,7 @@ module Vanilla
     end
 
     def url_to(snip_name, part=nil)
-      url = "/#{snip_name}"
+      url = "/#{snip_name.gsub(" ", "+")}"
       url += "/#{part}" if part
       url
     end
@@ -20,11 +20,11 @@ module Vanilla
     end
 
     def edit_link(snip_name, link_text)
-      %[<a href="/edit?name=#{snip_name}">#{link_text}</a>]
+      %[<a href="/edit?name=#{snip_name.gsub(" ", "+")}">#{link_text}</a>]
     end
 
     def new_link(snip_name="New")
-      %[<a href="/new?name=#{snip_name}" class="new">#{snip_name}</a>]
+      %[<a href="/new?name=#{snip_name ? snip_name.gsub(" ", "+") : nil}" class="new">#{snip_name}</a>]
     end
 
     extend self

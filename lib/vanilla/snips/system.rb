@@ -17,7 +17,7 @@ system.main_template = <<-HTML
       <strong><a href="/">home</a></strong>, 
       <%= Vanilla::Routes.new_link %> ::
       <strong>{link_to_current_snip}</strong> &rarr; 
-      <%= Vanilla::Routes.edit_link("{current_snip name}", "Edit") %>
+      {edit_link}
     </div>
     {current_snip}
   </div>
