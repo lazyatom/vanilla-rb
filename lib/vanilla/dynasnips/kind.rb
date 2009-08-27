@@ -59,7 +59,7 @@ class Kind < Dynasnip
   attribute :snip_template, %{
     <div class="snip SNIP_KIND">
       <div class="details">
-        #{Vanilla::Routes.link_to '#', 'SNIP_NAME'}
+        #{Vanilla::Routes.existing_link '#', 'SNIP_NAME'}
         <p class="created_at">CREATED_AT</p>
       </div>
       <div class="content">
