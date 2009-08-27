@@ -27,7 +27,7 @@ module SnipReference
     end
 
     i0, s0 = index, []
-    if input.index("{", index) == index
+    if has_terminal?("{", false, index)
       r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -50,7 +50,7 @@ module SnipReference
           r4 = instantiate_node(SyntaxNode,input, i4...index, s4)
           r4.extend(SnipCall0)
         else
-          self.index = i4
+          @index = i4
           r4 = nil
         end
         if r4
@@ -60,7 +60,7 @@ module SnipReference
         end
         s0 << r3
         if r3
-          if input.index("}", index) == index
+          if has_terminal?("}", false, index)
             r7 = instantiate_node(SyntaxNode,input, index...(index + 1))
             @index += 1
           else
@@ -75,13 +75,13 @@ module SnipReference
       r0 = instantiate_node(SnipCall,input, i0...index, s0)
       r0.extend(SnipCall1)
     else
-      self.index = i0
+      @index = i0
       r0 = nil
     end
 
     node_cache[:snip_call][start_index] = r0
 
-    return r0
+    r0
   end
 
   module SnipName0
@@ -107,7 +107,7 @@ module SnipReference
     r2 = _nt_word
     s1 << r2
     if r2
-      if input.index(".", index) == index
+      if has_terminal?(".", false, index)
         r3 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
@@ -124,7 +124,7 @@ module SnipReference
       r1 = instantiate_node(SnipNameWithAttribute,input, i1...index, s1)
       r1.extend(SnipName0)
     else
-      self.index = i1
+      @index = i1
       r1 = nil
     end
     if r1
@@ -135,14 +135,14 @@ module SnipReference
       if r5
         r0 = r5
       else
-        self.index = i0
+        @index = i0
         r0 = nil
       end
     end
 
     node_cache[:snip_name][start_index] = r0
 
-    return r0
+    r0
   end
 
   module ArgumentList0
@@ -185,7 +185,7 @@ module SnipReference
         r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
         r3.extend(ArgumentList0)
       else
-        self.index = i3
+        @index = i3
         r3 = nil
       end
       if r3
@@ -199,13 +199,13 @@ module SnipReference
       r0 = instantiate_node(ArgumentList,input, i0...index, s0)
       r0.extend(ArgumentList1)
     else
-      self.index = i0
+      @index = i0
       r0 = nil
     end
 
     node_cache[:argument_list][start_index] = r0
 
-    return r0
+    r0
   end
 
   def _nt_argument
@@ -216,12 +216,25 @@ module SnipReference
       return cached
     end
 
-    r0 = _nt_word
-    r0.extend(NormalArgument)
+    i0 = index
+    r1 = _nt_unquoted_words
+    r1.extend(NormalArgument)
+    if r1
+      r0 = r1
+    else
+      r2 = _nt_quoted_word
+      r2.extend(NormalArgument)
+      if r2
+        r0 = r2
+      else
+        @index = i0
+        r0 = nil
+      end
+    end
 
     node_cache[:argument][start_index] = r0
 
-    return r0
+    r0
   end
 
   module ArgumentSeparator0
@@ -239,7 +252,7 @@ module SnipReference
     end
 
     i0, s0 = index, []
-    if input.index(",", index) == index
+    if has_terminal?(",", false, index)
       r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -255,13 +268,13 @@ module SnipReference
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
       r0.extend(ArgumentSeparator0)
     else
-      self.index = i0
+      @index = i0
       r0 = nil
     end
 
     node_cache[:argument_separator][start_index] = r0
 
-    return r0
+    r0
   end
 
   def _nt_word
@@ -281,14 +294,14 @@ module SnipReference
       if r2
         r0 = r2
       else
-        self.index = i0
+        @index = i0
         r0 = nil
       end
     end
 
     node_cache[:word][start_index] = r0
 
-    return r0
+    r0
   end
 
   def _nt_unquoted_word
@@ -301,7 +314,7 @@ module SnipReference
 
     s0, i0 = [], index
     loop do
-      if input.index(Regexp.new('[a-zA-Z0-9_\\-]'), index) == index
+      if has_terminal?('\G[a-zA-Z0-9_\\-]', true, index)
         r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
@@ -314,7 +327,7 @@ module SnipReference
       end
     end
     if s0.empty?
-      self.index = i0
+      @index = i0
       r0 = nil
     else
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
@@ -322,7 +335,7 @@ module SnipReference
 
     node_cache[:unquoted_word][start_index] = r0
 
-    return r0
+    r0
   end
 
   module QuotedWord0
@@ -341,7 +354,7 @@ module SnipReference
 
     i0 = index
     i1, s1 = index, []
-    if input.index("\"", index) == index
+    if has_terminal?("\"", false, index)
       r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
@@ -353,7 +366,7 @@ module SnipReference
       r3 = _nt_unquoted_words
       s1 << r3
       if r3
-        if input.index("\"", index) == index
+        if has_terminal?("\"", false, index)
           r4 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else
@@ -367,14 +380,14 @@ module SnipReference
       r1 = instantiate_node(QuotedWord,input, i1...index, s1)
       r1.extend(QuotedWord0)
     else
-      self.index = i1
+      @index = i1
       r1 = nil
     end
     if r1
       r0 = r1
     else
       i5, s5 = index, []
-      if input.index("'", index) == index
+      if has_terminal?("'", false, index)
         r6 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
@@ -386,7 +399,7 @@ module SnipReference
         r7 = _nt_unquoted_words
         s5 << r7
         if r7
-          if input.index("'", index) == index
+          if has_terminal?("'", false, index)
             r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
             @index += 1
           else
@@ -400,20 +413,20 @@ module SnipReference
         r5 = instantiate_node(QuotedWord,input, i5...index, s5)
         r5.extend(QuotedWord1)
       else
-        self.index = i5
+        @index = i5
         r5 = nil
       end
       if r5
         r0 = r5
       else
-        self.index = i0
+        @index = i0
         r0 = nil
       end
     end
 
     node_cache[:quoted_word][start_index] = r0
 
-    return r0
+    r0
   end
 
   def _nt_unquoted_words
@@ -426,7 +439,7 @@ module SnipReference
 
     s0, i0 = [], index
     loop do
-      if input.index(Regexp.new('[a-zA-Z0-9_\\- ]'), index) == index
+      if has_terminal?('\G[a-zA-Z0-9_\\- ]', true, index)
         r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
@@ -439,7 +452,7 @@ module SnipReference
       end
     end
     if s0.empty?
-      self.index = i0
+      @index = i0
       r0 = nil
     else
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
@@ -447,7 +460,7 @@ module SnipReference
 
     node_cache[:unquoted_words][start_index] = r0
 
-    return r0
+    r0
   end
 
   def _nt_optional_spaces
@@ -460,7 +473,7 @@ module SnipReference
 
     s0, i0 = [], index
     loop do
-      if input.index(Regexp.new('[ ]'), index) == index
+      if has_terminal?('\G[ ]', true, index)
         r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
@@ -476,7 +489,7 @@ module SnipReference
 
     node_cache[:optional_spaces][start_index] = r0
 
-    return r0
+    r0
   end
 
   def _nt_spaces
@@ -489,7 +502,7 @@ module SnipReference
 
     s0, i0 = [], index
     loop do
-      if input.index(Regexp.new('[ ]'), index) == index
+      if has_terminal?('\G[ ]', true, index)
         r1 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
@@ -502,7 +515,7 @@ module SnipReference
       end
     end
     if s0.empty?
-      self.index = i0
+      @index = i0
       r0 = nil
     else
       r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
@@ -510,7 +523,7 @@ module SnipReference
 
     node_cache[:spaces][start_index] = r0
 
-    return r0
+    r0
   end
 
 end

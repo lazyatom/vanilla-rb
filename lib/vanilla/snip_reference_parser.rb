@@ -57,7 +57,7 @@ require 'vanilla/snip_reference'
 
 if __FILE__ == $0
 
-Treetop.load "snip_reference"
+Treetop.load "vanilla/snip_reference"
 require 'test/unit'
 
 class SnipReferenceParserTest < Test::Unit::TestCase
@@ -79,6 +79,8 @@ class SnipReferenceParserTest < Test::Unit::TestCase
     %|{snip."spaced attribute"}|            => {:snip => 'snip', :attribute => 'spaced attribute', :arguments => []},
     %|{"snip with spaces".attribute}|       => {:snip => 'snip with spaces', :attribute => 'attribute', :arguments => []},
     %|{snip.snip_attribute arg}|            => {:snip => 'snip', :attribute => 'snip_attribute', :arguments => ['arg']},
+    %|{snip arg with spaces}|               => {:snip => 'snip', :attribute => nil, :arguments => ['arg with spaces']},
+    %|{snip arg with spaces, another arg}|  => {:snip => 'snip', :attribute => nil, :arguments => ['arg with spaces', 'another arg']},
     # %|{snip key1:value1,key2:value2}| => {:snip => 'snip', :arguments => {:key1 => 'value1', :key2 => 'value2'}},
     # %|{snip key1:value1, key2:value2}| => {:snip => 'snip', :arguments => {:key}},
     # %|{snip key1: value1, key2: value2}|,
@@ -94,10 +96,11 @@ class SnipReferenceParserTest < Test::Unit::TestCase
   
   examples.each do |example, expected|
     define_method :"test_parsing_#{example}" do
-      tree = @parser.parse(example)
-      if tree
-        assert_equal expected[:snip], tree.snip
-        assert_equal expected[:arguments], tree.arguments
+      reference = @parser.parse(example)
+      if reference
+        assert_equal expected[:snip],      reference.snip
+        assert_equal expected[:attribute], reference.attribute
+        assert_equal expected[:arguments], reference.arguments
       else
         flunk "failed to parse: #{example}"
       end

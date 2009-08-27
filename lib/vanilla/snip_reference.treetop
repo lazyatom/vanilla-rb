@@ -13,7 +13,8 @@ grammar SnipReference
   end
 
   rule argument
-    word <NormalArgument>
+    unquoted_words <NormalArgument> /
+    quoted_word <NormalArgument>
   end
 
   rule argument_separator
