@@ -1,4 +1,4 @@
-require 'vanilla'
+require 'vanilla/app'
 
 app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
 use Rack::Session::Cookie, :key => 'vanilla.session',

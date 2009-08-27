@@ -1,7 +1,5 @@
 require 'vanilla/app'
-require 'treetop'
 require 'vanilla/snip_reference_parser'
-require 'vanilla/snip_reference'
 
 module Vanilla
   module Renderers
@@ -30,18 +28,22 @@ module Vanilla
       def include_snips(content)
         content.gsub(Vanilla::Renderers::Base.snip_regexp) do
           snip_tree = parse_snip_reference($1)
-          snip_name = snip_tree.snip
-          snip_attribute = snip_tree.attribute
-          snip_args = snip_tree.arguments
+          if snip_tree
+            snip_name = snip_tree.snip
+            snip_attribute = snip_tree.attribute
+            snip_args = snip_tree.arguments
           
-          # Render the snip or snip part with the given args, and the current
-          # context, but with the default renderer for that snip. We dispatch
-          # *back* out to the root Vanilla.render method to do this.
-          snip = Vanilla.snip(snip_name)
-          if snip
-            app.render(snip, snip_attribute, snip_args)
+            # Render the snip or snip part with the given args, and the current
+            # context, but with the default renderer for that snip. We dispatch
+            # *back* out to the root Vanilla.render method to do this.
+            snip = Vanilla.snip(snip_name)
+            if snip
+              app.render(snip, snip_attribute, snip_args)
+            else
+              app.render_missing_snip(snip_name)
+            end
           else
-            app.render_missing_snip(snip_name)
+            "malformed snip reference: #{$1.inspect}"
           end
         end
       end

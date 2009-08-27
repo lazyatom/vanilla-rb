@@ -1,5 +1,3 @@
-require 'treetop'
-
 module SnipReference
   module SnipCall
     def snip
@@ -52,6 +50,9 @@ module SnipReference
     end
   end
 end
+
+require 'treetop'
+require 'vanilla/snip_reference'
 
 
 if __FILE__ == $0

@@ -1,7 +1,3 @@
-require 'rubygems'
-
-gem 'soup', '>= 0.1.4'
-require 'soup'
 require 'vanilla/snip_handling'
 
 module Vanilla

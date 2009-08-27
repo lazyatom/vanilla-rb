@@ -1,3 +1,5 @@
+require 'soup'
+
 module Vanilla
   module SnipHandling
     class MissingSnipException < Exception; end
