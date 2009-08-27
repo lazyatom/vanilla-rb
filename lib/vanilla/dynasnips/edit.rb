@@ -52,7 +52,7 @@ class EditSnip < Dynasnip
       <dt><%= name %></dt>
       <dd><textarea name="<%= name %>" class="<%= name %>"><%=h value %></textarea></dd>
       <% end %>
-      <dt><input class="attribute_name" type="text"></input></dt>
+      <dt><input class="attribute_name" type="text"></dt>
       <dd><textarea></textarea></dd>
     </dl>
     <a href="#" id="add">Add</a>

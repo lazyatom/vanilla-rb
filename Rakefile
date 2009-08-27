@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'vanilla'
+load File.join(File.dirname(__FILE__), *%w[lib tasks vanilla.rake])
 
 require 'spec'
 require 'spec/rake/spectask'
@@ -35,7 +36,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w(--main README)
 
   # Add any extra files to include in the gem
-  s.files             = %w(config.example.yml config.ru Rakefile README) + Dir.glob("{spec,lib,bin}/**/*")
+  s.files             = %w(config.example.yml config.ru Rakefile README) + Dir.glob("{spec,lib,bin,public}/**/*")
   s.executables       = ['vanilla']
   s.require_paths     = ["lib"]
   
