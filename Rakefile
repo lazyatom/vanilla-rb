@@ -15,7 +15,7 @@ require "rubygems"
 require "rake/gempackagetask"
 require "rake/rdoctask"
 
-if Kernel.const_defined?(:Gem)
+if Object.const_defined?(:Gem)
   # This builds the actual gem. For details of what all these options
   # mean, and other ones you can add, check the documentation here:
   #
