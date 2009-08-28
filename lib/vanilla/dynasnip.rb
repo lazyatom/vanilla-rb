@@ -68,6 +68,8 @@ class Dynasnip < Vanilla::Renderers::Base
     snip
   end
   
+  attr_accessor :enclosing_snip
+  
   def method_missing(method, *args)
     if snip = Vanilla.snip(snip_name)
       snip.get_value(method)

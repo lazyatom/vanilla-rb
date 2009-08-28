@@ -143,7 +143,7 @@ Here's the tutorial (helpfully included from {link_to vanilla-rb-tutorial}).
 [2]: http://lazyatom.lighthouseapp.com/projects/11797-vanilla/tickets
 [3]: http://interblah.net/introducing-vanilla-rb
 EOS
-vanilla_rb.save
+vanilla_rb.
 
 vanilla = Snip.new(:name => 'vanilla', :render_as => "Markdown")
 vanilla.content = <<-EOS

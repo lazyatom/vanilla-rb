@@ -5,7 +5,7 @@ include ERB::Util
 
 module Vanilla::Renderers
   class Erb < Base
-    def prepare(snip, part=:content, args=[])
+    def prepare(snip, part=:content, args=[], enclosing_snip=snip)
       @snip = snip
     end
     

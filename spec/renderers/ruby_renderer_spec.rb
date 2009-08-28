@@ -39,4 +39,21 @@ describe Vanilla::Renderers::Ruby do
       Vanilla::Test.response_body_for("/restish_dyna?_method=post") == 'post called'
     end
   end
+  
+  describe "when knowing about enclosing snips" do
+    class Encloser < Dynasnip
+      def handle(*args)
+        "enclosing snip is #{enclosing_snip.name}"
+      end
+    end
+    
+    before(:each) do
+      @dyna = Encloser.persist!
+      create_snip(:name => "test", :content => "{encloser}")
+    end
+    
+    it "should know about the snip that called this dynasnip" do
+      Vanilla::Test.response_body_for("/test").should == 'enclosing snip is test'
+    end
+  end
 end

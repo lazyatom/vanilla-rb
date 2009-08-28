@@ -25,7 +25,7 @@ module Vanilla
       end
     
       # Default behaviour to include a snip's content
-      def include_snips(content)
+      def include_snips(content, enclosing_snip)
         content.gsub(Vanilla::Renderers::Base.snip_regexp) do
           snip_tree = parse_snip_reference($1)
           if snip_tree
@@ -38,7 +38,7 @@ module Vanilla
             # *back* out to the root Vanilla.render method to do this.
             snip = Vanilla.snip(snip_name)
             if snip
-              app.render(snip, snip_attribute, snip_args)
+              app.render(snip, snip_attribute, snip_args, enclosing_snip)
             else
               app.render_missing_snip(snip_name)
             end
@@ -54,15 +54,15 @@ module Vanilla
       end
       
       # Default rendering behaviour. Subclasses shouldn't really need to touch this.
-      def render(snip, part=:content, args=[])
-        prepare(snip, part, args)
+      def render(snip, part=:content, args=[], enclosing_snip=snip)
+        prepare(snip, part, args, enclosing_snip)
         processed_text = render_without_including_snips(snip, part)
-        include_snips(processed_text)
+        include_snips(processed_text, snip)
       end
       
       # Subclasses should override this to perform any actions required before
       # rendering
-      def prepare(snip, part, args)
+      def prepare(snip, part, args, enclosing_snip)
         # do nothing, by default
       end
       

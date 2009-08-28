@@ -45,9 +45,9 @@ module Vanilla
     # render a snip using either the renderer given, or the renderer
     # specified by the snip's "render_as" property, or Render::Base
     # if nothing else is given.
-    def render(snip, part=:content, args=[])
+    def render(snip, part=:content, args=[], enclosing_snip=snip)
       rendering(snip) do |renderer|
-        renderer.render(snip, part, args)
+        renderer.render(snip, part, args, enclosing_snip)
       end
     end
 

@@ -13,9 +13,10 @@ module Vanilla::Renderers
   # itself), it should be a subclass of Dynasnip (or define an initializer
   # that accepts the context as its first argument).
   class Ruby < Base
-    def prepare(snip, part=:content, args=[])
+    def prepare(snip, part=:content, args=[], enclosing_snip=snip)
       @args = args
       @snip = snip
+      @enclosing_snip = enclosing_snip
     end
     
     def process_text(content)
@@ -25,6 +26,7 @@ module Vanilla::Renderers
       else
         handler_klass.new
       end
+      instance.enclosing_snip = @enclosing_snip if instance.respond_to?(:enclosing_snip)
       if (method = app.request.method) && instance.respond_to?(method)
         instance.send(method, *@args).to_s
       else
