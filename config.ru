@@ -1,3 +1,4 @@
+$:.unshift File.join(File.dirname(__FILE__), *%w[lib])
 require 'vanilla/app'
 
 app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
