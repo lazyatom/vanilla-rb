@@ -145,7 +145,7 @@ Here's the tutorial (helpfully included from {link_to vanilla-rb-tutorial}).
 EOS
 vanilla_rb.save
 
-vanilla = Snip.new(:name => 'vanilla')
+vanilla = Snip.new(:name => 'vanilla', :render_as => "Markdown")
 vanilla.content = <<-EOS
 The bliki upon which {link_to vanilla-rb} is based, writen by [Christian Langreiter][1]
 
