@@ -1,4 +1,5 @@
-start = Snip.new(:name => 'start')
+app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
+start = app.snip(:name => 'start')
 start.content = <<-START
 Welcome to Vanilla.rb
 =============

@@ -5,7 +5,7 @@ require 'date'
 class Kind < Dynasnip
   def handle(kind, limit=10, as=:html)
     as = as.to_sym
-    snips = Soup.sieve(:kind => kind)
+    snips = app.soup.sieve(:kind => kind)
     entries = snips.sort_by { |s| s.created_at || '' }.reverse[0...limit.to_i].map do |snip|
       render_entry_in_template(snip, as, kind)
     end
@@ -28,7 +28,7 @@ class Kind < Dynasnip
         e.content = Atom::Content::Html.new(rendered_contents)
         e.title = snip.name
         e.authors = [Atom::Person.new(:name => snip.author || domain)]
-        e.links << Atom::Link.new(:href => "http://#{domain}#{Vanilla::Routes.url_to(snip.name)}")
+        e.links << Atom::Link.new(:href => "http://#{domain}#{url_to(snip.name)}")
         e.id = "tag:#{domain},#{(snip.created_at || Date.today.to_s).split[0]}:/#{snip.name}"
       end
     end
@@ -59,7 +59,7 @@ class Kind < Dynasnip
   attribute :snip_template, %{
     <div class="snip SNIP_KIND">
       <div class="details">
-        #{Vanilla::Routes.existing_link '#', 'SNIP_NAME'}
+        {link_to_current_snip}
         <p class="created_at">CREATED_AT</p>
       </div>
       <div class="content">

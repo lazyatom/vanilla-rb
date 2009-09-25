@@ -1,7 +1,8 @@
 module Vanilla
+  # Expects to be able to call 'soup' on whatever it is included into
   module Routes
     def link_to(link_text, snip_name=link_text, part=nil)
-      Vanilla.snip_exists?(snip_name) ? Vanilla::Routes.existing_link(link_text, snip_name, part) : Vanilla::Routes.new_link(snip_name)
+      soup[snip_name] ? existing_link(link_text, snip_name, part) : new_link(snip_name)
     end
 
     def url_to(snip_name, part=nil)
@@ -11,12 +12,12 @@ module Vanilla
     end
 
     def url_to_raw(snip_name, part=nil)
-      url = Vanilla::Routes.url_to(snip_name, part)
+      url = url_to(snip_name, part)
       url += ".raw"
     end
 
     def existing_link(link_text, snip_name=link_text, part=nil)
-      %{<a href="#{Vanilla::Routes.url_to(snip_name, part)}">#{link_text}</a>}
+      %{<a href="#{url_to(snip_name, part)}">#{link_text}</a>}
     end
 
     def edit_link(snip_name, link_text)
@@ -26,7 +27,5 @@ module Vanilla
     def new_link(snip_name="New")
       %[<a href="/new?name=#{snip_name ? snip_name.gsub(" ", "+") : nil}" class="new">#{snip_name}</a>]
     end
-
-    extend self
   end
 end

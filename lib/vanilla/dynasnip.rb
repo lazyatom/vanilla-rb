@@ -29,50 +29,16 @@ class Dynasnip < Vanilla::Renderers::Base
     attribute :usage, escape_curly_braces(str).strip
   end
   
-  def self.persist_all!(overwrite=false)
-    all.each do |dynasnip|
-      dynasnip.persist!(overwrite)
-    end
-  end
-  
-  def self.build_snip
-    Snip.new(snip_attributes)
-  end
-  
   def self.snip_attributes
     full_snip_attributes = {:name => snip_name, :content => self.name, :render_as => "Ruby"}
     @attributes ? full_snip_attributes.merge!(@attributes) : full_snip_attributes
   end
   
-  def self.persist!(overwrite=false)
-    if overwrite
-      snip = Soup[snip_name]
-      if snip
-        if snip.is_a?(Array)
-          snip.each { |s| s.destroy }
-        else
-          snip.destroy
-        end
-      end
-    end
-    snip = Soup[snip_name]
-    snip = snip[0] if snip.is_a?(Array)    
-    if snip
-      snip_attributes.each do |name, value|
-        snip.set_value(name, value)
-      end
-    else
-      snip = build_snip
-    end
-    snip.save
-    snip
-  end
-  
   attr_accessor :enclosing_snip
   
   def method_missing(method, *args)
-    if snip = Vanilla.snip(snip_name)
-      snip.get_value(method)
+    if snip
+      snip.__send__(method)
     elsif part = self.class.attribute(method)
       part
     else
@@ -90,7 +56,7 @@ class Dynasnip < Vanilla::Renderers::Base
   end
   
   def snip
-    Snip[snip_name]
+    app.soup[snip_name]
   end
   
   def show_usage

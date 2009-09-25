@@ -6,7 +6,7 @@ describe "when detecting the snip renderer" do
   end
 
   it "should return the constant refered to in the render_as property of the snip" do
-    snip = create_snip(:render_as => "Raw")
+    snip = create_snip(:name => "blah", :render_as => "Raw")
     @app.renderer_for(snip).should == Vanilla::Renderers::Raw
   end
 
@@ -21,7 +21,7 @@ describe "when detecting the snip renderer" do
   end
 
   it "should raise an error if the specified renderer doesn't exist" do
-    snip = create_snip(:render_as => "NonExistentClass")
+    snip = create_snip(:name => "blah", :render_as => "NonExistentClass")
     lambda { @app.renderer_for(snip) }.should raise_error
   end
 
@@ -29,7 +29,7 @@ describe "when detecting the snip renderer" do
     class ::MyRenderer
     end
   
-    snip = create_snip(:render_as => "MyRenderer")
+    snip = create_snip(:name => "blah", :render_as => "MyRenderer")
     @app.renderer_for(snip).should == MyRenderer      
   end
 end

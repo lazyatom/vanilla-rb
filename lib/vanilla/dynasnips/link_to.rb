@@ -9,6 +9,6 @@ The link_to dyna lets you create links between snips:
 would insert a link to the blah snip.|
 
   def handle(snip_name, link_text=snip_name, part=nil)
-    Vanilla::Routes.link_to(link_text, snip_name, part)
+    link_to(link_text, snip_name, part)
   end
 end

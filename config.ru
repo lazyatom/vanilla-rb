@@ -1,5 +1,5 @@
 $:.unshift File.join(File.dirname(__FILE__), *%w[lib])
-require 'vanilla/app'
+require 'vanilla'
 
 app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
 use Rack::Session::Cookie, :key => 'vanilla.session',

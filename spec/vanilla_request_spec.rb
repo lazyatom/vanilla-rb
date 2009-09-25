@@ -1,14 +1,14 @@
 require File.join(File.dirname(__FILE__), "spec_helper")
 
 describe Vanilla::Request, "when requesting urls" do
-  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip")) }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip"), @app) }
   
   it "should use the first segement as the snip name" do
     @request.snip_name.should == "snip"
   end
   
   it "should try to load the snip based on the snip name" do
-    Vanilla.should_receive(:snip).with('snip').and_return(:snip)
+    @app.soup.should_receive(:[]).with('snip').and_return(:snip)
     @request.snip.should == :snip
   end
   
@@ -26,7 +26,7 @@ describe Vanilla::Request, "when requesting urls" do
 end
 
 describe Vanilla::Request, "when requesting a snip part" do
-  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip/part")) }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip/part"), @app) }
   
   it "should use the first segment as the snip, and the second segment as the part" do
     @request.snip_name.should == "snip"
@@ -39,7 +39,7 @@ describe Vanilla::Request, "when requesting a snip part" do
 end
 
 describe Vanilla::Request, "when requesting a snip with a format" do
-  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip.raw")) }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip.raw"), @app) }
   
   it "should use the extension as the format" do
     @request.format.should == "raw"
@@ -51,7 +51,7 @@ describe Vanilla::Request, "when requesting a snip with a format" do
 end
 
 describe Vanilla::Request, "when requesting a snip part with a format" do
-  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip/part.raw")) }
+  before(:each) { @request = Vanilla::Request.new(mock_env_for_url("/snip/part.raw"), @app) }
   
   it "should use the extension as the format" do
     @request.format.should == "raw"
@@ -68,6 +68,6 @@ end
 
 describe Vanilla::Request, "when requested with a _method paramter" do
   it "should return the method using the parameter" do
-    Vanilla::Request.new(mock_env_for_url("/snip?_method=put")).method.should == 'put'
+    Vanilla::Request.new(mock_env_for_url("/snip?_method=put"), @app).method.should == 'put'
   end
 end

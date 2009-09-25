@@ -14,6 +14,6 @@ class ShowContentInPreTag < Dynasnip
   |
   
   def handle(snip_name, part=:content)
-    %{<pre>#{Vanilla.snip(snip_name).__send__(part || :content)}</pre>}
+    %{<pre>#{app.soup[snip_name].__send__(part || :content)}</pre>}
   end
 end

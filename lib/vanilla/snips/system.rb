@@ -1,4 +1,5 @@
-system = Snip.new(:name => "system")
+app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
+system = app.snip(:name => "system")
 system.content = "You're in the system snip now. You probably want to {edit_link system,edit} it though."
 
 system.main_template = <<-HTML
@@ -9,13 +10,13 @@ system.main_template = <<-HTML
   <title>{current_snip name}</title>
   <script language="javascript" src="/public/javascripts/jquery.js"></script>
   <script language="javascript" src="/public/javascripts/vanilla.js"></script>
-  <link rel="stylesheet" type="text/css" media="screen"  href="<%= Vanilla::Routes.url_to("system", "css.css") %>" />
+  <link rel="stylesheet" type="text/css" media="screen"  href="<%= url_to("system", "css.css") %>" />
 </head>
 <body>
   <div id="content">
     <div id="controls">
       <strong><a href="/">home</a></strong>, 
-      <%= Vanilla::Routes.new_link %> ::
+      <%= new_link %> ::
       <strong>{link_to_current_snip}</strong> &rarr; 
       {edit_link}
     </div>

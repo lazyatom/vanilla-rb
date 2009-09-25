@@ -7,22 +7,18 @@ require "rack/mock"
 module Vanilla
   module Test
     def setup_clean_environment
-      test_soup_config = { :database => File.join(File.dirname(__FILE__), "soup_test.db")}
-      FileUtils.rm(test_soup_config[:database]) if File.exist?(test_soup_config[:database])
-      Soup.base = test_soup_config
+      FileUtils.mkdir_p(File.dirname(test_config_file))
+      clear_soup
+      File.open(test_config_file, 'w') { |f| f.write({:soup => soup_path}.to_yaml) }
+      @app = Vanilla::App.new(test_config_file)
 
-      # TODO: this is hard-coded for the AR implementation
-      require "active_record"
-      ActiveRecord::Migration.verbose = false
-  
-      Soup.prepare
       require "vanilla/dynasnips/current_snip"
-      CurrentSnip.persist!
+      @app.soup << CurrentSnip.snip_attributes
       create_snip :name => "system", :main_template => "{current_snip}"
     end
     
     def response_for(url)
-      Vanilla::App.new.call(mock_env_for_url(url))
+      @app.call(mock_env_for_url(url))
     end
     
     def response_body_for(url)
@@ -34,13 +30,13 @@ module Vanilla
     end
     
     def set_main_template(template_content)
-      system = Vanilla.snip("system") || Snip.new(:name => "system")
+      system = @app.soup["system"] || Snip.new({:name => "system"}, @app.soup)
       system.main_template = template_content
       system.save
     end
     
     def create_snip(params)
-      s = Snip.new(params)
+      s = Snip.new(params, @app.soup)
       s.save
       s
     end
@@ -53,12 +49,22 @@ module Vanilla
       Rack::Request.new(mock_env_for_url(url))
     end
     
-    extend self
+    def test_config_file
+      File.join(File.dirname(__FILE__), "tmp", "config.yml")
+    end
+    
+    def soup_path
+      File.expand_path(File.join(File.dirname(__FILE__), "tmp", "soup"))
+    end
+    
+    def clear_soup
+      FileUtils.rm_rf(soup_path)
+    end
   end
 end
 
 Spec::Runner.configure do |config|
   config.include(Vanilla::Test)
-  config.before { Vanilla::Test.setup_clean_environment }
+  config.before { setup_clean_environment }
 end
 

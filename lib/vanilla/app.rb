@@ -1,19 +1,29 @@
-require 'vanilla'
 require 'vanilla/request'
+require 'vanilla/routes'
+
+# Require the base set of renderers
+require 'vanilla/renderers/base'
+require 'vanilla/renderers/raw'
+require 'vanilla/renderers/erb'
+
+# Require the data store
+require 'soup'
+
 
 module Vanilla
   class App
+    include Routes
     
-    attr_reader :request, :response, :config
+    attr_reader :request, :response, :config, :soup
     
     def initialize(config_file=nil)
       prepare_configuration(config_file)
-      Soup.prepare
+      @soup = Soup.new(config[:soup])
     end
     
     # Returns a Rack-appropriate 3-element array (via Rack::Response#finish)
     def call(env)
-      @request = Vanilla::Request.new(env)
+      @request = Vanilla::Request.new(env, self)
       @response = Rack::Response.new
 
       begin
@@ -32,7 +42,7 @@ module Vanilla
     def formatted_render(snip, part=nil, format=nil)
       case format
       when 'html', nil
-        Renderers::Erb.new(self).render(Vanilla.snip('system'), :main_template)
+        Renderers::Erb.new(self).render(soup['system'], :main_template)
       when 'raw', 'css', 'js'
         Renderers::Raw.new(self).render(snip, part || :content)
       when 'text', 'atom', 'xml'
@@ -71,6 +81,10 @@ module Vanilla
     # Other things can call this when a snip cannot be loaded.
     def render_missing_snip(snip_name)
       "[snip '#{snip_name}' cannot be found]"
+    end
+    
+    def snip(attributes)
+      Snip.new(attributes, soup)
     end
     
     private

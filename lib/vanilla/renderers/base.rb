@@ -4,6 +4,7 @@ require 'vanilla/snip_reference_parser'
 module Vanilla
   module Renderers
     class Base
+      include Routes
       
       # Render a snip.
       def self.render(snip, part=:content)
@@ -18,6 +19,11 @@ module Vanilla
     
       def initialize(app)
         @app = app
+      end
+      
+      # defined for the routes
+      def soup
+        @app.soup
       end
       
       def self.snip_regexp
@@ -36,7 +42,7 @@ module Vanilla
             # Render the snip or snip part with the given args, and the current
             # context, but with the default renderer for that snip. We dispatch
             # *back* out to the root Vanilla.render method to do this.
-            snip = Vanilla.snip(snip_name)
+            snip = soup[snip_name]
             if snip
               app.render(snip, snip_attribute, snip_args, enclosing_snip)
             else

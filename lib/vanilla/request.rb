@@ -6,8 +6,9 @@ module Vanilla
   class Request
     attr_reader :snip_name, :part, :format, :method
     
-    def initialize(env)
+    def initialize(env, app)
       @rack_request = Rack::Request.new(env)
+      @app = app
       determine_request_uri_parts
     end
 
@@ -19,7 +20,7 @@ module Vanilla
     # Returns the snip referenced by the request's URL. Performs no exception
     # handling, so if the snip does not exist, an exception will be thrown.
     def snip
-      Vanilla.snip(snip_name)
+      @app.soup[snip_name]
     end
     
     def cookies

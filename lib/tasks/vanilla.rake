@@ -12,20 +12,15 @@ namespace :vanilla do
     FileUtils.rm "soup.db" if File.exist?("soup.db")
   end
 
-  task :prepare do
-    Soup.prepare
-  end
-
-  task :load_snips => :prepare do  
-    Dynasnip.persist_all!(overwrite=true)
+  task :load_snips do
+    app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
+    Dynasnip.all.each { |ds| app.soup << ds.snip_attributes }
   
     Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '*.rb')].each do |f|
       load f
     end  
   
-    load File.join(File.dirname(__FILE__), *%w[.. vanilla test_snips.rb])
-  
-    puts "The soup is simmering. Loaded #{Soup.tuple_class.count} tuples"
+    puts "The soup is simmering."
   end
 
   desc 'Resets the soup to contain the base snips only. Dangerous!'
@@ -33,19 +28,20 @@ namespace :vanilla do
 
   namespace :upgrade do
     desc 'Upgrade the dynasnips'
-    task :dynasnips => :prepare do
+    task :dynasnips do
+      app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
       Dynasnip.all.each do |dynasnip|
         print "Upgrading #{dynasnip.snip_name}... "
         # TODO: our confused Soup interface might return an array.
-        snip = Soup[dynasnip.snip_name]
+        snip = app.soup[dynasnip.snip_name]
         if snip.empty? || snip.nil?
           # it's a new dyna
-          Soup << dynasnip.snip_attributes
+          app.soup << dynasnip.snip_attributes
           puts "(new)"
         elsif snip.created_at == snip.updated_at
           # it's not been changed, let's upgrade
           snip.destroy
-          Soup << dynasnip.snip_attributes
+          app.soup << dynasnip.snip_attributes
           puts "(unedited)"
         else
           # the dyna exists and has been changed

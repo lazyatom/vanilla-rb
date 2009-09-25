@@ -6,26 +6,23 @@ describe Dynasnip, "when storing attributes" do
     attribute :test_attribute, "test attribute content"
   end
   
-  before(:each) do
-    @fake_app = nil
-  end
-  
   it "should make the attribute available as an instance method" do
-    TestDyna.new(@fake_app).test_attribute.should == "test attribute content"
+    p TestDyna.new(@app).test_attribute
+    TestDyna.new(@app).test_attribute.should == "test attribute content"
   end
 
   it "should store the attribute in the soup" do
-    TestDyna.persist!
-    Soup['test_dyna'].test_attribute.should == "test attribute content"
+    @app.soup << TestDyna.snip_attributes
+    @app.soup['test_dyna'].test_attribute.should == "test attribute content"
   end
   
   it "should allow the attribute to be overriden by the soup contents" do
-    TestDyna.persist!
-    snip = Soup['test_dyna']
+    @app.soup << TestDyna.snip_attributes
+    snip = @app.soup['test_dyna']
     snip.test_attribute = "altered content"
     snip.save
     
-    TestDyna.new(@fake_app).test_attribute.should == "altered content"
+    TestDyna.new(@app).test_attribute.should == "altered content"
   end
   
 end

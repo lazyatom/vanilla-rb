@@ -9,11 +9,11 @@ describe Vanilla::Renderers::Ruby do
     end
 
     before(:each) do
-      @test_dyna = TestDyna.persist!
+      @app.soup << TestDyna.snip_attributes
     end
   
     it "should render the result of the handle method" do
-      Vanilla::Test.response_body_for("/test_dyna").should == 'handle called'
+      response_body_for("/test_dyna").should == 'handle called'
     end
   end
 
@@ -28,15 +28,15 @@ describe Vanilla::Renderers::Ruby do
     end
     
     before(:each) do
-      @dyna = RestishDyna.persist!
+      @app.soup << RestishDyna.snip_attributes
     end
   
     it "should render the result of the get method on GET requests" do
-      Vanilla::Test.response_body_for("/restish_dyna").should == 'get called'
+      response_body_for("/restish_dyna").should == 'get called'
     end
   
     it "should render the result of the post method on POST requests" do
-      Vanilla::Test.response_body_for("/restish_dyna?_method=post") == 'post called'
+      response_body_for("/restish_dyna?_method=post") == 'post called'
     end
   end
   
@@ -48,12 +48,12 @@ describe Vanilla::Renderers::Ruby do
     end
     
     before(:each) do
-      @dyna = Encloser.persist!
+      @app.soup << Encloser.snip_attributes
       create_snip(:name => "test", :content => "{encloser}")
     end
     
     it "should know about the snip that called this dynasnip" do
-      Vanilla::Test.response_body_for("/test").should == 'enclosing snip is test'
+      response_body_for("/test").should == 'enclosing snip is test'
     end
   end
 end

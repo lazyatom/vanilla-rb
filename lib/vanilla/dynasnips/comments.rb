@@ -16,20 +16,20 @@ class Comments < Dynasnip
   def get(snip_name=nil, disable_new_comments=false)
     snip_name = snip_name || app.request.params[:snip]
     return usage if self.class.snip_name == snip_name
-    comments = Soup.sieve(:commenting_on => snip_name)
+    comments = app.soup.sieve(:commenting_on => snip_name)
     comments_html = if app.request.snip_name == snip_name
       rendered_comments = render_comments(comments)
       rendered_comments += comment_form.gsub('SNIP_NAME', snip_name) unless disable_new_comments
       rendered_comments
     else
-     %{<a href="#{Vanilla::Routes.url_to(snip_name)}">#{comments.length} comments for #{snip_name}</a>}
+     %{<a href="#{url_to(snip_name)}">#{comments.length} comments for #{snip_name}</a>}
     end
     return comments_html
   end
   
   def post(*args)
     snip_name = app.request.params[:snip]
-    existing_comments = Soup.sieve(:commenting_on => snip_name)
+    existing_comments = app.soup.sieve(:commenting_on => snip_name)
     comment = app.request.params.reject { |k,v| ![:author, :email, :website, :content].include?(k) }
     
     return "You need to add some details!" if comment.empty?
@@ -40,7 +40,7 @@ class Comments < Dynasnip
       "Sorry - your comment looks like spam, according to Defensio :("
     else
       return "No spam today, thanks anyway" unless app.request.params[:human] == 'human'
-      Soup << comment.merge({
+      app.soup << comment.merge({
        :name => "#{snip_name}-comment-#{existing_comments.length + 1}", 
        :commenting_on => snip_name,
        :created_at => Time.now
@@ -65,7 +65,7 @@ class Comments < Dynasnip
   end
   
   def check_for_spam(comment)
-    snip_date = Date.parse(Soup[app.request.params[:snip]].updated_at)
+    snip_date = Date.parse(app.soup[app.request.params[:snip]].updated_at)
     Defensio.configure(app.config[:defensio])
     defensio_params = {
       :comment_author_email => comment[:email], 

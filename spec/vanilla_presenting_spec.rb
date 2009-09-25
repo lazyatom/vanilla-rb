@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), "spec_helper")
 
 describe Vanilla::App do  
   before(:each) do
-    LinkTo.persist!
+    @app.soup << LinkTo.snip_attributes
     set_main_template "<tag>{current_snip}</tag>"
     create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
     create_snip :name => "other_snip", :content => "blah!"
@@ -67,7 +67,7 @@ describe Vanilla::App do
   
   describe "when a missing snip is requested" do
     it "should render missing snip content in the main template" do
-      response_body_for("/missing_snip").should == "<tag>Couldn't find snip #{LinkTo.new(nil).handle("missing_snip")}</tag>"
+      response_body_for("/missing_snip").should == "<tag>Couldn't find snip #{LinkTo.new(@app).handle("missing_snip")}</tag>"
     end
     
     it "should have a 404 response code" do

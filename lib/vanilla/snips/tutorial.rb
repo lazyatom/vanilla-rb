@@ -1,4 +1,5 @@
-tutorial = Snip.new(:name => 'vanilla-rb-tutorial')
+app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
+tutorial = app.snip(:name => 'vanilla-rb-tutorial')
 tutorial.render_as = "Markdown"
 tutorial.content = <<-END_OF_TUTORIAL
 Basic Concepts
@@ -73,17 +74,17 @@ END_OF_TUTORIAL
 
 tutorial.save
 
-tutorial_basic_snip_inclusion = Snip.new(:name => 'tutorial-basic-snip-inclusion')
+tutorial_basic_snip_inclusion = app.snip(:name => 'tutorial-basic-snip-inclusion')
 tutorial_basic_snip_inclusion.content = <<-EOS
 This is a snip, which includes another {link_to snip}: {tutorial-another-snip}
 EOS
 tutorial_basic_snip_inclusion.save
 
-tutorial_another_snip = Snip.new(:name => 'tutorial-another-snip')
+tutorial_another_snip = app.snip(:name => 'tutorial-another-snip')
 tutorial_another_snip.content = "this is another snip!"
 tutorial_another_snip.save
 
-hello_world = Snip.new(:name => 'hello_world', :render_as => "Ruby")
+hello_world = app.snip(:name => 'hello_world', :render_as => "Ruby")
 hello_world.content = <<-END_OF_RUBY
 class HelloWorld
   # although the name doesn't need to match the snip name,
@@ -106,7 +107,7 @@ HelloWorld
 END_OF_RUBY
 hello_world.save
 
-snip = Snip.new(:name => 'snip', :render_as => "Markdown")
+snip = app.snip(:name => 'snip', :render_as => "Markdown")
 snip.content = <<-EOS
 A snip is the basic building block of information for {link_to vanilla-rb}. Essentially, it is a piece of content with arbitrary attributes. Vanilla anticipates the presence of some key attributes:
 
@@ -118,7 +119,7 @@ One implementation of the snip store is {link_to soup}.
 EOS
 snip.save
 
-soup = Snip.new(:name => 'soup')
+soup = app.snip(:name => 'soup')
 soup.content = <<-EOS
 Soup is a data store supporting the {link_to snip}-space that {link_to vanilla-rb} expects.
 
@@ -126,7 +127,7 @@ It's hosted on github <a href="http://github.com/lazyatom/soup">here</a>.
 EOS
 soup.save
 
-vanilla_rb = Snip.new(:name => 'vanilla-rb', :render_as => "Markdown")
+vanilla_rb = app.snip(:name => 'vanilla-rb', :render_as => "Markdown")
 vanilla_rb.content = <<-EOS
 Vanilla.rb is the software powering this site. It's a sort-of wiki/bliki thing, based on {link_to vanilla}.
 
@@ -143,9 +144,9 @@ Here's the tutorial (helpfully included from {link_to vanilla-rb-tutorial}).
 [2]: http://lazyatom.lighthouseapp.com/projects/11797-vanilla/tickets
 [3]: http://interblah.net/introducing-vanilla-rb
 EOS
-vanilla_rb.
+vanilla_rb.save
 
-vanilla = Snip.new(:name => 'vanilla', :render_as => "Markdown")
+vanilla = app.snip(:name => 'vanilla', :render_as => "Markdown")
 vanilla.content = <<-EOS
 The bliki upon which {link_to vanilla-rb} is based, writen by [Christian Langreiter][1]
 
@@ -155,3 +156,89 @@ The bliki upon which {link_to vanilla-rb} is based, writen by [Christian Langrei
 [2]: http://www.vanillasite.at
 EOS
 vanilla.save
+
+test = app.snip(:name => "test")
+test.content =<<EOF
+Linking is good: {link_to bold}
+Here's a bold snip: {bold}
+
+- Here's a random number between 5 and 15: {rand 5,15}
+- Here's a random number between 1 and 90 (the default min): {rand 90}
+- Here's a random number between 1 and 100 (the default range): {rand}
+
+And lets include some textile: 
+
+{textile_example}
+
+The source for that was 
+
+{pre textile_example}
+
+And lets include some markdown!: 
+
+{markdown_example}
+
+The source for that was 
+
+{pre markdown_example}
+
+How about some {link_to debug} information: {debug}
+
+What about a missing snip? Lets try to include one: {monkey}
+
+And an error when running? {bad_dynasnip}
+
+EOF
+test.render_as = "Markdown"
+test.save
+
+bold = app.snip(:name => "bold")
+bold.content =<<EOF
+Snip2 in da house!
+EOF
+bold.render_as = "Bold"
+bold.save
+
+textile = app.snip(:name => "textile_example")
+textile.content =<<EOF
+
+# testing lists
+# because lists are common things
+
+monkey
+
+what the *hell* are __you__ looking at?
+
+"Beyotch":http://example.com
+
+EOF
+textile.render_as = "Textile"
+textile.save
+
+textile = app.snip(:name => "markdown_example")
+textile.content =<<EOF
+
+# testing header
+
+so, how are you?
+
+- item one
+- item two
+- item three
+
+
+what the *hell* are looking at, [beyotch](http://example.com)?
+EOF
+textile.render_as = "Markdown"
+textile.save
+
+bad_dynasnip = app.snip(:name => "bad_dynasnip", :render_as => "Ruby")
+bad_dynasnip.content = <<EOF
+class BadDynasnip
+  def get(*args)
+    raise "Oh no"
+  end
+end
+BadDynasnip
+EOF
+bad_dynasnip.save

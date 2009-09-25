@@ -15,6 +15,6 @@ You can also give a custom piece of text for the link, like this:
   def handle(*args)
     snip_name = args[0] || app.request.snip_name
     link_text = args[1] || "Edit"
-    Vanilla::Routes.edit_link(snip_name, link_text)
+    edit_link(snip_name, link_text)
   end
 end

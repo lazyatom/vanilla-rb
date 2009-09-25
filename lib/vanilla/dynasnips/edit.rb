@@ -10,7 +10,7 @@ class EditSnip < Dynasnip
   
   def get(snip_name=nil)
     return login_required unless logged_in?
-    snip = Vanilla.snip(snip_name || app.request.params[:name])
+    snip = app.soup[snip_name || app.request.params[:name]]
     edit(snip)
   end
   
@@ -19,23 +19,23 @@ class EditSnip < Dynasnip
     snip_attributes = cleaned_params
     snip_attributes.delete(:save_button)
     return 'no params' if snip_attributes.empty?
-    snip = Vanilla.snip(snip_attributes[:name])
+    snip = app.soup[snip_attributes[:name]]
     snip_attributes[:updated_at] = Time.now
     snip_attributes.each do |name, value|
       snip.__send__(:set_value, name, value)
     end
     snip.save
-    %{Saved snip #{Vanilla::Routes.link_to snip_attributes[:name]} ok}
+    %{Saved snip #{link_to snip_attributes[:name]} ok}
   rescue Exception => e
     snip_attributes[:created_at] ||= Time.now
-    Soup << snip_attributes
-    %{Created snip #{Vanilla::Routes.link_to snip_attributes[:name]} ok}
+    app.soup << snip_attributes
+    %{Created snip #{link_to snip_attributes[:name]} ok}
   end
   
   def edit(snip)
     renderer = Vanilla::Renderers::Erb.new(app)
     renderer.instance_eval { @snip_to_edit = snip } # hacky!
-    snip_in_edit_template = renderer.render_without_including_snips(Vanilla.snip('edit'), :template)
+    snip_in_edit_template = renderer.render_without_including_snips(app.soup['edit'], :template)
     prevent_snip_inclusion(snip_in_edit_template)
   end
   
@@ -46,7 +46,7 @@ class EditSnip < Dynasnip
   end
   
   attribute :template, %{
-    <form action="<%= Vanilla::Routes.url_to 'edit' %>" method="post">
+    <form action="<%= url_to 'edit' %>" method="post">
     <dl class="attributes">
       <% @snip_to_edit.attributes.each do |name, value| %>
       <dt><%= name %></dt>
