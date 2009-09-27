@@ -19,7 +19,7 @@ class Kind < Dynasnip
       snip_template.
         gsub('SNIP_KIND', kind).
         gsub('SNIP_NAME', snip.name).
-        gsub('CREATED_AT', snip.created_at || '').
+        gsub('CREATED_AT', snip.created_at.to_s || '').
         gsub('SNIP_CONTENT', rendered_contents)
     when :xml
       Atom::Entry.new do |e|
