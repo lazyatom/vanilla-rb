@@ -20,14 +20,12 @@ class EditSnip < Dynasnip
     snip_attributes.delete(:save_button)
     return 'no params' if snip_attributes.empty?
     snip = app.soup[snip_attributes[:name]]
-    snip_attributes[:updated_at] = Time.now
     snip_attributes.each do |name, value|
       snip.__send__(:set_value, name, value)
     end
     snip.save
     %{Saved snip #{link_to snip_attributes[:name]} ok}
   rescue Exception => e
-    snip_attributes[:created_at] ||= Time.now
     app.soup << snip_attributes
     %{Created snip #{link_to snip_attributes[:name]} ok}
   end

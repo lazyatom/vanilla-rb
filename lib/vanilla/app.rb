@@ -1,13 +1,11 @@
 require 'vanilla/request'
 require 'vanilla/routes'
+require 'vanilla/soup_with_timestamps'
 
 # Require the base set of renderers
 require 'vanilla/renderers/base'
 require 'vanilla/renderers/raw'
 require 'vanilla/renderers/erb'
-
-# Require the data store
-require 'soup'
 
 
 module Vanilla
@@ -18,7 +16,7 @@ module Vanilla
     
     def initialize(config_file=nil)
       prepare_configuration(config_file)
-      @soup = Soup.new(config[:soup])
+      @soup = SoupWithTimestamps.new(config[:soup])
     end
     
     # Returns a Rack-appropriate 3-element array (via Rack::Response#finish)
@@ -84,7 +82,7 @@ module Vanilla
     end
     
     def snip(attributes)
-      Snip.new(attributes, soup)
+      @soup.new_snip(attributes)
     end
     
     private
