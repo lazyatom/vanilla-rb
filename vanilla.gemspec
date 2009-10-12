@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
+      s.add_runtime_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
@@ -36,6 +37,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
+      s.add_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_dependency(%q<rspec>, [">= 0"])
     end
   else
@@ -44,6 +46,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
+    s.add_dependency(%q<treetop>, [">= 1.4.1"])
     s.add_dependency(%q<rspec>, [">= 0"])
   end
 end
