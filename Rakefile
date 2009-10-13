@@ -25,7 +25,7 @@ if Object.const_defined?(:Gem)
 
     # Change these as appropriate
     s.name              = "vanilla"
-    s.version           = "1.9.10"
+    s.version           = "1.9.11"
     s.summary           = "A bliki-type web content thing."
     s.author            = "James Adam"
     s.email             = "james@lazyatom.com.com"
@@ -36,7 +36,7 @@ if Object.const_defined?(:Gem)
     s.rdoc_options      = %w(--main README)
 
     # Add any extra files to include in the gem
-    s.files             = %w(config.example.yml config.ru Rakefile README) + Dir.glob("{spec,lib,bin,public}/**/*")
+    s.files             = %w(config.example.yml config.ru Rakefile README README_FOR_APP) + Dir.glob("{spec,lib,bin,public}/**/*")
     s.executables       = ['vanilla']
     s.require_paths     = ["lib"]
 

@@ -14,13 +14,12 @@ namespace :vanilla do
 
   task :load_snips do
     app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
+    print "Preparing soup... "
     Dynasnip.all.each { |ds| app.soup << ds.snip_attributes }
-  
     Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '*.rb')].each do |f|
       load f
-    end  
-  
-    puts "The soup is simmering."
+    end
+    puts "the soup is simmering."
   end
 
   desc 'Resets the soup to contain the base snips only. Dangerous!'
@@ -88,6 +87,7 @@ namespace :vanilla do
 
   desc 'Generate file containing secret for cookie-based session storage'
   task :generate_secret do
+    print "Generating cookie secret... "
     # Adapted from old rails secret generator.
     require 'openssl'
     if !File.exist?("/dev/urandom")
@@ -104,12 +104,14 @@ namespace :vanilla do
     app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
     app.config[:secret] = secret
     app.config.save!
-    puts "Secret generated."
+    puts "done; cookies are twice baked. BIS-CUIT!"
   end
 
   desc 'Prepare standard files to run Vanilla'
   task :prepare_files do
     cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. config.ru])), 'config.ru'
+    cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. config.example.yml])), 'config.yml'
+    cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. README_FOR_APP])), 'README'
     cp_r File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. public])), 'public'
     mkdir 'tmp'
     File.open("Rakefile", "w") do |f|
@@ -127,47 +129,21 @@ EOF
   desc 'Prepare a new vanilla.rb installation'
   task :setup do
     puts <<-EOM
+____________________.c( Vanilla.rb )o._____________________
 
-  ===================~ Vanilla.rb ~====================
+Congratulations! You have elected to try out the weirdest web 
+thing ever. Lets get started.
 
-  Congratulations! You have elected to try out the weirdest web thing ever.
-  Lets get started. Firstly, I'm going to cook you some soup:
+EOM
+  Rake::Task['vanilla:prepare_files'].invoke
+  Rake::Task['vanilla:generate_secret'].invoke
+  Rake::Task['vanilla:load_snips'].invoke
 
+  puts <<-EOM
 
-  EOM
-    Rake::Task['vanilla:load_snips'].invoke
-  
-    puts <<-EOM
-  
-  Now I'm going to generate your configuration. This will be stored either in
-  'config.yml' in the current directory, or in the path you provide via the
-  environment variable VANILLA_CONFIG.  
+___________________.c( You Are Ready )o.___________________
 
-  Generating the secret for cookie-based session storage.
-  EOM
-    Rake::Task['vanilla:prepare_files'].invoke
-    Rake::Task['vanilla:generate_secret'].invoke
-  
-    puts <<-EOM
-
-
-  Now that we've got our broth, you'll want to add a user, so you can edit stuff.
-  Lets do that now:
-
-
-  EOM
-    Rake::Task['vanilla:add_user'].invoke
-    puts <<-EOM
-
-
-  OK! You're ready to go. To start vanilla.rb, you'll want to get it running under
-  a webserver that supports Rack. The easiest way to do this locally is via 'rackup':
-  
-    $ rackup
-  
-  Then go to http://localhost:9292
-
-  I'm going now, Goodbye!
+#{File.readlines('README')[0,16].join}
   EOM
   end
 end
