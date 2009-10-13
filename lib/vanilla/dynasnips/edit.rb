@@ -21,7 +21,7 @@ class EditSnip < Dynasnip
     return 'no params' if snip_attributes.empty?
     snip = app.soup[snip_attributes[:name]]
     snip_attributes.each do |name, value|
-      snip.__send__(:set_value, name, value)
+      snip.__send__("#{name}=", value)
     end
     snip.save
     %{Saved snip #{link_to snip_attributes[:name]} ok}
