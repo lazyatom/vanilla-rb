@@ -29,7 +29,7 @@ class Kind < Dynasnip
         e.title = snip.name
         e.authors = [Atom::Person.new(:name => snip.author || domain)]
         e.links << Atom::Link.new(:href => "http://#{domain}#{url_to(snip.name)}")
-        e.id = "tag:#{domain},#{(snip.created_at || Date.today.to_s).split[0]}:/#{snip.name}"
+        e.id = "tag:#{domain},#{(snip.created_at.to_s || Date.today.to_s).split[0]}:/#{snip.name}"
       end
     end
   end
@@ -47,7 +47,7 @@ class Kind < Dynasnip
     when :xml
       Atom::Feed.new do |f|
         f.title = feed_title
-        f.updated = DateTime.parse(snips[0].updated_at)
+        f.updated = snips[0].updated_at
         f.id = "tag:#{domain},2008-06-01:kind/#{kind}"
         f.entries = entries
       end.to_xml
