@@ -9,6 +9,7 @@ system.main_template = <<-HTML
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title>{current_snip name}</title>
   <script language="javascript" src="/public/javascripts/jquery.js"></script>
+  <script language="javascript" src="/public/javascripts/jquery.autogrow-textarea.js"></script>
   <script language="javascript" src="/public/javascripts/vanilla.js"></script>
   <link rel="stylesheet" type="text/css" media="screen"  href="<%= url_to("system", "css.css") %>" />
 </head>
