@@ -1,4 +1,5 @@
 require 'warden'
+require 'md5'
 
 module Vanilla
   module Authentication

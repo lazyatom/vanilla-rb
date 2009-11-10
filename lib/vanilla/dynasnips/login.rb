@@ -1,6 +1,4 @@
 require 'vanilla/dynasnip'
-require 'yaml'
-require 'md5'
 
 class Login < Dynasnip
   def get(*args)
