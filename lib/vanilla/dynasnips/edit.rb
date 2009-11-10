@@ -1,5 +1,4 @@
 require 'vanilla/dynasnip'
-require 'vanilla/dynasnips/login'
 
 # The edit dyna will load the snip given in the 'snip_to_edit' part of the
 # params

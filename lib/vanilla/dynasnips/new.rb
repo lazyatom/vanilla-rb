@@ -1,5 +1,4 @@
 require 'vanilla/dynasnip'
-require 'vanilla/dynasnips/login'
 
 class NewSnip < Dynasnip
   snip_name :new
