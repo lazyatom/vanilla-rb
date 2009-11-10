@@ -3,43 +3,27 @@ require 'yaml'
 require 'md5'
 
 class Login < Dynasnip
-  module Helper
-    def logged_in?
-      !current_user.nil?
-    end
-    
-    def current_user
-      app.request.session['logged_in_as']
-    end
-  
-    def login_required
-      "You need to <a href='/login'>login</a> to do that."
-    end
-  end
-  include Helper
-  
   def get(*args)
-    if logged_in?
+    if app.request.authenticated?
       login_controls
     else
       render(self, 'template')
     end
   end
-  
+
   def post(*args)
-    if app.config[:credentials][cleaned_params[:name]] == MD5.md5(cleaned_params[:password]).to_s
-      app.request.session['logged_in_as'] = cleaned_params[:name]
+    if app.request.authenticate!
       login_controls
     else
       "login fail!"
     end
   end
-  
+
   def delete(*args)
-    app.request.session['logged_in_as'] = nil
+    app.request.logout
     "Logged out"
   end
-  
+
   attribute :template, <<-EHTML
     <form action='/login' method='post'>
     <label>Name: <input type="text" name="name"></input></label>
@@ -47,10 +31,10 @@ class Login < Dynasnip
     <button>login</button>
     </form>
   EHTML
-  
+
   private
-  
+
   def login_controls
-    "logged in as {link_to #{app.request.session['logged_in_as']}}; <a href='/login?_method=delete'>logout</a>"
+    "logged in as #{link_to app.request.user}; <a href='/login?_method=delete'>logout</a>"
   end
 end
