@@ -12,7 +12,7 @@ require 'vanilla/authentication/warden'
 app.authenticator = Vanilla::Authentication::Warden.new(app)
 use Warden::Manager do |manager|
   manager.default_strategies :vanilla
-  manager.failure_app = lambda{|e| [401, {"Content-Type" => "text/plain"}, ["Fail App"]]}
+  manager.failure_app = Vanilla::Authentication::Warden::FailApp.new
 end
 
 use Rack::Static, :urls => ["/public"], :root => File.join(File.dirname(__FILE__))

@@ -2,8 +2,6 @@ require 'vanilla/dynasnip'
 require 'vanilla/dynasnips/login'
 
 class NewSnip < Dynasnip
-  # include Login::Helper
-
   snip_name :new
 
   def handle(*arg)

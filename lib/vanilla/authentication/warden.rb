@@ -32,10 +32,25 @@ module Vanilla
 
         def authenticate!
           if env['vanilla.app'].config[:credentials][params["name"]] == MD5.md5(params["password"]).to_s
+            # clear these so they don't interfere with the request
+            env['vanilla.app'].request.params.delete(:name)
+            env['vanilla.app'].request.params.delete(:password)
             success!(params["name"])
           else
-            redirect!("/login")
+            fail! "Sorry, you couldn't be logged in with those details"
           end
+        end
+      end
+
+      class FailApp
+        def call(env)
+          [401, {"Content-Type" => "text/html"}, [login_form(env)]]
+        end
+
+        private
+
+        def login_form(env)
+          env['vanilla.app'].soup["system"].login_template.gsub("MESSAGE", env['warden'].message)
         end
       end
     end

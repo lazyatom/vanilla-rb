@@ -27,6 +27,20 @@ system.main_template = <<-HTML
 </html>
 HTML
 
+system.login_template = <<-HTML
+<html>
+  <head><link rel="stylesheet" type="text/css" media="screen" href="/system/css.css" /></head>
+  <body id="login">
+    <form action='' method='post'>
+      <h1>Login</h1><p class="message">MESSAGE</p>
+      <label>Name: <input type="text" name="name"></input></label>
+      <label>Password: <input type="password" name="password"></input></label>
+      <button>login</button>
+    </form>
+  </body>
+</html>
+HTML
+
 system.css = <<-CSS
 body {
   font-family: Helvetica;
