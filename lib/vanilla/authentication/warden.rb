@@ -50,7 +50,7 @@ module Vanilla
         private
 
         def login_form(env)
-          env['vanilla.app'].soup["system"].login_template.gsub("MESSAGE", env['warden'].message)
+          env['vanilla.app'].soup["system"].login_template.gsub("MESSAGE", env['warden'].message || "Please log in")
         end
       end
     end
