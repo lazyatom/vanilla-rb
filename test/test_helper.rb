@@ -1,6 +1,9 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+require "rubygems"
 require "vanilla"
-require "spec"
+require "test/unit"
+require "shoulda"
+require "mocha"
 require "fileutils"
 require "rack/mock"
 
@@ -27,6 +30,10 @@ module Vanilla
     
     def response_code_for(url)
       response_for(url)[0]
+    end
+    
+    def assert_response_body(expected, uri)
+      assert_equal expected, response_body_for(uri)
     end
     
     def set_main_template(template_content)
@@ -63,8 +70,10 @@ module Vanilla
   end
 end
 
-Spec::Runner.configure do |config|
-  config.include(Vanilla::Test)
-  config.before { setup_clean_environment }
-end
+class Vanilla::TestCase < Test::Unit::TestCase
+  include Vanilla::Test
 
+  def setup
+    setup_clean_environment
+  end
+end

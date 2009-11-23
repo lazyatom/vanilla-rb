@@ -2,14 +2,14 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'vanilla'
 load File.join(File.dirname(__FILE__), *%w[lib tasks vanilla.rake])
 
-require 'spec'
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = %w(--format specdoc --colour)
-  t.libs = ["spec"]
-end
+task :default => :test
 
-task :default => :spec
+require "rake/testtask"
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.test_files = FileList["test/**/*_test.rb"]
+  t.verbose = true
+end
 
 require "rubygems"
 require "rake/gempackagetask"
@@ -25,7 +25,7 @@ if Object.const_defined?(:Gem)
 
     # Change these as appropriate
     s.name              = "vanilla"
-    s.version           = "1.9.13.2"
+    s.version           = "1.9.13.3"
     s.summary           = "A bliki-type web content thing."
     s.author            = "James Adam"
     s.email             = "james@lazyatom.com.com"
@@ -36,7 +36,7 @@ if Object.const_defined?(:Gem)
     s.rdoc_options      = %w(--main README)
 
     # Add any extra files to include in the gem
-    s.files             = %w(config.example.yml config.ru Rakefile README README_FOR_APP) + Dir.glob("{spec,lib,bin,public}/**/*")
+    s.files             = %w(config.example.yml config.ru Rakefile README README_FOR_APP) + Dir.glob("{test,lib,bin,public}/**/*")
     s.executables       = ['vanilla']
     s.require_paths     = ["lib"]
 
@@ -49,7 +49,8 @@ if Object.const_defined?(:Gem)
     s.add_dependency("treetop", ">= 1.4.1")
     s.add_dependency("warden", ">= 0.5.2")
 
-    s.add_development_dependency("rspec") # add any other gems for testing/development
+    s.add_development_dependency("shoulda") # add any other gems for testing/development
+    s.add_development_dependency("mocha")
 
     # If you want to publish automatically to rubyforge, you'll may need
     # to tweak this, and the publishing task below too.
