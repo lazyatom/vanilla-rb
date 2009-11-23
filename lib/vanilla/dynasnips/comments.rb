@@ -52,7 +52,7 @@ class Comments < Dynasnip
   def render_comments(comments)
     "<h2>Comments</h2><ol class='comments'>" + comments.map do |comment|
       rendered_comment = comment_template.gsub('COMMENT_CONTENT', app.render(comment)).
-                                          gsub('COMMENT_DATE', comment.created_at)
+                                          gsub('COMMENT_DATE', comment.created_at.to_s)
       author = comment.author
       author = "Anonymous" unless author && author != ""
       if comment.website && comment.website != ""
