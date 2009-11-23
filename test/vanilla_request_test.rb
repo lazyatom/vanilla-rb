@@ -1,6 +1,29 @@
 require File.join(File.dirname(__FILE__), "test_helper")
 
 class VanillaRequestTest < Vanilla::TestCase
+  context "when requesting the root" do
+    setup { @request = Vanilla::Request.new(mock_env_for_url("/"), @app) }
+
+    should "set snip to 'start' by default" do
+      assert_equal "start", @request.snip_name
+    end
+
+    should "set format to 'html'" do
+      assert_equal "html", @request.format
+    end
+
+    context "with a start snip configuration set" do
+      setup do
+        test_config(:root_snip => "custom")
+        @app = Vanilla::App.new(test_config_file)
+      end
+
+      should "use specified snip as default" do
+        assert_equal "custom", Vanilla::Request.new(mock_env_for_url("/"), @app).snip_name
+      end
+    end
+  end
+
   context "when requesting urls" do
     setup { @request = Vanilla::Request.new(mock_env_for_url("/snip"), @app) }
 
@@ -67,7 +90,7 @@ class VanillaRequestTest < Vanilla::TestCase
     end
   end
 
-  context "when requested with a _method paramter" do
+  context "when requested with a _method parameter" do
     should "return the method using the parameter" do
       assert_equal 'put', Vanilla::Request.new(mock_env_for_url("/snip?_method=put"), @app).method
     end
