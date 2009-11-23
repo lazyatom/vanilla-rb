@@ -9,6 +9,7 @@ module Vanilla
     
     def <<(attributes)
       attributes[:created_at] ||= Time.now
+      attributes[:created_at] = Time.parse(attributes[:created_at]) if attributes[:created_at].is_a?(String)
       attributes[:updated_at] = Time.now
       super
     end
