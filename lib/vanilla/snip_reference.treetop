@@ -23,9 +23,14 @@ grammar SnipReference
   end
 
   rule hash_argument
-    word_or_symbol optional_spaces "=>" optional_spaces word
+    word_or_symbol optional_spaces hash_argument_separator optional_spaces word
   end
-  
+
+  rule hash_argument_separator
+    "=>" /
+    ":"
+  end
+
   rule word_or_symbol
    [:]? word
   end
