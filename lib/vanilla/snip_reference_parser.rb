@@ -40,8 +40,19 @@ module SnipReference
   module ArgumentList
     def to_arguments
       args = elements[0].to_arguments
-      args << elements[1].elements[1].to_arguments if elements[1].elements
+      if args.is_a?(Array)
+        args << elements[1].elements[1].to_arguments if elements[1].elements
+      elsif args.is_a?(Hash)
+        args.merge!(elements[1].elements[1].to_arguments) if elements[1].elements
+      end
       args
+    end
+  end
+  module HashArgument
+    def to_arguments
+      key = elements[0].text_value
+      key = $1 if key =~ /\A:(.*)\Z/
+      {key.to_sym => elements[4].text_value}
     end
   end
   module NormalArgument
@@ -53,59 +64,3 @@ end
 
 require 'treetop'
 require 'vanilla/snip_reference'
-
-
-if __FILE__ == $0
-
-Treetop.load "vanilla/snip_reference"
-require 'test/unit'
-
-class SnipReferenceParserTest < Test::Unit::TestCase
-  examples = {
-    %|{snip}|                               => {:snip => 'snip', :attribute => nil, :arguments => []},
-    %|{snip argument}|                      => {:snip => 'snip', :attribute => nil, :arguments => ["argument"]},
-    %|{"snip with spaces"}|                 => {:snip => 'snip with spaces', :attribute => nil, :arguments => []},
-    %|{snip-with-dashes}|                   => {:snip => 'snip-with-dashes', :attribute => nil, :arguments => []},
-    %|{snip_with_underscores}|              => {:snip => 'snip_with_underscores', :attribute => nil, :arguments => []},
-    %|{"snip with spaces" argument}|        => {:snip => 'snip with spaces', :attribute => nil, :arguments => ['argument']},
-    %|{'snip with spaces' argument}|        => {:snip => 'snip with spaces', :attribute => nil, :arguments => ['argument']},
-    %|{snip "argument with spaces"}|        => {:snip => 'snip', :attribute => nil, :arguments => ['argument with spaces']},
-    %|{snip 'argument with spaces'}|        => {:snip => 'snip', :attribute => nil, :arguments => ['argument with spaces']},
-    %|{snip arg1,arg2}|                     => {:snip => 'snip', :attribute => nil, :arguments => ['arg1', 'arg2']},
-    %|{snip arg1, arg2}|                    => {:snip => 'snip', :attribute => nil, :arguments => ['arg1', 'arg2']},
-    %|{snip "argument with spaces", arg2}|  => {:snip => 'snip', :attribute => nil, :arguments => ['argument with spaces', 'arg2']},
-    %|{"snip with spaces" arg1, arg2}|      => {:snip => 'snip with spaces', :attribute => nil, :arguments => ['arg1', 'arg2']},
-    %|{snip.snip_attribute}|                => {:snip => 'snip', :attribute => 'snip_attribute', :arguments => []},
-    %|{snip."spaced attribute"}|            => {:snip => 'snip', :attribute => 'spaced attribute', :arguments => []},
-    %|{"snip with spaces".attribute}|       => {:snip => 'snip with spaces', :attribute => 'attribute', :arguments => []},
-    %|{snip.snip_attribute arg}|            => {:snip => 'snip', :attribute => 'snip_attribute', :arguments => ['arg']},
-    %|{snip arg with spaces}|               => {:snip => 'snip', :attribute => nil, :arguments => ['arg with spaces']},
-    %|{snip arg with spaces, another arg}|  => {:snip => 'snip', :attribute => nil, :arguments => ['arg with spaces', 'another arg']},
-    # %|{snip key1:value1,key2:value2}| => {:snip => 'snip', :arguments => {:key1 => 'value1', :key2 => 'value2'}},
-    # %|{snip key1:value1, key2:value2}| => {:snip => 'snip', :arguments => {:key}},
-    # %|{snip key1: value1, key2: value2}|,
-    # %|{snip key1 => value1, key2 => value2}|,
-    # %|{snip :key1 => value1, :key2 => value2}|,
-    # %|{snip key1:"value with spaces"}|,
-    # %|{snip key1 => "value with spaces"}|   => {:snip => 'snip', :arguments => {:key1 => "value with spaces"}}
-  }
-  
-  def setup
-    @parser = SnipReferenceParser.new
-  end
-  
-  examples.each do |example, expected|
-    define_method :"test_parsing_#{example}" do
-      reference = @parser.parse(example)
-      if reference
-        assert_equal expected[:snip],      reference.snip
-        assert_equal expected[:attribute], reference.attribute
-        assert_equal expected[:arguments], reference.arguments
-      else
-        flunk "failed to parse: #{example}"
-      end
-    end
-  end
-end
-
-end
