@@ -6,23 +6,22 @@ class Comments < Dynasnip
   usage %|
     Embed comments within snips!
     
-    {comments <snip-name>}
+    {comments <false>}
     
     This will embed a list of comments, and a comment form, in a snip
     If the snip is being rendered within another snip, it will show a link to the snip,
-    with the number of comments.
+    with the number of comments. Add a parameter to disable new comments.
   |
 
-  def get(snip_name=nil, disable_new_comments=false)
-    snip_name = snip_name || app.request.params[:snip]
-    return usage if self.class.snip_name == snip_name
-    comments = app.soup.sieve(:commenting_on => snip_name)
-    comments_html = if app.request.snip_name == snip_name
+  def get(disable_new_comments=false)
+    return usage if self.class.snip_name == app.request.snip_name
+    comments = app.soup.sieve(:commenting_on => enclosing_snip.name)
+    comments_html = if app.request.snip_name == enclosing_snip.name
       rendered_comments = render_comments(comments)
-      rendered_comments += comment_form.gsub('SNIP_NAME', snip_name) unless disable_new_comments
+      rendered_comments += comment_form.gsub('SNIP_NAME', enclosing_snip.name) unless disable_new_comments
       rendered_comments
     else
-     %{<a href="#{url_to(snip_name)}">#{comments.length} comments for #{snip_name}</a>}
+     %{<a href="#{url_to(enclosing_snip.name)}">#{comments.length} comments for #{enclosing_snip.name}</a>}
     end
     return comments_html
   end
