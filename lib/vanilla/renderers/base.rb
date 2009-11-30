@@ -27,7 +27,7 @@ module Vanilla
       end
       
       def self.snip_regexp
-        %r{(\{[^\}.]+\})}
+        %r{(\{[\w\-_\d]+(\s+[^\}.]+)?\})}
       end
     
       # Default behaviour to include a snip's content
