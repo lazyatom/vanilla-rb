@@ -8,9 +8,9 @@ system.main_template = <<-HTML
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title>{current_snip name}</title>
-  <script language="javascript" src="/public/javascripts/jquery.js"></script>
-  <script language="javascript" src="/public/javascripts/jquery.autogrow-textarea.js"></script>
-  <script language="javascript" src="/public/javascripts/vanilla.js"></script>
+  <script language="javascript" src="/javascripts/jquery.js"></script>
+  <script language="javascript" src="/javascripts/jquery.autogrow-textarea.js"></script>
+  <script language="javascript" src="/javascripts/vanilla.js"></script>
   <link rel="stylesheet" type="text/css" media="screen"  href="<%= url_to("system", "css.css") %>" />
 </head>
 <body>
@@ -33,8 +33,8 @@ system.login_template = <<-HTML
   <body id="login">
     <form action='' method='post'>
       <h1>Login</h1><p class="message">MESSAGE</p>
-      <label>Name: <input type="text" name="name"></input></label>
-      <label>Password: <input type="password" name="password"></input></label>
+      <label>Name: <input type="text" name="login[username]"></input></label>
+      <label>Password: <input type="password" name="login[password]"></input></label>
       <button>login</button>
     </form>
   </body>
