@@ -1,7 +1,7 @@
 require 'vanilla/request'
 require 'vanilla/authentication'
 require 'vanilla/routes'
-require 'vanilla/soup_with_timestamps'
+require 'vanilla/soup/timestamp_backend'
 
 # Require the base set of renderers
 require 'vanilla/renderers/base'
@@ -18,7 +18,7 @@ module Vanilla
 
     def initialize(config_file=nil)
       prepare_configuration(config_file)
-      @soup = SoupWithTimestamps.new(config[:soup])
+      @soup = prepare_soup(config)
       @authenticator = Vanilla::Authentication::Base.new(self)
     end
 
@@ -97,6 +97,15 @@ module Vanilla
       @config[:filename] = config_file
       def @config.save!
         File.open(self[:filename], 'w') { |f| f.puts self.to_yaml }
+      end
+    end
+
+    def prepare_soup(config)
+      if config[:soups]
+        backends = [config[:soups]].flatten.map { |path| Vanilla::Soup::TimestampBackend.new(::Soup::Backends::YAMLBackend.new(path)) }
+        ::Soup.new(::Soup::Backends::MultiSoup.new(*backends))
+      else
+        ::Soup.new(Vanilla::Soup::TimestampBackend.new(::Soup::Backends::YAMLBackend.new(config[:soup])))
       end
     end
   end

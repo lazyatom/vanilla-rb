@@ -1,5 +1,7 @@
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
-require 'vanilla'
+require "rubygems"
+require "rake/gempackagetask"
+require "rake/rdoctask"
+
 load File.join(File.dirname(__FILE__), *%w[lib tasks vanilla.rake])
 
 task :default => :test
@@ -7,13 +9,10 @@ task :default => :test
 require "rake/testtask"
 Rake::TestTask.new do |t|
   t.libs << "test"
+  t.ruby_opts << "-rubygems"
   t.test_files = FileList["test/**/*_test.rb"]
   t.verbose = true
 end
-
-require "rubygems"
-require "rake/gempackagetask"
-require "rake/rdoctask"
 
 if Object.const_defined?(:Gem)
   # This builds the actual gem. For details of what all these options
@@ -25,7 +24,7 @@ if Object.const_defined?(:Gem)
 
     # Change these as appropriate
     s.name              = "vanilla"
-    s.version           = "1.9.17"
+    s.version           = "1.10.0"
     s.summary           = "A bliki-type web content thing."
     s.author            = "James Adam"
     s.email             = "james@lazyatom.com.com"
@@ -42,7 +41,7 @@ if Object.const_defined?(:Gem)
 
     # All the other gems we need.
     s.add_dependency("rack", ">= 0.9.1")
-    s.add_dependency("soup", ">= 0.9.9")
+    s.add_dependency("soup", ">= 0.9.10")
     s.add_dependency("ratom", ">= 0.3.5")
     s.add_dependency("RedCloth", ">= 4.1.1")
     s.add_dependency("BlueCloth", ">= 1.0.0")

@@ -1,22 +1,26 @@
 require 'soup'
-require 'delegate'
 
 module Vanilla
-  class SoupWithTimestamps < DelegateClass(Soup)
-    def initialize(config)
-      super(Soup.new(config))
-    end
-    
-    def <<(attributes)
-      attributes[:created_at] ||= Time.now
-      attributes[:created_at] = Time.parse(attributes[:created_at]) if attributes[:created_at].is_a?(String)
-      attributes[:updated_at] = Time.now
-      super
-    end
-    
-    def new_snip(attributes)
-      Snip.new(attributes, self)
+  module Soup
+    class TimestampBackend
+      def initialize(backend)
+        @backend = backend
+      end
+
+      def prepare
+        @backend.prepare
+      end
+
+      def save_snip(attributes)
+        attributes[:created_at] ||= Time.now
+        attributes[:created_at] = Time.parse(attributes[:created_at]) if attributes[:created_at].is_a?(String)
+        attributes[:updated_at] = Time.now
+        backend.save_snip(attributes)
+      end
+
+      def method_missing(*args)
+        @backend.__send__(*args)
+      end
     end
   end
 end
-    
