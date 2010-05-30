@@ -1,11 +1,8 @@
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
-require "rubygems"
-require "vanilla"
-require "test/unit"
 require "shoulda"
 require "mocha"
 require "fileutils"
 require "rack/mock"
+require "vanilla"
 
 module Vanilla
   module Test

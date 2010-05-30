@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), *%w[test_helper])
+require "test_helper"
 Treetop.load File.join(File.dirname(__FILE__), *%w[.. lib vanilla snip_reference])
 
 class SnipReferenceParserTest < Test::Unit::TestCase
