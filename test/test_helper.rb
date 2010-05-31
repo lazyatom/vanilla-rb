@@ -34,15 +34,13 @@ module Vanilla
     end
 
     def set_main_template(template_content)
-      system = @app.soup["system"] || Snip.new({:name => "system"}, @app.soup)
+      system = @app.soup["system"] || Soup::Snip.new({:name => "system"}, @app.soup)
       system.main_template = template_content
       system.save
     end
 
     def create_snip(params)
-      s = Snip.new(params, @app.soup)
-      s.save
-      s
+      @app.soup << params
     end
 
     def mock_env_for_url(url)

@@ -7,6 +7,6 @@ class NewSnip < Dynasnip
     app.request.authenticate!
 
     base_params = {:render_as => '', :content => '', :author => current_user}.update(app.request.params)
-    editor = EditSnip.new(app).edit(Snip.new(base_params))
+    editor = EditSnip.new(app).edit(Soup::Snip.new(base_params))
   end
 end
