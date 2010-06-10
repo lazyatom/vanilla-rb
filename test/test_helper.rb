@@ -30,7 +30,7 @@ module Vanilla
     end
 
     def assert_response_body(expected, uri)
-      assert_equal expected, response_body_for(uri)
+      assert_equal expected.strip, response_body_for(uri).strip
     end
 
     def set_main_template(template_content)

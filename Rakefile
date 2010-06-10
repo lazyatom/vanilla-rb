@@ -24,7 +24,7 @@ if Object.const_defined?(:Gem)
 
     # Change these as appropriate
     s.name              = "vanilla"
-    s.version           = "1.10.0"
+    s.version           = "1.11.0"
     s.summary           = "A bliki-type web content thing."
     s.author            = "James Adam"
     s.email             = "james@lazyatom.com.com"
@@ -50,6 +50,7 @@ if Object.const_defined?(:Gem)
 
     s.add_development_dependency("shoulda") # add any other gems for testing/development
     s.add_development_dependency("mocha")
+    s.add_development_dependency("haml")
 
     # If you want to publish automatically to rubyforge, you'll may need
     # to tweak this, and the publishing task below too.
