@@ -14,8 +14,8 @@ class VanillaRequestTest < Vanilla::TestCase
 
     context "with a start snip configuration set" do
       setup do
-        test_config(:root_snip => "custom")
-        @app = Vanilla::App.new(test_config_file)
+        config_for_tests(:root_snip => "custom")
+        @app = Vanilla::App.new(config_file_for_tests)
       end
 
       should "use specified snip as default" do

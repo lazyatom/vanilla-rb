@@ -39,7 +39,7 @@ class VanillaAppTest < Vanilla::TestCase
 
   context "when detecting the snip renderer" do
     setup do
-      @app = Vanilla::App.new(test_config_file)
+      @app = Vanilla::App.new(config_file_for_tests)
     end
 
     should "return the constant refered to in the render_as property of the snip" do

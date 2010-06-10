@@ -7,10 +7,10 @@ require "vanilla"
 module Vanilla
   module Test
     def setup_clean_environment
-      FileUtils.mkdir_p(File.dirname(test_config_file))
+      FileUtils.mkdir_p(File.dirname(config_file_for_tests))
       clear_soup
-      File.open(test_config_file, 'w') { |f| f.write({:soup => soup_path}.to_yaml) }
-      @app = Vanilla::App.new(test_config_file)
+      File.open(config_file_for_tests, 'w') { |f| f.write({:soup => soup_path}.to_yaml) }
+      @app = Vanilla::App.new(config_file_for_tests)
 
       require "vanilla/dynasnips/current_snip"
       @app.soup << CurrentSnip.snip_attributes
@@ -51,12 +51,12 @@ module Vanilla
       Rack::Request.new(mock_env_for_url(url))
     end
 
-    def test_config_file
+    def config_file_for_tests
       File.join(File.dirname(__FILE__), "tmp", "config.yml")
     end
 
-    def test_config(options={})
-      File.open(test_config_file, 'w') { |f| f.write({:soup => soup_path}.update(options).to_yaml) }
+    def config_for_tests(options={})
+      File.open(config_file_for_tests, 'w') { |f| f.write({:soup => soup_path}.update(options).to_yaml) }
     end
 
     def soup_path
