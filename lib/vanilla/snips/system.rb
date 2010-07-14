@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <title>{current_snip name}</title>
+  <title>{title}</title>
   <script language="javascript" src="/javascripts/jquery.js"></script>
   <script language="javascript" src="/javascripts/jquery.autogrow-textarea.js"></script>
   <script language="javascript" src="/javascripts/vanilla.js"></script>
