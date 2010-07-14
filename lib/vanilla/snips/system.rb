@@ -1,8 +1,6 @@
-app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
-system = app.snip(:name => "system")
-system.content = "You're in the system snip now. You probably want to {edit_link system,edit} it though."
-
-system.main_template = <<-HTML
+{:name => "system",
+ :content => "You're in the system snip now. You probably want to {edit_link system,edit} it though.",
+ :main_template => %^
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -24,10 +22,8 @@ system.main_template = <<-HTML
     {current_snip}
   </div>
 </body>
-</html>
-HTML
-
-system.login_template = <<-HTML
+</html>^,
+ :login_template => %^
 <html>
   <head><link rel="stylesheet" type="text/css" media="screen" href="/system/css.css" /></head>
   <body id="login">
@@ -38,10 +34,8 @@ system.login_template = <<-HTML
       <button>login</button>
     </form>
   </body>
-</html>
-HTML
-
-system.css = <<-CSS
+</html>^,
+ :css => %^
 body {
   font-family: Helvetica;
   background-color: #666;
@@ -86,7 +80,5 @@ a.new {
 
 a.new:hover {
   text-decoration: underline;
+}^
 }
-CSS
-
-system.save

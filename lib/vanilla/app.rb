@@ -86,7 +86,7 @@ module Vanilla
     end
 
     def snip(attributes)
-      @soup.new_snip(attributes)
+      @soup << attributes
     end
 
     private

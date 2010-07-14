@@ -7,61 +7,11 @@ namespace :vanilla do
     sh "irb -Ilib -rubygems -rvanilla -rvanilla/console"
   end
 
-  task :clean do
-    # TODO: get the database name from Soup
-    FileUtils.rm "soup.db" if File.exist?("soup.db")
-  end
-
-  task :load_snips do
-    app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
-    print "Preparing soup... "
-    Dynasnip.all.each { |ds| app.soup << ds.snip_attributes }
-    Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '*.rb')].each do |f|
-      load f
-    end
-    puts "the soup is simmering."
-  end
-
-  desc 'Resets the soup to contain the base snips only. Dangerous!'
-  task :reset => [:clean, :load_snips]
-
-  namespace :upgrade do
-    desc 'Upgrade the dynasnips'
-    task :dynasnips do
-      app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
-      Dynasnip.all.each do |dynasnip|
-        print "Upgrading #{dynasnip.snip_name}... "
-        # TODO: our confused Soup interface might return an array.
-        snip = app.soup[dynasnip.snip_name]
-        if snip.empty? || snip.nil?
-          # it's a new dyna
-          app.soup << dynasnip.snip_attributes
-          puts "(new)"
-        elsif snip.created_at == snip.updated_at
-          # it's not been changed, let's upgrade
-          snip.destroy
-          app.soup << dynasnip.snip_attributes
-          puts "(unedited)"
-        else
-          # the dyna exists and has been changed
-          dynasnip.snip_attributes.each do |name, value|
-            unless (existing_value = snip.get_value(name)) == value
-              puts "Conflict in attribute '#{name}':"
-              puts "> Your soup: '#{existing_value}'"
-              puts ">  New soup: '#{value}"
-              print "Upgrade? [Y/n]: "
-              upgrade_value = ["Y", "y", ""].include? STDIN.gets.chomp.strip
-              snip.set_value(name, value) if upgrade_value
-            end
-          end
-          snip.save
-        end
-      end
-    end
-  end
-
   desc 'Upgrade dynasnips and system snips'
-  task :upgrade => ["upgrade:dynasnips"]
+  task :upgrade do
+    # TODO
+    puts "TODO, but should be easier thanks to multi-space soup."
+  end
 
   desc 'Add a user (or change an existing password)'
   task :add_user => :prepare do
@@ -107,37 +57,18 @@ namespace :vanilla do
     puts "done; cookies are twice baked. BIS-CUIT!"
   end
 
-  desc 'Prepare standard files to run Vanilla'
-  task :prepare_files do
-    cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. config.ru])), 'config.ru'
-    cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. config.example.yml])), 'config.yml'
-    cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. README_FOR_APP])), 'README'
-    cp_r File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. public])), 'public'
-    mkdir 'tmp'
-    File.open("Rakefile", "w") do |f|
-      rakefile =<<-EOF
-require 'vanilla'
-load 'tasks/vanilla.rake'
-
-# Add any other tasks here.
-EOF
-      f.write rakefile.strip
-    end
-  end
-
-
   desc 'Prepare a new vanilla.rb installation'
   task :setup do
     puts <<-EOM
 ____________________.c( Vanilla.rb )o._____________________
 
-Congratulations! You have elected to try out the weirdest web 
+Congratulations! You have elected to try out the weirdest web
 thing ever. Lets get started.
 
 EOM
-  Rake::Task['vanilla:prepare_files'].invoke
+  Rake::Task['vanilla:setup:prepare_files'].invoke
   Rake::Task['vanilla:generate_secret'].invoke
-  Rake::Task['vanilla:load_snips'].invoke
+  Rake::Task['vanilla:setup:load_snips'].invoke
 
   puts <<-EOM
 
@@ -145,5 +76,37 @@ ___________________.c( You Are Ready )o.___________________
 
 #{File.readlines('README')[0,16].join}
   EOM
+  end
+
+  namespace :setup do
+    desc 'Prepare standard files to run Vanilla'
+    task :prepare_files do
+      cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. config.ru])), 'config.ru'
+      cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. config.example.yml])), 'config.yml'
+      cp File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. README_FOR_APP])), 'README'
+      cp_r File.expand_path(File.join(File.dirname(__FILE__), *%w[.. .. public])), 'public'
+      mkdir 'tmp'
+      File.open("Rakefile", "w") do |f|
+        rakefile =<<-EOF
+require 'vanilla'
+load 'tasks/vanilla.rake'
+
+# Add any other tasks here.
+EOF
+        f.write rakefile.strip
+      end
+    end
+
+    task :load_snips do
+      print "Preparing soup... "
+      system_soup = ::Soup.new(::Soup::Backends::YAMLBackend.new("soup/system"))
+      system_soup << eval(File.read(File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', 'system.rb')))
+      dynasnip_soup = ::Soup.new(::Soup::Backends::YAMLBackend.new("soup/system/dynasnips"))
+      Dynasnip.all.each { |ds| dynasnip_soup << ds.snip_attributes }
+      Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '{start,tutorial}.rb')].each do |f|
+        load f
+      end
+      puts "the soup is simmering."
+    end
   end
 end
