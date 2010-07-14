@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vanilla}
-  s.version = "1.11.2"
+  s.version = "1.11.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_runtime_dependency(%q<soup>, [">= 0.9.12"])
+      s.add_runtime_dependency(%q<soup>, [">= 0.9.13"])
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<haml>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_dependency(%q<soup>, [">= 0.9.12"])
+      s.add_dependency(%q<soup>, [">= 0.9.13"])
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rack>, [">= 0.9.1"])
-    s.add_dependency(%q<soup>, [">= 0.9.12"])
+    s.add_dependency(%q<soup>, [">= 0.9.13"])
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
