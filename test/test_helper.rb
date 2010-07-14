@@ -75,4 +75,8 @@ class Vanilla::TestCase < Test::Unit::TestCase
   def setup
     setup_clean_environment
   end
+
+  def test_nothing
+    # please, please stop complaining.
+  end
 end
