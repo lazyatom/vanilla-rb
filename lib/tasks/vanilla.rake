@@ -99,9 +99,9 @@ EOF
 
     task :load_snips do
       print "Preparing soup... "
-      system_soup = ::Soup.new(::Soup::Backends::YAMLBackend.new("soup/system"))
+      system_soup = ::Soup.new(::Soup::Backends::FileBackend.new("soup/system"))
       system_soup << eval(File.read(File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', 'system.rb')))
-      dynasnip_soup = ::Soup.new(::Soup::Backends::YAMLBackend.new("soup/system/dynasnips"))
+      dynasnip_soup = ::Soup.new(::Soup::Backends::FileBackend.new("soup/system/dynasnips"))
       Dynasnip.all.each { |ds| dynasnip_soup << ds.snip_attributes }
       Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '{start,tutorial}.rb')].each do |f|
         load f

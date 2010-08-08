@@ -102,10 +102,10 @@ module Vanilla
 
     def prepare_soup(config)
       if config[:soups]
-        backends = [config[:soups]].flatten.map { |path| Vanilla::Soup::TimestampBackend.new(::Soup::Backends::YAMLBackend.new(path)) }
+        backends = [config[:soups]].flatten.map { |path| ::Soup::Backends::FileBackend.new(path) }
         ::Soup.new(::Soup::Backends::MultiSoup.new(*backends))
       else
-        ::Soup.new(Vanilla::Soup::TimestampBackend.new(::Soup::Backends::YAMLBackend.new(config[:soup])))
+        ::Soup.new(::Soup::Backends::FileBackend.new(config[:soup]))
       end
     end
   end
