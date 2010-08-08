@@ -5,7 +5,7 @@ require 'date'
 class Kind < Dynasnip
   def handle(kind, limit=10, as=:html)
     as = as.to_sym
-    snips = app.soup.sieve(:kind => kind)
+    snips = app.soup.with(:kind => kind)
     entries = snips.sort_by { |s| s.created_at || Time.at(0) }.reverse[0...limit.to_i].map do |snip|
       render_entry_in_template(snip, as, kind)
     end
