@@ -1,7 +1,6 @@
 require 'vanilla/request'
 require 'vanilla/authentication'
 require 'vanilla/routes'
-require 'vanilla/soup/timestamp_backend'
 
 # Require the base set of renderers
 require 'vanilla/renderers/base'
