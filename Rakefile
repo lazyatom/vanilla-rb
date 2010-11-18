@@ -24,7 +24,7 @@ if Object.const_defined?(:Gem)
 
     # Change these as appropriate
     s.name              = "vanilla"
-    s.version           = "1.11.4"
+    s.version           = "1.12.0"
     s.summary           = "A bliki-type web content thing."
     s.author            = "James Adam"
     s.email             = "james@lazyatom.com.com"
@@ -57,17 +57,25 @@ if Object.const_defined?(:Gem)
     s.rubyforge_project = "vanilla"
   end
 
-  # This task actually builds the gem. We also regenerate a static 
-  # .gemspec file, which is useful if something (i.e. GitHub) will
-  # be automatically building a gem for this project. If you're not
-  # using GitHub, edit as appropriate.
-  Rake::GemPackageTask.new(spec) do |pkg|
-    pkg.gem_spec = spec
-
-    # Generate the gemspec file for github.
-    file = File.dirname(__FILE__) + "/#{spec.name}.gemspec"
-    File.open(file, "w") {|f| f << spec.to_ruby }
+  # Stolen from jeweler
+  def prettyify_array(gemspec_ruby, array_name)
+    gemspec_ruby.gsub(/s\.#{array_name.to_s} = \[.+?\]/) do |match|
+      leadin, files = match[0..-2].split("[")
+      leadin + "[\n    #{files.split(",").join(",\n   ")}\n  ]"
+    end
   end
+
+  task :gemspec do
+    output = spec.to_ruby
+    output = prettyify_array(output, :files)
+    output = prettyify_array(output, :test_files)
+    output = prettyify_array(output, :extra_rdoc_files)
+
+    file = File.expand_path("../#{spec.name}.gemspec", __FILE__)
+    File.open(file, "w") {|f| f << output }
+  end
+
+  task :package => :gemspec
 
   # Generate documentation
   Rake::RDocTask.new do |rd|
@@ -81,47 +89,20 @@ if Object.const_defined?(:Gem)
     rm "#{spec.name}.gemspec"
   end
 
-  # If you want to publish to RubyForge automatically, here's a simple 
-  # task to help do that. If you don't, just get rid of this.
-  # Be sure to set up your Rubyforge account details with the Rubyforge
-  # gem; you'll need to run `rubyforge setup` and `rubyforge config` at
-  # the very least.
-  begin
-    require "rake/contrib/sshpublisher"
-    namespace :rubyforge do
-  
-      desc "Release gem and RDoc documentation to RubyForge"
-      task :release => ["rubyforge:release:gem", "rubyforge:release:docs"]
-  
-      namespace :release do
-        desc "Release a new version of this gem"
-        task :gem => [:package] do
-          require 'rubyforge'
-          rubyforge = RubyForge.new
-          rubyforge.configure
-          rubyforge.login
-          rubyforge.userconfig['release_notes'] = spec.summary
-          path_to_gem = File.join(File.dirname(__FILE__), "pkg", "#{spec.name}-#{spec.version}.gem")
-          puts "Publishing #{spec.name}-#{spec.version.to_s} to Rubyforge..."
-          rubyforge.add_release(spec.rubyforge_project, spec.name, spec.version.to_s, path_to_gem)
-        end
-  
-        desc "Publish RDoc to RubyForge."
-        task :docs => [:rdoc] do
-          config = YAML.load(
-              File.read(File.expand_path('~/.rubyforge/user-config.yml'))
-          )
-
-          host = "#{config['username']}@rubyforge.org"
-          remote_dir = "/var/www/gforge-projects/vanilla-rb/" # Should be the same as the rubyforge project name
-          local_dir = 'rdoc'
-
-          Rake::SshDirPublisher.new(host, remote_dir, local_dir).upload
-        end
+  desc 'Tag the repository in git with gem version number'
+  task :tag => [:gemspec, :package] do
+    if `git diff --cached`.empty?
+      if `git tag`.split("\n").include?("v#{spec.version}")
+        raise "Version #{spec.version} has already been released"
       end
+      `git add #{File.expand_path("../#{spec.name}.gemspec", __FILE__)}`
+      `git commit -m "Released version #{spec.version}"`
+      `git tag v#{spec.version}`
+      `git push --tags`
+      `git push`
+    else
+      raise "Unstaged changes still waiting to be committed"
     end
-  rescue LoadError
-    puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
   end
 else
   puts "Gem management tasks unavailable, as rubygems was not fully loaded."
