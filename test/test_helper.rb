@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'bundler/setup'
+$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+
 require "shoulda"
 require "mocha"
 require "fileutils"
@@ -14,7 +18,7 @@ module Vanilla
 
       require "vanilla/dynasnips/current_snip"
       @app.soup << CurrentSnip.snip_attributes
-      create_snip :name => "system", :main_template => "{current_snip}"
+      create_snip :name => "layout", :content => "{current_snip}"
     end
 
     def response_for(url)
@@ -34,9 +38,7 @@ module Vanilla
     end
 
     def set_main_template(template_content)
-      system = @app.soup["system"] || Soup::Snip.new({:name => "system"}, @app.soup)
-      system.main_template = template_content
-      system.save
+      @app.soup << {:name => "layout", :content => template_content}
     end
 
     def create_snip(params)

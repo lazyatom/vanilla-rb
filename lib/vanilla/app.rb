@@ -8,7 +8,6 @@ require 'vanilla/renderers/base'
 require 'vanilla/renderers/raw'
 require 'vanilla/renderers/erb'
 
-
 module Vanilla
   class App
     include Routes
@@ -44,7 +43,8 @@ module Vanilla
     def formatted_render(snip, part=nil, format=nil)
       case format
       when 'html', nil
-        Renderers::Erb.new(self).render(soup['system'], :main_template)
+        layout_snip = (snip && snip.layout) ? soup[snip.layout] : soup['layout']
+        render(layout_snip)
       when 'raw', 'css', 'js'
         Renderers::Raw.new(self).render(snip, part || :content)
       when 'text', 'atom', 'xml'

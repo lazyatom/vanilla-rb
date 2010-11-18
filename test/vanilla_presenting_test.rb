@@ -64,6 +64,14 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
+  context "when presenting a snip with a custom layout" do
+    should "render the snips contents within that layout" do
+      create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
+      create_snip :name => "test", :content => "this is a test", :layout => "custom-layout"
+      assert_response_body "<custom>this is a test</custom>", "/test"
+    end
+  end
+
   context "when a missing snip is requested" do
     should "render missing snip content in the main template" do
       assert_response_body "<tag>Couldn't find snip #{LinkTo.new(@app).handle("missing_snip")}</tag>", "/missing_snip"
