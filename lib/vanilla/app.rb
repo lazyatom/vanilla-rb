@@ -1,3 +1,4 @@
+require 'soup'
 require 'vanilla/request'
 require 'vanilla/authentication'
 require 'vanilla/routes'
