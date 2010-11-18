@@ -72,6 +72,29 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
+  class ::Vanilla::Renderers::Custom < ::Vanilla::Renderers::Base
+    def default_layout_snip
+      soup['custom-layout']
+    end
+  end
+
+  context "when presenting a snip using a renderer that specifies a template" do
+    setup do
+      create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
+    end
+
+    should "use the renderer's specified layout" do
+      create_snip :name => "test", :content => "this is a test", :render_as => "Custom"
+      assert_response_body "<custom>this is a test</custom>", "/test"
+    end
+
+    should "use the snips layout when given" do
+      create_snip :name => "snip-custom-layout", :content => "<snipcustom>{current_snip}</snipcustom>"
+      create_snip :name => "test", :content => "this is a test", :render_as => "Custom", :layout => "snip-custom-layout"
+      assert_response_body "<snipcustom>this is a test</snipcustom>", "/test"
+    end
+  end
+
   context "when a missing snip is requested" do
     should "render missing snip content in the main template" do
       assert_response_body "<tag>Couldn't find snip #{LinkTo.new(@app).handle("missing_snip")}</tag>", "/missing_snip"

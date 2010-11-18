@@ -31,7 +31,7 @@ module Vanilla
         output = formatted_render(request.snip, request.part, request.format)
       rescue => e
         @response.status = 500
-        output = e.to_s
+        output = e.to_s + e.backtrace.join("\n")
       end
       response_format = request.format
       response_format = 'plain' if response_format == 'raw'
@@ -43,8 +43,7 @@ module Vanilla
     def formatted_render(snip, part=nil, format=nil)
       case format
       when 'html', nil
-        layout_snip = (snip && snip.layout) ? soup[snip.layout] : soup['layout']
-        render(layout_snip)
+        render(layout_for(snip))
       when 'raw', 'css', 'js'
         Renderers::Raw.new(self).render(snip, part || :content)
       when 'text', 'atom', 'xml'
@@ -69,15 +68,31 @@ module Vanilla
       renderer_instance = renderer_for(snip).new(self)
       yield renderer_instance
     rescue Exception => e
-      "<pre>[Error rendering '#{snip.name}' - \"" +
+      snip_name = snip ? snip.name : nil
+      "<pre>[Error rendering '#{snip_name}' - \"" +
         e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" +
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
     end
 
     # Returns the renderer class for a given snip
     def renderer_for(snip)
-      return Renderers::Base unless snip.render_as && !snip.render_as.empty?
-      Vanilla::Renderers.const_get(snip.render_as)
+      if snip && snip.render_as && !snip.render_as.empty?
+        Vanilla::Renderers.const_get(snip.render_as)
+      else
+        Vanilla::Renderers::Base
+      end
+    end
+
+    def default_layout_snip
+      soup[config[:default_layout_snip] || 'layout']
+    end
+
+    def layout_for(snip)
+      if snip
+        renderer_for(snip).new(self).layout_for(snip)
+      else
+        default_layout_snip
+      end
     end
 
     # Other things can call this when a snip cannot be loaded.

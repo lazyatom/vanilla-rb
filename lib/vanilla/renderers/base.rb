@@ -30,6 +30,14 @@ module Vanilla
         %r{(\{[\w\-_\d]+(\s+[^\}.]+)?\})}
       end
 
+      def default_layout_snip
+        app.default_layout_snip
+      end
+
+      def layout_for(snip)
+        layout_snip = (snip && snip.layout) ? soup[snip.layout] : default_layout_snip
+      end
+
       # Default behaviour to include a snip's content
       def include_snips(content, enclosing_snip)
         content.gsub(Vanilla::Renderers::Base.snip_regexp) do
