@@ -2,7 +2,7 @@
 source "http://rubygems.org"
 
 gem "rack"
-gem "soup", ">=1.0.0"
+gem "soup", ">=1.0.1"
 gem "ratom"
 
 gem "RedCloth", ">= 4.1.1"
