@@ -11,9 +11,9 @@ class Kind < Dynasnip
     end
     render_entry_collection(snips, entries, as, kind)
   end
-  
+
   def render_entry_in_template(snip, as, kind)
-    rendered_contents = prepare_snip_contents(snip)
+    rendered_contents = externalise_links(prepare_snip_contents(snip))
     case as
     when :html
       snip_template.
@@ -33,13 +33,15 @@ class Kind < Dynasnip
       end
     end
   end
-  
+
   def prepare_snip_contents(snip)
-    rendered_snip = app.render(snip)
-    # make all the links absolute
-    rendered_snip.gsub(/href="\//, "href=\"http://#{domain}/")
+    app.render(snip)
   end
-  
+
+  def externalise_links(content)
+    content.gsub(/href="\//, "href=\"http://#{domain}/").gsub(/src="\//, "src=\"http://#{domain}/")
+  end
+
   def render_entry_collection(snips, entries, as, kind)
     case as
     when :html
@@ -53,7 +55,7 @@ class Kind < Dynasnip
       end.to_xml
     end
   end
-  
+
   attribute :feed_title, "Your Blog"
   attribute :domain, "yourdomain.com"
   attribute :snip_template, %{
