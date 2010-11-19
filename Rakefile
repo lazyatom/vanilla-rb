@@ -24,7 +24,7 @@ if Object.const_defined?(:Gem)
 
     # Change these as appropriate
     s.name              = "vanilla"
-    s.version           = "1.12.4"
+    s.version           = "1.12.5"
     s.summary           = "A bliki-type web content thing."
     s.author            = "James Adam"
     s.email             = "james@lazyatom.com.com"
@@ -114,6 +114,11 @@ if Object.const_defined?(:Gem)
     else
       raise "Unstaged changes still waiting to be committed"
     end
+  end
+
+  desc "Tag and publish the gem to rubygems.org"
+  task :publish => :tag do
+    `gem push pkg/#{spec.name}-#{spec.version}.gem`
   end
 else
   puts "Gem management tasks unavailable, as rubygems was not fully loaded."
