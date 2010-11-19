@@ -34,8 +34,15 @@ class SnipReferenceTest < Vanilla::TestCase
   end
 
   should "match snips with ruby 1.9 style hashes" do
-    create_snip :name => "test", :content => "snip content"
-    assert_equal "rendering snip content", render("rendering {test x:1}")
+    create_snip :name => "test", :content => %{
+      class Blah
+        def handle(args)
+          args.inspect
+        end
+        self
+      end
+    }, :render_as => "Ruby"
+    assert_equal %{rendering {:x=>"1"}}, render("rendering {test x:1}")
   end
 
   should "ignore references that are rubyish" do

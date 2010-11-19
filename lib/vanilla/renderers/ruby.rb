@@ -27,10 +27,16 @@ module Vanilla::Renderers
         handler_klass.new
       end
       instance.enclosing_snip = @enclosing_snip if instance.respond_to?(:enclosing_snip)
-      if (method = app.request.method) && instance.respond_to?(method)
-        instance.send(method, *@args).to_s
+
+      if app.request && (method = app.request.method) && instance.respond_to?(method)
+        message = method
       else
-        instance.handle(*@args).to_s
+        message = :handle
+      end
+      if @args.is_a?(Array)
+        instance.send(message, *@args).to_s
+      else
+        instance.send(message, @args).to_s
       end
     end
   end
