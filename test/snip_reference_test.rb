@@ -33,6 +33,11 @@ class SnipReferenceTest < Vanilla::TestCase
     assert_equal "rendering snip content", render("rendering {test1}")
   end
 
+  should "match snips with ruby 1.9 style hashes" do
+    create_snip :name => "test", :content => "snip content"
+    assert_equal "rendering snip content", render("rendering {test x:1}")
+  end
+
   should "ignore references that are rubyish" do
     assert_equal "10.times { |x| puts x }", render("10.times { |x| puts x }")
     assert_equal "10.times {|x| puts x }", render("10.times {|x| puts x }")

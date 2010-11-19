@@ -60,6 +60,11 @@ module SnipReference
       [text_value]
     end
   end
+  module EmptyArgument
+    def to_arguments
+      [nil]
+    end
+  end
 end
 
 require 'treetop'

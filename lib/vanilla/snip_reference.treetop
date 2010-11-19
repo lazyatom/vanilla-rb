@@ -15,7 +15,8 @@ grammar SnipReference
   rule argument
     hash_argument <HashArgument> /
     unquoted_words <NormalArgument> /
-    quoted_word <NormalArgument>
+    quoted_word <NormalArgument> /
+    empty_argument <EmptyArgument>
   end
 
   rule argument_separator
@@ -29,6 +30,10 @@ grammar SnipReference
   rule hash_argument_separator
     "=>" /
     ":"
+  end
+
+  rule empty_argument
+    optional_spaces
   end
 
   rule word_or_symbol

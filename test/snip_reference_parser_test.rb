@@ -16,6 +16,8 @@ class SnipReferenceParserTest < Test::Unit::TestCase
     %|{snip arg1, arg2}|                       => {:snip => 'snip', :attribute => nil, :arguments => ['arg1', 'arg2']},
     %|{snip "argument with spaces", arg2}|     => {:snip => 'snip', :attribute => nil, :arguments => ['argument with spaces', 'arg2']},
     %|{"snip with spaces" arg1, arg2}|         => {:snip => 'snip with spaces', :attribute => nil, :arguments => ['arg1', 'arg2']},
+    %|{snip arg1,,arg3}|                       => {:snip => 'snip', :attribute => nil, :arguments => ['arg1', nil, 'arg3']},
+    %|{snip arg1, ,arg3}|                      => {:snip => 'snip', :attribute => nil, :arguments => ['arg1', nil, 'arg3']},
     %|{snip.snip_attribute}|                   => {:snip => 'snip', :attribute => 'snip_attribute', :arguments => []},
     %|{snip."spaced attribute"}|               => {:snip => 'snip', :attribute => 'spaced attribute', :arguments => []},
     %|{"snip with spaces".attribute}|          => {:snip => 'snip with spaces', :attribute => 'attribute', :arguments => []},
