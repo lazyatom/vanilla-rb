@@ -1,6 +1,6 @@
 require "test_helper"
 
-class RawRendererTest < Vanilla::TestCase
+describe Vanilla::Renderers::Raw do
   context "when rendering" do
     setup do
       @snip = create_snip(:name => "test", :content => "raw content", :part => "raw part")

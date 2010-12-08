@@ -1,6 +1,6 @@
 require "test_helper"
 
-class VanillaRequestTest < Vanilla::TestCase
+describe Vanilla::Request do
   context "when requesting the root" do
     setup { @request = Vanilla::Request.new(mock_env_for_url("/"), @app) }
 

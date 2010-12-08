@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ErbRendererTest < Vanilla::TestCase
+describe Vanilla::Renderers::Erb do
   context "when rendering" do
     should "insert evaluated Erb content into the snip" do
       erb_snip(:name => "test", :content => "<%= 1 + 2 %>")
@@ -23,9 +23,9 @@ class ErbRendererTest < Vanilla::TestCase
     end
   end
 
-  private
-
-  def erb_snip(params)
-    create_snip(params.merge(:render_as => "Erb"))
+  helpers do
+    def erb_snip(params)
+      create_snip(params.merge(:render_as => "Erb"))
+    end
   end
 end

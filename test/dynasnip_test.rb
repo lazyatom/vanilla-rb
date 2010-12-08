@@ -1,8 +1,7 @@
 require "test_helper"
 require 'vanilla/dynasnip'
 
-class DynasnipTest < Vanilla::TestCase
-
+describe Dynasnip do
   context "when storing attributes" do
 
     class ::TestDyna < Dynasnip
@@ -27,5 +26,4 @@ class DynasnipTest < Vanilla::TestCase
       assert_equal "altered content", TestDyna.new(@app).test_attribute
     end
   end
-  
 end

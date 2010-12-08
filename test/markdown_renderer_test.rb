@@ -1,6 +1,6 @@
 require "test_helper"
 
-class MarkdownRendererTest < Vanilla::TestCase
+describe Vanilla::Renderers::Markdown do
   context "when rendering" do
     should "return the snip contents rendered via Markdown" do
       content = <<Markdown
@@ -25,9 +25,9 @@ Markdown
     end
   end
 
-  private
-
-  def markdown_snip(attributes)
-    create_snip(attributes.merge(:render_as => "Markdown"))
+  helpers do
+    def markdown_snip(attributes)
+      create_snip(attributes.merge(:render_as => "Markdown"))
+    end
   end
 end

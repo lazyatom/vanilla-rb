@@ -48,7 +48,7 @@ if Object.const_defined?(:Gem)
     s.add_dependency("treetop", ">= 1.4.1")
     s.add_dependency("haml")
 
-    s.add_development_dependency("shoulda") # add any other gems for testing/development
+    s.add_development_dependency("jtest") # add any other gems for testing/development
     s.add_development_dependency("mocha")
 
     # If you want to publish automatically to rubyforge, you'll may need

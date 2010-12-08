@@ -1,15 +1,14 @@
 require "test_helper"
 
-class VanillaPresentingTest < Vanilla::TestCase
-  def setup
-    super
+context "When presenting" do
+  setup do
     @app.soup << LinkTo.snip_attributes
     set_main_template "<tag>{current_snip}</tag>"
     create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
     create_snip :name => "other_snip", :content => "blah!"
   end
 
-  context "when presenting as HTML" do
+  context "HTML" do
     should "render the snip's content in the system template if no format or part is given" do
       assert_response_body "<tag>blah blah!</tag>", "/test"
     end
@@ -30,7 +29,7 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
-  context "when presenting content as text" do
+  context "as text" do
     should "render the snip's content outside of the main template with its default renderer" do
       assert_response_body "blah blah!", "/test.text"
     end
@@ -45,7 +44,7 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
-  context "when presenting raw content" do
+  context "raw content" do
     should "render the snips contents exactly as they are" do
       assert_response_body "blah {other_snip}", "/test.raw"
     end
@@ -64,7 +63,7 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
-  context "when presenting a snip with a custom layout" do
+  context "a snip with a custom layout" do
     should "render the snips contents within that layout" do
       create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
       create_snip :name => "test", :content => "this is a test", :layout => "custom-layout"
@@ -78,7 +77,7 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
-  context "when presenting a snip using a renderer that specifies a template" do
+  context "a snip using a renderer that specifies a template" do
     setup do
       create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
     end
@@ -95,7 +94,7 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
-  context "when a missing snip is requested" do
+  context "and a missing snip is requested" do
     should "render missing snip content in the main template" do
       assert_response_body "<tag>Couldn't find snip #{LinkTo.new(@app).handle("missing_snip")}</tag>", "/missing_snip"
     end
@@ -105,7 +104,7 @@ class VanillaPresentingTest < Vanilla::TestCase
     end
   end
 
-  context "when requesting an unknown format" do
+  context "requesting an unknown format" do
     should "return a 500 status code" do
       assert_equal 500, response_code_for("/test.monkey")
     end

@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
-require "shoulda"
+require "jtest"
 require "mocha"
 require "fileutils"
 require "rack/mock"
@@ -71,14 +71,18 @@ module Vanilla
   end
 end
 
-class Vanilla::TestCase < Test::Unit::TestCase
-  include Vanilla::Test
+JTest.add Vanilla::Test
+JTest.setup do
+  setup_clean_environment
+end
 
-  def setup
-    setup_clean_environment
-  end
-
-  def test_nothing
-    # please, please stop complaining.
+JTest.add Mocha::API
+JTest.teardown do
+  begin
+    mocha_verify
+  rescue Mocha::ExpectationError => e
+    raise e
+  ensure
+    mocha_teardown
   end
 end

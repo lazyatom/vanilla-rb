@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-02-22}
+  s.date = %q{2011-03-01}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -111,7 +111,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_runtime_dependency(%q<haml>, [">= 0"])
-      s.add_development_dependency(%q<shoulda>, [">= 0"])
+      s.add_development_dependency(%q<jtest>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
@@ -121,7 +121,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_dependency(%q<haml>, [">= 0"])
-      s.add_dependency(%q<shoulda>, [">= 0"])
+      s.add_dependency(%q<jtest>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
     end
   else
@@ -132,7 +132,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
     s.add_dependency(%q<treetop>, [">= 1.4.1"])
     s.add_dependency(%q<haml>, [">= 0"])
-    s.add_dependency(%q<shoulda>, [">= 0"])
+    s.add_dependency(%q<jtest>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
   end
 end

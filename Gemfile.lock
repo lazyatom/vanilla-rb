@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    vanilla (1.12.5)
+    vanilla (1.13.1)
       BlueCloth (>= 1.0.0)
       RedCloth (>= 4.1.1)
       haml
       rack (>= 0.9.1)
       ratom (>= 0.3.5)
-      soup (>= 1.0.1)
+      soup (>= 1.0.3)
       treetop (>= 1.4.1)
 
 GEM
@@ -16,16 +16,16 @@ GEM
     BlueCloth (1.0.1)
     RedCloth (4.2.7)
     haml (3.0.25)
+    jtest (0.1.0)
     libxml-ruby (1.1.4)
-    mocha (0.9.9)
+    mocha (0.9.10)
       rake
     polyglot (0.3.1)
     rack (1.2.1)
     rake (0.8.7)
     ratom (0.6.7)
       libxml-ruby (>= 1.1.2)
-    shoulda (2.11.3)
-    soup (1.0.2)
+    soup (1.0.3)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
 
@@ -33,6 +33,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  jtest
   mocha
-  shoulda
   vanilla!

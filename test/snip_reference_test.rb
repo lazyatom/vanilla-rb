@@ -1,8 +1,7 @@
 require "test_helper"
 
-class SnipReferenceTest < Vanilla::TestCase
-  def setup
-    super
+context "The SnipReference parser" do
+  setup do
     create_snip :name => "test", :content => "snip content"
   end
 
@@ -50,10 +49,10 @@ class SnipReferenceTest < Vanilla::TestCase
     assert_equal "10.times {|x| puts x }", render("10.times {|x| puts x }")
   end
 
-  private
-
-  def render(content)
-    snip = create_snip :name => "test-content", :content => content
-    Vanilla::Renderers::Base.new(@app).render(snip)
+  helpers do
+    def render(content)
+      snip = create_snip :name => "test-content", :content => content
+      Vanilla::Renderers::Base.new(@app).render(snip)
+    end
   end
 end

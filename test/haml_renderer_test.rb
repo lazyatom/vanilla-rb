@@ -1,7 +1,7 @@
-require 'haml'
 require 'test_helper'
+require 'haml'
 
-class HamlRendererTest < Vanilla::TestCase
+describe Vanilla::Renderers::Haml do
   context "when rendering" do
     should "render Haml into HTML" do
       haml_snip(:name => "test", :content => "#hello\n  stuff")
@@ -29,9 +29,9 @@ class HamlRendererTest < Vanilla::TestCase
     end
   end
 
-  private
-
-  def haml_snip(params)
-    create_snip(params.merge(:render_as => "Haml"))
+  helpers do
+    def haml_snip(params)
+      create_snip(params.merge(:render_as => "Haml"))
+    end
   end
 end

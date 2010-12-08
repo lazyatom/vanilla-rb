@@ -1,7 +1,6 @@
 require "test_helper"
 
-class VanillaAppTest < Vanilla::TestCase
-
+describe Vanilla::App do
   context "when behaving as a Rack application" do
     should "return an array of status code, headers and response" do
       create_snip(:name => "test", :content => "content")

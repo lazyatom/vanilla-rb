@@ -1,7 +1,11 @@
 require "test_helper"
 Treetop.load File.join(File.dirname(__FILE__), *%w[.. lib vanilla snip_reference])
 
-class SnipReferenceParserTest < Test::Unit::TestCase
+context "The SnipReference parser" do
+  setup do
+    @parser = SnipReferenceParser.new
+  end
+
   examples = {
     %|{snip}|                                  => {:snip => 'snip', :attribute => nil, :arguments => []},
     %|{snip argument}|                         => {:snip => 'snip', :attribute => nil, :arguments => ["argument"]},
@@ -35,13 +39,9 @@ class SnipReferenceParserTest < Test::Unit::TestCase
     %|{snip key1: value1, key2: value2}|       => {:snip => 'snip', :arguments => {:key1 => 'value1', :key2 => 'value2'}},
     %|{snip key1:"value with spaces"}|         => {:snip => 'snip', :arguments => {:key1 => 'value with spaces'}}
   }
-  
-  def setup
-    @parser = SnipReferenceParser.new
-  end
-  
+
   examples.each do |example, expected|
-    define_method :"test_parsing_#{example}" do
+    should "parse '#{example}' into #{expected.inspect}" do
       reference = @parser.parse(example)
       if reference
         assert_equal expected[:snip],      reference.snip
