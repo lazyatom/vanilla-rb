@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
-require "jtest"
+require "kintama"
 require "mocha"
 require "fileutils"
 require "rack/mock"
@@ -71,13 +71,13 @@ module Vanilla
   end
 end
 
-JTest.add Vanilla::Test
-JTest.setup do
+Kintama.include Vanilla::Test
+Kintama.setup do
   setup_clean_environment
 end
 
-JTest.add Mocha::API
-JTest.teardown do
+Kintama.include Mocha::API
+Kintama.teardown do
   begin
     mocha_verify
   rescue Mocha::ExpectationError => e

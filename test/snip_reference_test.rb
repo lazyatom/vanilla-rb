@@ -49,10 +49,8 @@ context "The SnipReference parser" do
     assert_equal "10.times {|x| puts x }", render("10.times {|x| puts x }")
   end
 
-  helpers do
-    def render(content)
-      snip = create_snip :name => "test-content", :content => content
-      Vanilla::Renderers::Base.new(@app).render(snip)
-    end
+  def render(content)
+    snip = create_snip :name => "test-content", :content => content
+    Vanilla::Renderers::Base.new(@app).render(snip)
   end
 end

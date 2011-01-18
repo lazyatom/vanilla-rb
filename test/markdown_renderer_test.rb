@@ -25,9 +25,7 @@ Markdown
     end
   end
 
-  helpers do
-    def markdown_snip(attributes)
-      create_snip(attributes.merge(:render_as => "Markdown"))
-    end
+  def markdown_snip(attributes)
+    create_snip(attributes.merge(:render_as => "Markdown"))
   end
 end

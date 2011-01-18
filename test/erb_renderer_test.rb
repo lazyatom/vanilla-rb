@@ -23,9 +23,7 @@ describe Vanilla::Renderers::Erb do
     end
   end
 
-  helpers do
-    def erb_snip(params)
-      create_snip(params.merge(:render_as => "Erb"))
-    end
+  def erb_snip(params)
+    create_snip(params.merge(:render_as => "Erb"))
   end
 end

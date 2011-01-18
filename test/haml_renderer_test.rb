@@ -29,9 +29,7 @@ describe Vanilla::Renderers::Haml do
     end
   end
 
-  helpers do
-    def haml_snip(params)
-      create_snip(params.merge(:render_as => "Haml"))
-    end
+  def haml_snip(params)
+    create_snip(params.merge(:render_as => "Haml"))
   end
 end
