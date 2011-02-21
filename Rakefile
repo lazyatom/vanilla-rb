@@ -46,7 +46,6 @@ if Object.const_defined?(:Gem)
     s.add_dependency("RedCloth", ">= 4.1.1")
     s.add_dependency("BlueCloth", ">= 1.0.0")
     s.add_dependency("treetop", ">= 1.4.1")
-    s.add_dependency("warden", ">= 0.5.2")
 
     s.add_development_dependency("shoulda") # add any other gems for testing/development
     s.add_development_dependency("mocha")

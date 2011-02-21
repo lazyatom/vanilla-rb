@@ -36,22 +36,6 @@ module Vanilla
       @rack_request.env["rack.session"]
     end
 
-    def authenticated?
-      @app.authenticator.authenticated?
-    end
-
-    def user
-      @app.authenticator.user
-    end
-
-    def authenticate!
-      @app.authenticator.authenticate!
-    end
-
-    def logout
-      @app.authenticator.logout
-    end
-
     private
 
     def determine_request_uri_parts

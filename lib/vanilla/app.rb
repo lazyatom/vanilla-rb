@@ -1,6 +1,5 @@
 require 'soup'
 require 'vanilla/request'
-require 'vanilla/authentication'
 require 'vanilla/routes'
 
 # Require the base set of renderers
@@ -13,12 +12,10 @@ module Vanilla
     include Routes
 
     attr_reader :request, :response, :config, :soup
-    attr_accessor :authenticator
 
     def initialize(config_file=nil)
       prepare_configuration(config_file)
       @soup = prepare_soup(config)
-      @authenticator = Vanilla::Authentication::Base.new(self)
     end
 
     # Returns a Rack-appropriate 3-element array (via Rack::Response#finish)
