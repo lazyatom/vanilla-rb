@@ -5,6 +5,8 @@ tutorial.content = <<-END_OF_TUTORIAL
 Basic Concepts
 ------------
 
+Firstly, open the raw contents of this snip - either in your edit (search for 'vanilla-rb-tutorial.snip'), or by opening <a href="vanilla-rb-tutorial.raw">this snip in raw format</a> in a new window or tab. Ready? OK.
+
 Every piece of information displayed here is stored as a {link_to snip}. Snips, within their contents, can also reference other snips. When you request a snip, it will render into a page (or another kind of response), and also render any snips that it internally references.
 
 For example, consider the snip {link_to tutorial-basic-snip-inclusion}:
@@ -20,7 +22,9 @@ Notice the use of curly brackets to reference one snip from inside another. Vani
 Renderers
 --------
 
-The way that a snip is rendered depends on whether or not it has a `render_as` attribute set. For instance, the `render_as` property of this snip ({link_to vanilla-rb}) is "Markdown". This means that the `content` of this snip will be passed through `Vanilla::Renderers::Markdown` before it is then rendered to the page. There are several different renders provided by Vanilla.rb at the moment:
+The way that a snip is rendered depends on whether or not it has a `render_as` attribute set. For instance, the `render_as` property of this snip is "Markdown". Scroll to the bottom of the raw snip you opened earlier, and you'll see this being declared.
+
+This means that the `content` of this snip will be passed through `Vanilla::Renderers::Markdown` before it is then rendered to the page. There are several different renders provided by Vanilla.rb at the moment:
 
   * Markdown - as described above
   * Textile - which performs similarly for Textile. This means that you can mix how you write the content of snips!
@@ -53,11 +57,10 @@ Vanilla.rb includes a number of dynasnips by default. Here are a couple:
   * `link_to`, to produce a link to another snip
   * `kind`, which selects and renders sets of snips based on their `kind` attribute (this is how the blog is currently implemented)
   * `raw`, which displays the raw contents of a snip
-  * `edit`, which implements the editor
   * `index`, which shows all of the available snips: {link_to index}
   * ... and several others.
 
-While dynasnip classes can be provided as part of the vanilla codebase, it's envisioned that much of these will be created by end users in their own sites, either by refering to local classes, or defining the classes directly as the content. Here's an example of that, as the raw content of {link_to hello\_world}:
+While dynasnip classes can be provided as part of the vanilla codebase, it's envisioned that much of these will be created by end users in their own sites, either by refering to local classes, or defining the classes directly as the content. Here's an example of that, as the raw content of hello_world:
 
 {raw hello_world}
 

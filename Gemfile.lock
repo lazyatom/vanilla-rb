@@ -1,9 +1,21 @@
+PATH
+  remote: .
+  specs:
+    vanilla (1.12.5)
+      BlueCloth (>= 1.0.0)
+      RedCloth (>= 4.1.1)
+      haml
+      rack (>= 0.9.1)
+      ratom (>= 0.3.5)
+      soup (>= 1.0.1)
+      treetop (>= 1.4.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
     BlueCloth (1.0.1)
-    RedCloth (4.2.3)
-    haml (3.0.23)
+    RedCloth (4.2.7)
+    haml (3.0.25)
     libxml-ruby (1.1.4)
     mocha (0.9.9)
       rake
@@ -13,23 +25,14 @@ GEM
     ratom (0.6.7)
       libxml-ruby (>= 1.1.2)
     shoulda (2.11.3)
-    soup (1.0.1)
-    treetop (1.4.8)
+    soup (1.0.2)
+    treetop (1.4.9)
       polyglot (>= 0.3.1)
-    warden (1.0.2)
-      rack (>= 1.0.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  BlueCloth (>= 1.0.0)
-  RedCloth (>= 4.1.1)
-  haml
   mocha
-  rack
-  ratom
   shoulda
-  soup (>= 1.0.1)
-  treetop (>= 1.4.1)
-  warden
+  vanilla!

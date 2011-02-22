@@ -50,17 +50,24 @@ load 'tasks/vanilla.rake'
 EOF
         f.write rakefile.strip
       end
+      File.open("Gemfile", "w") do |f|
+        gemfile =<<-EOF
+source :rubygems
+
+gem "vanilla", #{Vanilla::VERSION.inspect}
+EOF
+        f.write gemfile.strip
+      end
     end
 
     task :load_snips do
       print "Preparing soup... "
-      system_soup = ::Soup.new(::Soup::Backends::FileBackend.new("soup/system"))
-      system_soup << eval(File.read(File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', 'system.rb')))
       dynasnip_soup = ::Soup.new(::Soup::Backends::FileBackend.new("soup/system/dynasnips"))
       Dynasnip.all.each { |ds| dynasnip_soup << ds.snip_attributes }
-      Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '{start,tutorial}.rb')].each do |f|
-        load f
+      Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '*.snip')].each do |f|
+        FileUtils.cp(f, "soup/system")
       end
+      load File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', 'tutorial.rb')
       puts "the soup is simmering."
     end
   end

@@ -1,6 +1,3 @@
-app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
-start = app.snip(:name => 'start')
-start.content = <<-START
 Welcome to Vanilla.rb
 =============
 
@@ -23,6 +20,6 @@ In fact - I'll include it here for you:
 That was the end of the tutorial snip. We're back in the start snip now. There's also the {link_to test} snip, that might be interesting.
 
 Anyway, welcome.
-START
-start.render_as = "Markdown"
-start.save
+
+
+:render_as: "Markdown"

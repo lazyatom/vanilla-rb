@@ -24,7 +24,7 @@ if Object.const_defined?(:Gem)
 
     # Change these as appropriate
     s.name              = "vanilla"
-    s.version           = "1.12.5"
+    s.version           = Vanilla::VERSION
     s.summary           = "A bliki-type web content thing."
     s.author            = "James Adam"
     s.email             = "james@lazyatom.com.com"
@@ -46,10 +46,10 @@ if Object.const_defined?(:Gem)
     s.add_dependency("RedCloth", ">= 4.1.1")
     s.add_dependency("BlueCloth", ">= 1.0.0")
     s.add_dependency("treetop", ">= 1.4.1")
+    s.add_dependency("haml")
 
     s.add_development_dependency("shoulda") # add any other gems for testing/development
     s.add_development_dependency("mocha")
-    s.add_development_dependency("haml")
 
     # If you want to publish automatically to rubyforge, you'll may need
     # to tweak this, and the publishing task below too.
