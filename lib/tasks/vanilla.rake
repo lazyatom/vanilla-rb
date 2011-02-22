@@ -62,12 +62,13 @@ EOF
 
     task :load_snips do
       print "Preparing soup... "
+
+      mkdir_p "soup/system"
+      FileUtils.cp_r(File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', 'system'), "soup")
+      FileUtils.cp_r(File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', 'tutorial'), "soup")
+
       dynasnip_soup = ::Soup.new(::Soup::Backends::FileBackend.new("soup/system/dynasnips"))
       Dynasnip.all.each { |ds| dynasnip_soup << ds.snip_attributes }
-      Dir[File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', '*.snip')].each do |f|
-        FileUtils.cp(f, "soup/system")
-      end
-      load File.join(File.dirname(__FILE__), '..', 'vanilla', 'snips', 'tutorial.rb')
       puts "the soup is simmering."
     end
   end
