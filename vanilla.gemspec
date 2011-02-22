@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vanilla}
-  s.version = "1.12.5"
+  s.version = "1.13"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-02-21}
+  s.date = %q{2011-02-22}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -29,16 +29,21 @@ Gem::Specification.new do |s|
     "test/snip_reference_parser_test.rb",
     "test/snip_reference_test.rb",
     "test/test_helper.rb",
+    "test/tmp",
     "test/tmp/config.yml",
+    "test/tmp/soup",
     "test/tmp/soup/current_snip.snip",
     "test/tmp/soup/layout.snip",
     "test/vanilla_app_test.rb",
     "test/vanilla_presenting_test.rb",
     "test/vanilla_request_test.rb",
+    "lib/tasks",
     "lib/tasks/vanilla.rake",
+    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
+    "lib/vanilla/dynasnips",
     "lib/vanilla/dynasnips/comments.rb",
     "lib/vanilla/dynasnips/current_snip.rb",
     "lib/vanilla/dynasnips/debug.rb",
@@ -51,6 +56,7 @@ Gem::Specification.new do |s|
     "lib/vanilla/dynasnips/raw.rb",
     "lib/vanilla/dynasnips/title.rb",
     "lib/vanilla/dynasnips/url_to.rb",
+    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -64,10 +70,24 @@ Gem::Specification.new do |s|
     "lib/vanilla/snip_reference.rb",
     "lib/vanilla/snip_reference.treetop",
     "lib/vanilla/snip_reference_parser.rb",
-    "lib/vanilla/snips/layout.snip",
-    "lib/vanilla/snips/start.snip",
-    "lib/vanilla/snips/system.snip",
-    "lib/vanilla/snips/tutorial.rb",
+    "lib/vanilla/snips",
+    "lib/vanilla/snips/system",
+    "lib/vanilla/snips/system/layout.snip",
+    "lib/vanilla/snips/system/start.snip",
+    "lib/vanilla/snips/system/system.snip",
+    "lib/vanilla/snips/tutorial",
+    "lib/vanilla/snips/tutorial/bad_dynasnip.snip",
+    "lib/vanilla/snips/tutorial/hello_world.snip",
+    "lib/vanilla/snips/tutorial/markdown_example.snip",
+    "lib/vanilla/snips/tutorial/snip.snip",
+    "lib/vanilla/snips/tutorial/soup.snip",
+    "lib/vanilla/snips/tutorial/test.snip",
+    "lib/vanilla/snips/tutorial/textile_example.snip",
+    "lib/vanilla/snips/tutorial/tutorial-another-snip.snip",
+    "lib/vanilla/snips/tutorial/tutorial-basic-snip-inclusion.snip",
+    "lib/vanilla/snips/tutorial/vanilla-rb-tutorial.snip",
+    "lib/vanilla/snips/tutorial/vanilla-rb.snip",
+    "lib/vanilla/snips/tutorial/vanilla.snip",
     "lib/vanilla/static.rb",
     "lib/vanilla.rb",
     "bin/vanilla",
