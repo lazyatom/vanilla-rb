@@ -1,7 +1,7 @@
 require 'vanilla/app'
 
 module Vanilla
-  VERSION = "1.13"
+  VERSION = "1.13.1"
 end
 
 # Load all the other renderer subclasses

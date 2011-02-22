@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vanilla}
-  s.version = "1.13"
+  s.version = "1.13.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
@@ -29,21 +29,16 @@ Gem::Specification.new do |s|
     "test/snip_reference_parser_test.rb",
     "test/snip_reference_test.rb",
     "test/test_helper.rb",
-    "test/tmp",
     "test/tmp/config.yml",
-    "test/tmp/soup",
     "test/tmp/soup/current_snip.snip",
     "test/tmp/soup/layout.snip",
     "test/vanilla_app_test.rb",
     "test/vanilla_presenting_test.rb",
     "test/vanilla_request_test.rb",
-    "lib/tasks",
     "lib/tasks/vanilla.rake",
-    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
-    "lib/vanilla/dynasnips",
     "lib/vanilla/dynasnips/comments.rb",
     "lib/vanilla/dynasnips/current_snip.rb",
     "lib/vanilla/dynasnips/debug.rb",
@@ -56,7 +51,6 @@ Gem::Specification.new do |s|
     "lib/vanilla/dynasnips/raw.rb",
     "lib/vanilla/dynasnips/title.rb",
     "lib/vanilla/dynasnips/url_to.rb",
-    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -70,12 +64,9 @@ Gem::Specification.new do |s|
     "lib/vanilla/snip_reference.rb",
     "lib/vanilla/snip_reference.treetop",
     "lib/vanilla/snip_reference_parser.rb",
-    "lib/vanilla/snips",
-    "lib/vanilla/snips/system",
     "lib/vanilla/snips/system/layout.snip",
     "lib/vanilla/snips/system/start.snip",
     "lib/vanilla/snips/system/system.snip",
-    "lib/vanilla/snips/tutorial",
     "lib/vanilla/snips/tutorial/bad_dynasnip.snip",
     "lib/vanilla/snips/tutorial/hello_world.snip",
     "lib/vanilla/snips/tutorial/markdown_example.snip",
@@ -105,7 +96,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_runtime_dependency(%q<soup>, [">= 1.0.1"])
+      s.add_runtime_dependency(%q<soup>, [">= 1.0.3"])
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -115,7 +106,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mocha>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_dependency(%q<soup>, [">= 1.0.1"])
+      s.add_dependency(%q<soup>, [">= 1.0.3"])
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -126,7 +117,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rack>, [">= 0.9.1"])
-    s.add_dependency(%q<soup>, [">= 1.0.1"])
+    s.add_dependency(%q<soup>, [">= 1.0.3"])
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
