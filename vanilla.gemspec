@@ -100,7 +100,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_runtime_dependency(%q<soup>, [">= 1.0.5"])
+      s.add_runtime_dependency(%q<soup>, [">= 1.0.6"])
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -110,7 +110,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mocha>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_dependency(%q<soup>, [">= 1.0.5"])
+      s.add_dependency(%q<soup>, [">= 1.0.6"])
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -121,7 +121,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rack>, [">= 0.9.1"])
-    s.add_dependency(%q<soup>, [">= 1.0.5"])
+    s.add_dependency(%q<soup>, [">= 1.0.6"])
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
