@@ -12,7 +12,6 @@ module Vanilla
   module Test
     def setup_clean_environment
       FileUtils.mkdir_p(File.dirname(config_file_for_tests))
-      clear_soup
       File.open(config_file_for_tests, 'w') { |f| f.write({:soup => soup_path}.to_yaml) }
       @app = Vanilla::App.new(config_file_for_tests)
 
@@ -53,8 +52,12 @@ module Vanilla
       Rack::Request.new(mock_env_for_url(url))
     end
 
+    def test_app_directory
+      File.join(File.dirname(__FILE__), "tmp")
+    end
+
     def config_file_for_tests
-      File.join(File.dirname(__FILE__), "tmp", "config.yml")
+      File.join(test_app_directory, "config.yml")
     end
 
     def config_for_tests(options={})
@@ -62,11 +65,7 @@ module Vanilla
     end
 
     def soup_path
-      File.expand_path(File.join(File.dirname(__FILE__), "tmp", "soup"))
-    end
-
-    def clear_soup
-      FileUtils.rm_rf(soup_path)
+      File.expand_path(File.join(test_app_directory, "soup"))
     end
   end
 end
@@ -74,6 +73,10 @@ end
 Kintama.include Vanilla::Test
 Kintama.setup do
   setup_clean_environment
+end
+
+Kintama.teardown do
+  FileUtils.rm_rf(test_app_directory)
 end
 
 Kintama.include Mocha::API
