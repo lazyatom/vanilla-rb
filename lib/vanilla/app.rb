@@ -75,6 +75,8 @@ module Vanilla
     def renderer_for(snip)
       if snip && snip.render_as && !snip.render_as.empty?
         Vanilla::Renderers.const_get(snip.render_as)
+      elsif snip && snip.extension && !snip.extension.empty?
+        Vanilla::Renderers.const_get(renderer_for_extension(snip.extension))
       else
         Vanilla::Renderers::Base
       end
@@ -102,6 +104,16 @@ module Vanilla
     end
 
     private
+
+    def renderer_for_extension(extension)
+      mapping = Hash.new("Base")
+      mapping["markdown"] = "Markdown"
+      mapping["textile"] = "Textile"
+      mapping["erb"] = "Erb"
+      mapping["rb"] = "Ruby"
+      mapping["haml"] = "Haml"
+      mapping[extension]
+    end
 
     def prepare_configuration(config_file)
       config_file ||= "config.yml"

@@ -46,6 +46,21 @@ describe Vanilla::App do
       assert_equal Vanilla::Renderers::Raw, @app.renderer_for(snip)
     end
 
+    context "using the snip extension" do
+      {
+        "markdown" => Vanilla::Renderers::Markdown,
+        "textile" => Vanilla::Renderers::Textile,
+        "erb" => Vanilla::Renderers::Erb,
+        "rb" => Vanilla::Renderers::Ruby,
+        "haml" => Vanilla::Renderers::Haml
+      }.each do |extension, renderer|
+        should "return the renderer #{renderer} when the snip has extension #{extension}" do
+          snip = create_snip(:name => "blah", :extension => extension)
+          assert_equal renderer, @app.renderer_for(snip)
+        end
+      end
+    end
+
     should "return Vanilla::Renderers::Base if no render_as property exists" do
       snip = create_snip(:name => "blah")
       assert_equal Vanilla::Renderers::Base, @app.renderer_for(snip)
