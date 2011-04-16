@@ -94,6 +94,15 @@ context "When presenting" do
     end
   end
 
+  context "and a custom default renderer has been provided" do
+    should "use that renderer" do
+      @app = Vanilla::App.new(:default_renderer => ::Vanilla::Renderers::Bold)
+      create_snip :name => "layout", :content => "{current_snip}", :render_as => "Base"
+      create_snip :name => "test", :content => "test"
+      assert_response_body "<b>test</b>", "/test"
+    end
+  end
+
   context "and a missing snip is requested" do
     should "render missing snip content in the main template" do
       assert_response_body "<tag>Couldn't find snip #{LinkTo.new(@app).handle("missing_snip")}</tag>", "/missing_snip"

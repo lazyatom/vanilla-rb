@@ -81,12 +81,16 @@ module Vanilla
       elsif snip && snip.extension && !snip.extension.empty?
         Vanilla::Renderers.const_get(renderer_for_extension(snip.extension))
       else
-        Vanilla::Renderers::Base
+        default_renderer
       end
     end
 
     def default_layout_snip
       soup[config[:default_layout_snip] || 'layout']
+    end
+
+    def default_renderer
+      config[:default_renderer] || Vanilla::Renderers::Base
     end
 
     def layout_for(snip)
