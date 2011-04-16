@@ -48,7 +48,7 @@ module Vanilla
       request.path_info
     end
 
-    URL_ROOT          = /\A\/\Z/                                  # i.e. /
+    URL_ROOT          = /\A\/?\Z/                                  # i.e. / or nothing
     URL_SNIP          = /\A\/([\w\-\s]+)(\/|\.(\w+))?\Z/            # i.e. /start, /start.html
     URL_SNIP_AND_PART = /\A\/([\w\-\s]+)\/([\w\-\s]+)(\/|\.(\w+))?\Z/ # i.e. /blah/part, /blah/part.raw
 
