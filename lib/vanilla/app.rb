@@ -13,8 +13,11 @@ module Vanilla
 
     attr_reader :request, :response, :config, :soup
 
-    def initialize(config_file=nil)
-      prepare_configuration(config_file)
+    def initialize(config={})
+      @config = config
+      if @config[:soup].nil? && @config[:soups].nil?
+        @config.merge!(:soup => File.expand_path("soup"))
+      end
       @soup = prepare_soup(config)
     end
 
@@ -113,15 +116,6 @@ module Vanilla
       mapping["rb"] = "Ruby"
       mapping["haml"] = "Haml"
       mapping[extension]
-    end
-
-    def prepare_configuration(config_file)
-      config_file ||= "config.yml"
-      @config = YAML.load(File.open(config_file)) rescue {}
-      @config[:filename] = config_file
-      def @config.save!
-        File.open(self[:filename], 'w') { |f| f.puts self.to_yaml }
-      end
     end
 
     def prepare_soup(config)

@@ -3,7 +3,7 @@ require 'bundler/setup'
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 require "kintama"
-require "mocha"
+require "kintama/mocha"
 require "fileutils"
 require "rack/mock"
 require "vanilla"
@@ -11,9 +11,8 @@ require "vanilla"
 module Vanilla
   module Test
     def setup_clean_environment
-      FileUtils.mkdir_p(File.dirname(config_file_for_tests))
-      File.open(config_file_for_tests, 'w') { |f| f.write({:soup => soup_path}.to_yaml) }
-      @app = Vanilla::App.new(config_file_for_tests)
+      clean_environment
+      @app = Vanilla::App.new(:soup => soup_path)
 
       require "vanilla/dynasnips/current_snip"
       @app.soup << CurrentSnip.snip_attributes
@@ -56,16 +55,12 @@ module Vanilla
       File.join(File.dirname(__FILE__), "tmp")
     end
 
-    def config_file_for_tests
-      File.join(test_app_directory, "config.yml")
-    end
-
-    def config_for_tests(options={})
-      File.open(config_file_for_tests, 'w') { |f| f.write({:soup => soup_path}.update(options).to_yaml) }
-    end
-
     def soup_path
       File.expand_path(File.join(test_app_directory, "soup"))
+    end
+
+    def clean_environment
+      FileUtils.rm_rf(test_app_directory)
     end
   end
 end
@@ -76,16 +71,5 @@ Kintama.setup do
 end
 
 Kintama.teardown do
-  FileUtils.rm_rf(test_app_directory)
-end
-
-Kintama.include Mocha::API
-Kintama.teardown do
-  begin
-    mocha_verify
-  rescue Mocha::ExpectationError => e
-    raise e
-  ensure
-    mocha_teardown
-  end
+  clean_environment
 end

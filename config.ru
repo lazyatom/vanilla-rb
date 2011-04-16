@@ -5,6 +5,7 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[lib])
 require 'vanilla'
 require 'vanilla/static'
 
-app = Vanilla::App.new(ENV['VANILLA_CONFIG'])
+config = YAML.parse_file(ENV['VANILLA_CONFIG'])
+app = Vanilla::App.new(config)
 use Vanilla::Static, File.join(File.dirname(__FILE__), 'public')
 run app

@@ -11,17 +11,6 @@ describe Vanilla::Request do
     should "set format to 'html'" do
       assert_equal "html", @request.format
     end
-
-    context "with a start snip configuration set" do
-      setup do
-        config_for_tests(:root_snip => "custom")
-        @app = Vanilla::App.new(config_file_for_tests)
-      end
-
-      should "use specified snip as default" do
-        assert_equal "custom", Vanilla::Request.new(mock_env_for_url("/"), @app).snip_name
-      end
-    end
   end
 
   context "when requesting urls" do

@@ -13,32 +13,22 @@ describe Vanilla::App do
   end
 
   context "when being configured" do
-    should "load a config file from the current working directory by default" do
-      File.expects(:open).with("config.yml").returns(StringIO.new({:soup => soup_path}.to_yaml))
-      Vanilla::App.new
+    should "default the root snip to 'start'" do
+      create_snip :name => "start", :content => "default"
+      assert_response_body "default", "/"
     end
 
-    should "load a config file given" do
-      File.open("/tmp/vanilla_config.yml", "w") { |f| f.write({:soup => soup_path, :hello => true}.to_yaml) }
-      app = Vanilla::App.new("/tmp/vanilla_config.yml")
-      assert app.config[:hello]
-    end
-
-    should "allow saving of configuration to the same file it was loaded from" do
-      config_file = "/tmp/vanilla_config.yml"
-      File.open(config_file, "w") { |f| f.write({:soup => soup_path, :hello => true}.to_yaml) }
-      app = Vanilla::App.new(config_file)
-      app.config[:saved] = true
-      app.config.save!
-
-      config = YAML.load(File.open(config_file))
-      assert config[:saved]
+    should "allow a customised root snip" do
+      create_snip :name => "start", :content => "default"
+      create_snip :name => "custom", :content => "custom"
+      @app = Vanilla::App.new(:soup => soup_path, :root_snip => "custom")
+      assert_response_body "custom", "/"
     end
   end
 
   context "when detecting the snip renderer" do
     setup do
-      @app = Vanilla::App.new(config_file_for_tests)
+      @app = Vanilla::App.new
     end
 
     should "return the constant refered to in the render_as property of the snip" do
