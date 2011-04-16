@@ -7,7 +7,7 @@ What you've got:
   config.ru  - this is the rack configuration, which is used to start
                the application by your webserver
   config.yml - the configuration; by default it specifies the directory
-               which contains the soup, and a cookie secret
+               which contains the soup(s)
   soup/      - the default soup directory, where your snips are stored
   
 
@@ -16,32 +16,23 @@ For an overview of vanilla, start your site and look at the tutorial:
   $ rackup   # then open http://localhost:9292/vanilla-rb-tutorial
 
 
-By default, you won't be able to edit anything on the site, because
-you can't log in. If you want to edit snips on the site, you'll need
-to create a user.
-
-  $ rake vanilla:add_user
-
-Your other option is to edit the soup directly; you can edit any file
-in the soup directory using your favourite editor, and the changes
-will be reflected automatically. The snip files are slightly modified
-YAML files. Here's one describing Soup itself, in soup/soup.yml:
+You can edit any file in the soup directory using your favourite editor, 
+and the changes will be reflected automatically. The snip files are
+slightly modified YAML files. Here's one describing Soup itself, in 
+soup/system/tutorial/soup.snip:
 
   Soup is a data store supporting the {link_to snip}-space that {link_to vanilla-rb} expects.
 
   It's hosted on github [here][github].
   
   [github]: http://github.com/lazyatom/soup
-  --- # Soup attributes
+
   :name: soup
   :created_at: 2009-09-27 14:14:16.096231 +01:00
   :updated_at: 2009-09-27 14:14:16.096232 +01:00
   :render_as: Markdown
 
-The 'content' of the snip is at the top of the file, followed by
-
-  --- # Soup attributes
-  
-which starts the rest of the snip attributes. Again, see the online
-tutorial for information about what each attribute signifies.
+The 'content' of the snip is at the top of the file, followed by the
+rest of the snip attributes. Again, see the online tutorial for information
+about what each attribute signifies.
   
