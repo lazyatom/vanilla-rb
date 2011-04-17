@@ -50,11 +50,10 @@ module Vanilla
             # Render the snip or snip part with the given args, and the current
             # context, but with the default renderer for that snip. We dispatch
             # *back* out to the root Vanilla.render method to do this.
-            snip = soup[snip_name]
-            if snip
+            if snip = soup[snip_name]
               app.render(snip, snip_attribute, snip_args, enclosing_snip)
             else
-              app.render_missing_snip(snip_name)
+              render_missing_snip(snip_name)
             end
           else
             "malformed snip reference: #{$1.inspect}"
@@ -65,6 +64,10 @@ module Vanilla
       def parse_snip_reference(string)
         @parser ||= SnipReferenceParser.new
         @parser.parse(string)
+      end
+
+      def render_missing_snip(snip_name)
+        "[snip '#{snip_name}' cannot be found]"
       end
 
       # Default rendering behaviour. Subclasses shouldn't really need to touch this.
