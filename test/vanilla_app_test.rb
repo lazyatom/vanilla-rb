@@ -51,6 +51,12 @@ describe Vanilla::App do
       end
     end
 
+    should "respect snip extensions pass in the config" do
+      app = Vanilla::App.new(:extensions => {"markdown" => "Bold"})
+      snip = create_snip(:name => "blah", :extension => "markdown")
+      assert_equal Vanilla::Renderers::Bold, app.renderer_for(snip)
+    end
+
     should "return Vanilla::Renderers::Base if no render_as property exists" do
       snip = create_snip(:name => "blah")
       assert_equal Vanilla::Renderers::Base, @app.renderer_for(snip)

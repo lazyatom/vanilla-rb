@@ -45,9 +45,9 @@ module Vanilla
       when 'html', nil
         render(layout_for(snip))
       when 'raw', 'css', 'js'
-        Renderers::Raw.new(self).render(snip, part || :content)
+        Renderers::Raw.new(self).render(snip, part)
       when 'text', 'atom', 'xml'
-        render(snip, part || :content)
+        render(snip, part)
       else
         raise "Unknown format '#{format}'"
       end
@@ -107,14 +107,17 @@ module Vanilla
 
     private
 
+    DEFAULT_EXTENSION_RENDERERS = Hash.new("Base").merge({
+      "markdown" => "Markdown",
+      "textile" => "Textile",
+      "erb" => "Erb",
+      "rb" => "Ruby",
+      "haml" => "Haml"
+    })
+
     def renderer_for_extension(extension)
-      mapping = Hash.new("Base")
-      mapping["markdown"] = "Markdown"
-      mapping["textile"] = "Textile"
-      mapping["erb"] = "Erb"
-      mapping["rb"] = "Ruby"
-      mapping["haml"] = "Haml"
-      mapping[extension]
+      @renderer_mapping ||= DEFAULT_EXTENSION_RENDERERS.merge(@config[:extensions] || {})
+      @renderer_mapping[extension]
     end
 
     def prepare_soup(config)

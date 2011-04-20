@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-03-01}
+  s.date = %q{2011-04-16}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -28,17 +28,18 @@ Gem::Specification.new do |s|
     "test/ruby_renderer_test.rb",
     "test/snip_reference_parser_test.rb",
     "test/snip_reference_test.rb",
+    "test/soup/current_snip.snip",
+    "test/soup/layout.snip",
+    "test/soup/test.snip",
+    "test/soup/test_dyna.snip",
     "test/test_helper.rb",
     "test/vanilla_app_test.rb",
     "test/vanilla_presenting_test.rb",
     "test/vanilla_request_test.rb",
-    "lib/tasks",
     "lib/tasks/vanilla.rake",
-    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
-    "lib/vanilla/dynasnips",
     "lib/vanilla/dynasnips/comments.rb",
     "lib/vanilla/dynasnips/current_snip.rb",
     "lib/vanilla/dynasnips/debug.rb",
@@ -51,7 +52,6 @@ Gem::Specification.new do |s|
     "lib/vanilla/dynasnips/raw.rb",
     "lib/vanilla/dynasnips/title.rb",
     "lib/vanilla/dynasnips/url_to.rb",
-    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -65,12 +65,9 @@ Gem::Specification.new do |s|
     "lib/vanilla/snip_reference.rb",
     "lib/vanilla/snip_reference.treetop",
     "lib/vanilla/snip_reference_parser.rb",
-    "lib/vanilla/snips",
-    "lib/vanilla/snips/system",
     "lib/vanilla/snips/system/layout.snip",
     "lib/vanilla/snips/system/start.snip",
     "lib/vanilla/snips/system/system.snip",
-    "lib/vanilla/snips/tutorial",
     "lib/vanilla/snips/tutorial/bad_dynasnip.snip",
     "lib/vanilla/snips/tutorial/hello_world.snip",
     "lib/vanilla/snips/tutorial/markdown_example.snip",
@@ -92,10 +89,11 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.4.1}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
