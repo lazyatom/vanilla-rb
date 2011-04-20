@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vanilla}
-  s.version = "1.13.2"
+  s.version = "1.13.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-04-16}
+  s.date = %q{2011-04-20}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -28,6 +28,12 @@ Gem::Specification.new do |s|
     "test/ruby_renderer_test.rb",
     "test/snip_reference_parser_test.rb",
     "test/snip_reference_test.rb",
+    "test/soup/blah.snip",
+    "test/soup/blah.snip.erb",
+    "test/soup/blah.snip.haml",
+    "test/soup/blah.snip.markdown",
+    "test/soup/blah.snip.rb",
+    "test/soup/blah.snip.textile",
     "test/soup/current_snip.snip",
     "test/soup/layout.snip",
     "test/soup/test.snip",
@@ -89,11 +95,10 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.4.1}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
@@ -104,7 +109,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_runtime_dependency(%q<haml>, [">= 0"])
-      s.add_development_dependency(%q<kintama>, [">= 0"])
+      s.add_development_dependency(%q<kintama>, [">= 0.1.5"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
@@ -114,7 +119,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_dependency(%q<haml>, [">= 0"])
-      s.add_dependency(%q<kintama>, [">= 0"])
+      s.add_dependency(%q<kintama>, [">= 0.1.5"])
       s.add_dependency(%q<mocha>, [">= 0"])
     end
   else
@@ -125,7 +130,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
     s.add_dependency(%q<treetop>, [">= 1.4.1"])
     s.add_dependency(%q<haml>, [">= 0"])
-    s.add_dependency(%q<kintama>, [">= 0"])
+    s.add_dependency(%q<kintama>, [">= 0.1.5"])
     s.add_dependency(%q<mocha>, [">= 0"])
   end
 end
