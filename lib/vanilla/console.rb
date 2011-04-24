@@ -3,7 +3,8 @@ require 'irb'
 
 def app(reload=false)
   @__vanilla_console_app = nil if reload
-  @__vanilla_console_app ||= Vanilla::App.new(ENV['VANILLA_CONFIG'])
+  config = YAML.parse_file(ENV['VANILLA_CONFIG']) rescue {}
+  @__vanilla_console_app ||= Vanilla::App.new(config)
 end
 
 puts "The Soup is simmering."
