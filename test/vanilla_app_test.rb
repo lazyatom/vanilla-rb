@@ -51,8 +51,8 @@ describe Vanilla::App do
       end
     end
 
-    should "respect snip extensions pass in the config" do
-      app = Vanilla::App.new(:extensions => {"markdown" => "Bold"})
+    should "respect snip renderers passed in the config" do
+      app = Vanilla::App.new(:renderers => {"markdown" => "Vanilla::Renderers::Bold"})
       snip = create_snip(:name => "blah", :extension => "markdown")
       assert_equal Vanilla::Renderers::Bold, app.renderer_for(snip)
     end
@@ -72,12 +72,12 @@ describe Vanilla::App do
       assert_raises(NameError) { @app.renderer_for(snip) }
     end
 
-    should "load constants outside of the Vanilla::Renderers module" do
+    should "load constants presented as a string" do
       class ::MyRenderer
       end
-
-      snip = create_snip(:name => "blah", :render_as => "MyRenderer")
-      assert_equal MyRenderer, @app.renderer_for(snip)
+      app = Vanilla::App.new(:renderers => {"my_renderer" => "MyRenderer"})
+      snip = create_snip(:name => "blah", :render_as => "my_renderer")
+      assert_equal MyRenderer, app.renderer_for(snip)
     end
   end
 end

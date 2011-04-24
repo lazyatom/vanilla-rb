@@ -1,5 +1,3 @@
-require 'vanilla/renderers/base'
-
 require 'rubygems'
 gem 'BlueCloth' # from http://www.deveiate.org/projects/BlueCloth
 require 'bluecloth'

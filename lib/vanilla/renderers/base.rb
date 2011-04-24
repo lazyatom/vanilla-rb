@@ -1,4 +1,3 @@
-require 'vanilla/app'
 require 'vanilla/snip_reference_parser'
 
 module Vanilla

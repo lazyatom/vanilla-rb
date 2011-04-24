@@ -1,5 +1,3 @@
-require 'vanilla/renderers/base'
-
 require 'erb'
 include ERB::Util
 

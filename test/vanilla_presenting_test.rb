@@ -71,7 +71,7 @@ context "When presenting" do
     end
   end
 
-  class ::Vanilla::Renderers::Custom < ::Vanilla::Renderers::Base
+  class CustomRenderer < ::Vanilla::Renderers::Base
     def default_layout_snip
       soup['custom-layout']
     end
@@ -79,17 +79,18 @@ context "When presenting" do
 
   context "a snip using a renderer that specifies a template" do
     setup do
+      @app.register_renderer CustomRenderer, "custom"
       create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
     end
 
     should "use the renderer's specified layout" do
-      create_snip :name => "test", :content => "this is a test", :render_as => "Custom"
+      create_snip :name => "test", :content => "this is a test", :render_as => "custom"
       assert_response_body "<custom>this is a test</custom>", "/test"
     end
 
     should "use the snips layout when given" do
       create_snip :name => "snip-custom-layout", :content => "<snipcustom>{current_snip}</snipcustom>"
-      create_snip :name => "test", :content => "this is a test", :render_as => "Custom", :layout => "snip-custom-layout"
+      create_snip :name => "test", :content => "this is a test", :render_as => "custom", :layout => "snip-custom-layout"
       assert_response_body "<snipcustom>this is a test</snipcustom>", "/test"
     end
   end
@@ -97,7 +98,7 @@ context "When presenting" do
   context "and a custom default renderer has been provided" do
     should "use that renderer" do
       @app = Vanilla::App.new(:default_renderer => ::Vanilla::Renderers::Bold)
-      create_snip :name => "layout", :content => "{current_snip}", :render_as => "Base"
+      create_snip :name => "layout", :content => "{current_snip}", :render_as => "base"
       create_snip :name => "test", :content => "test"
       assert_response_body "<b>test</b>", "/test"
     end

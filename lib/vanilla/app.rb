@@ -1,15 +1,8 @@
 require 'soup'
-require 'vanilla/request'
-require 'vanilla/routes'
-
-# Require the base set of renderers
-require 'vanilla/renderers/base'
-require 'vanilla/renderers/raw'
-require 'vanilla/renderers/erb'
 
 module Vanilla
   class App
-    include Routes
+    include Vanilla::Routes
 
     attr_reader :request, :response, :config, :soup
 
@@ -19,6 +12,7 @@ module Vanilla
         @config.merge!(:soup => File.expand_path("soup"))
       end
       @soup = prepare_soup(config)
+      prepare_renderers(config[:renderers])
     end
 
     # Returns a Rack-appropriate 3-element array (via Rack::Response#finish)
@@ -76,10 +70,8 @@ module Vanilla
 
     # Returns the renderer class for a given snip
     def renderer_for(snip)
-      if snip && snip.render_as && !snip.render_as.empty?
-        Vanilla::Renderers.const_get(snip.render_as)
-      elsif snip && snip.extension && !snip.extension.empty?
-        Vanilla::Renderers.const_get(renderer_for_extension(snip.extension))
+      if snip
+        find_renderer(snip.render_as || snip.extension)
       else
         default_renderer
       end
@@ -87,10 +79,6 @@ module Vanilla
 
     def default_layout_snip
       soup[config[:default_layout_snip] || 'layout']
-    end
-
-    def default_renderer
-      config[:default_renderer] || Vanilla::Renderers::Base
     end
 
     def layout_for(snip)
@@ -105,19 +93,39 @@ module Vanilla
       @soup << attributes
     end
 
+    def register_renderer(klass, *types)
+      types.each do |type|
+        if klass.is_a?(String)
+          klass = klass.split("::").inject(Object) { |o, name| o.const_get(name) }
+        end
+        @renderers[type.to_s] = klass
+      end
+    end
+
     private
 
-    DEFAULT_EXTENSION_RENDERERS = Hash.new("Base").merge({
-      "markdown" => "Markdown",
-      "textile" => "Textile",
-      "erb" => "Erb",
-      "rb" => "Ruby",
-      "haml" => "Haml"
-    })
+    def prepare_renderers(additional_renderers={})
+      @renderers = Hash.new(config[:default_renderer] || Vanilla::Renderers::Base)
+      @renderers.merge!({
+        "base" => Vanilla::Renderers::Base,
+        "markdown" => Vanilla::Renderers::Markdown,
+        "bold" => Vanilla::Renderers::Bold,
+        "erb" => Vanilla::Renderers::Erb,
+        "rb" => Vanilla::Renderers::Ruby,
+        "ruby" => Vanilla::Renderers::Ruby,
+        "haml" => Vanilla::Renderers::Haml,
+        "raw" => Vanilla::Renderers::Raw,
+        "textile" => Vanilla::Renderers::Textile
+      })
+      additional_renderers.each { |name, klass| register_renderer(klass, name) } if additional_renderers
+    end
 
-    def renderer_for_extension(extension)
-      @renderer_mapping ||= DEFAULT_EXTENSION_RENDERERS.merge(@config[:extensions] || {})
-      @renderer_mapping[extension]
+    def find_renderer(name)
+      @renderers[(name ? name.downcase : nil)]
+    end
+
+    def default_renderer
+      @renderers[nil]
     end
 
     def prepare_soup(config)

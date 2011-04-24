@@ -1,5 +1,3 @@
-require 'vanilla/renderers/base'
-
 require 'rubygems'
 gem 'RedCloth'
 require 'redcloth'

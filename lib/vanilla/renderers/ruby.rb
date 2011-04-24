@@ -1,5 +1,3 @@
-require 'vanilla/renderers/base'
-
 module Vanilla::Renderers
   # Snips that render_as "Ruby" should define a class.
   # The class should have instance methods for any HTTP request methods that the dynasnip
