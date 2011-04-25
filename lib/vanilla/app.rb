@@ -6,6 +6,18 @@ module Vanilla
 
     attr_reader :request, :response, :config, :soup
 
+    # Create a new Vanilla application
+    # Configuration options:
+    #
+    #  :soup - provide the path to the soup data
+    #  :soups - provide an array of paths to soup data
+    #  :renderers - a hash of names to classes
+    #  :default_renderer - the class to use when no renderer is provided;
+    #                      defaults to 'Vanilla::Renderers::Base'
+    #  :default_layout_snip - the snip to use as a layout when rendering to HTML;
+    #                         defaults to 'layout'
+    #  :root_snip - the snip to load for the root ('/') url;
+    #               defaults to 'start'
     def initialize(config={})
       @config = config
       if @config[:soup].nil? && @config[:soups].nil?
