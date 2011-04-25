@@ -18,6 +18,11 @@ describe Vanilla::Renderers::Base do
     assert_response_body "loading content content", "/snip_with_inclusions"
   end
 
+  should "be able to render a snip attribute" do
+    create_snip(:name => "snip_with_inclusions", :content => "loading {test.part}")
+    assert_response_body "loading part content", "/snip_with_inclusions"
+  end
+
   should "perform snip inclusion when rendering a part" do
     create_snip(:name => "snip_with_inclusions", :content => "other content", :part => "loading {test}")
     assert_response_body "loading content content", "/snip_with_inclusions/part"
