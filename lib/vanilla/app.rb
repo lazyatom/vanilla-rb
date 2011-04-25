@@ -56,18 +56,6 @@ module Vanilla
       end
     end
 
-    # Given the snip and parameters, yield an instance of the appropriate
-    # Vanilla::Render::Base subclass
-    def rendering(snip)
-      renderer_instance = renderer_for(snip).new(self)
-      yield renderer_instance
-    rescue Exception => e
-      snip_name = snip ? snip.name : nil
-      "<pre>[Error rendering '#{snip_name}' - \"" +
-        e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" +
-        e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
-    end
-
     # Returns the renderer class for a given snip
     def renderer_for(snip)
       if snip
@@ -126,6 +114,16 @@ module Vanilla
 
     def default_renderer
       @renderers[nil]
+    end
+
+    def rendering(snip)
+      renderer_instance = renderer_for(snip).new(self)
+      yield renderer_instance
+    rescue Exception => e
+      snip_name = snip ? snip.name : nil
+      "<pre>[Error rendering '#{snip_name}' - \"" +
+        e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" +
+        e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
     end
 
     def prepare_soup(config)
