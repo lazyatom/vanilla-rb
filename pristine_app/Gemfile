@@ -1,0 +1,3 @@
+source :rubygems
+
+gem 'vanilla', :path => File.expand_path("../..", __FILE__)

@@ -6,4 +6,5 @@ pkg
 rdoc
 pristine_app/tmp
 pristine_app/log
+pristine_app/Gemfile.lock
 test/soup
