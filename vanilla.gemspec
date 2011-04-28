@@ -39,7 +39,6 @@ Gem::Specification.new do |s|
     "test/vanilla_app_test.rb",
     "test/vanilla_presenting_test.rb",
     "test/vanilla_request_test.rb",
-    "lib/tasks/vanilla.rake",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
@@ -62,6 +61,7 @@ Gem::Specification.new do |s|
     "bin/vanilla",
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
+    "pristine_app/Gemfile.lock",
     "pristine_app/README",
     "pristine_app/soups/base/layout.snip.erb",
     "pristine_app/soups/base/start.snip",
@@ -86,7 +86,7 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/textile_example.snip",
     "pristine_app/soups/tutorial/tutorial-another-snip.snip",
     "pristine_app/soups/tutorial/tutorial-basic-snip-inclusion.snip",
-    "pristine_app/soups/tutorial/vanilla-rb-tutorial.snip",
+    "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
     "pristine_app/soups/tutorial/vanilla.snip"
   ]

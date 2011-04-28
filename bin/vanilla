@@ -8,7 +8,7 @@ def create(new_app_dir)
   File.open(File.join(new_app_dir, "Gemfile"), "w") do |f|
     f.write "source :rubygems\n\n# Vanilla itself.\ngem 'vanilla', '#{Vanilla::VERSION}'"
   end
-  puts "Created a new vanilla.rb app in #{new_app_dir}"
+  puts File.readlines(File.join(new_app_dir, "README"))[0..16].join
   FileUtils.cd(new_app_dir)
 end
 

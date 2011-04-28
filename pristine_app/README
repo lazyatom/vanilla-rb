@@ -13,7 +13,7 @@ What you've got:
 
 For an overview of vanilla, start your site and look at the tutorial:
 
-  $ rackup   # then open http://localhost:9292/vanilla-rb-tutorial
+  $ rackup   # then open http://localhost:9292/tutorial
 
 
 You can edit any file in the soup directory using your favourite editor,
