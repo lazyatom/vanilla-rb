@@ -1,5 +1,4 @@
 require 'vanilla'
-require 'irb'
 
 def app(reload=false)
   if !@__vanilla_console_app || reload
@@ -8,5 +7,3 @@ def app(reload=false)
   end
   @__vanilla_console_app
 end
-
-puts "The Soup is simmering."

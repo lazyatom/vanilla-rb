@@ -35,7 +35,7 @@ if Object.const_defined?(:Gem)
     s.rdoc_options      = %w(--main README)
 
     # Add any extra files to include in the gem
-    s.files             = %w(config.example.yml config.ru Rakefile README README_FOR_APP) + Dir.glob("{test,lib,bin,public}/**/*")
+    s.files             = %w(Rakefile README) + Dir.glob("{test,lib,bin,pristine_app}/**/*")
     s.executables       = ['vanilla']
     s.require_paths     = ["lib"]
 

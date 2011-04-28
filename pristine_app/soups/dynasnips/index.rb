@@ -7,4 +7,6 @@ class Index < Dynasnip
     }
     "<ol>#{list}</ol>"
   end
+
+  self
 end

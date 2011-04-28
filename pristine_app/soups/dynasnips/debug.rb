@@ -6,8 +6,9 @@ class Debug < Dynasnip
   def get(*args)
     app.request.inspect
   end
-  
+
   def post(*args)
     "You posted! " + app.request.inspect
   end
+  self
 end

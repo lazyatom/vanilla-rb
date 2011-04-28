@@ -1,9 +1,38 @@
 #!/usr/bin/env ruby
-require 'rubygems'
-require 'rake'
-load File.join(File.dirname(__FILE__), *%w[.. lib tasks vanilla.rake])
 
-mkdir(ARGV[0])
-cd(ARGV[0])
+def create(new_app_dir)
+  require 'fileutils'
+  pristine_app = File.expand_path("../../pristine_app", __FILE__)
+  FileUtils.cp_r(pristine_app, new_app_dir)
+  require 'vanilla'
+  File.open(File.join(new_app_dir, "Gemfile"), "w") do |f|
+    f.write "source :rubygems\n\n# Vanilla itself.\ngem 'vanilla', '#{Vanilla::VERSION}'"
+  end
+  puts "Created a new vanilla.rb app in #{new_app_dir}"
+  FileUtils.cd(new_app_dir)
+end
 
-Rake::Task['vanilla:setup'].invoke
+def console
+  $LOAD_PATH << "lib"
+  require "rubygems"
+  require "bundler/setup"
+  require "irb"
+  require "vanilla/console"
+  ARGV.clear
+  puts "The Soup is simmering."
+  IRB.start 
+end
+
+def upgrade
+  # TODO
+  puts "TODO, but should be easier thanks to multi-space soup."
+end
+
+case ARGV[0]
+when "console"
+  console
+when "upgrade"
+  upgrade
+else
+  create(ARGV[0])
+end

@@ -1,0 +1,36 @@
+                      WELCOME IN VANILLA
+                                 Vanilla
+                                 vanilla
+                                 .........vanillaaaaaAAAAAAAAAAA
+
+What you've got:
+
+  Gemfile    - specifying your dependencies
+  config.ru  - this is the rack configuration, which is used to start
+               the application by your webserver
+  soup/      - the default soup directory, where your snips are stored
+
+
+For an overview of vanilla, start your site and look at the tutorial:
+
+  $ rackup   # then open http://localhost:9292/vanilla-rb-tutorial
+
+
+You can edit any file in the soup directory using your favourite editor,
+and the changes will be reflected automatically. The snip files are
+slightly modified YAML files. Here's an example, which you might save
+in a file called 'soup.snip':
+
+
+    Soup is a data store supporting the {link_to snip}-space that 
+    {link_to vanilla-rb} expects.
+
+    It's hosted on github [here](http://github.com/lazyatom/soup).
+
+    :created_at: 2011-05-23 14:14:16 +01:00
+    :updated_at: 2009-05-23 15:23:22 +01:00
+    :render_as: Markdown
+
+
+The 'content' of the snip is at the top of the file, followed by the
+rest of the snip attributes on lines starting with ':'.

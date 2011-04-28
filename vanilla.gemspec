@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-04-26}
+  s.date = %q{2011-04-28}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -14,11 +14,8 @@ Gem::Specification.new do |s|
     "README"
   ]
   s.files = [
-    "config.example.yml",
-    "config.ru",
     "Rakefile",
     "README",
-    "README_FOR_APP",
     "test/base_renderer_test.rb",
     "test/dynasnip_test.rb",
     "test/erb_renderer_test.rb",
@@ -28,7 +25,6 @@ Gem::Specification.new do |s|
     "test/ruby_renderer_test.rb",
     "test/snip_reference_parser_test.rb",
     "test/snip_reference_test.rb",
-    "test/soup",
     "test/soup/blah.snip",
     "test/soup/blah.snip.erb",
     "test/soup/blah.snip.haml",
@@ -43,26 +39,10 @@ Gem::Specification.new do |s|
     "test/vanilla_app_test.rb",
     "test/vanilla_presenting_test.rb",
     "test/vanilla_request_test.rb",
-    "lib/tasks",
     "lib/tasks/vanilla.rake",
-    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
-    "lib/vanilla/dynasnips",
-    "lib/vanilla/dynasnips/comments.rb",
-    "lib/vanilla/dynasnips/current_snip.rb",
-    "lib/vanilla/dynasnips/debug.rb",
-    "lib/vanilla/dynasnips/index.rb",
-    "lib/vanilla/dynasnips/kind.rb",
-    "lib/vanilla/dynasnips/link_to.rb",
-    "lib/vanilla/dynasnips/link_to_current_snip.rb",
-    "lib/vanilla/dynasnips/pre.rb",
-    "lib/vanilla/dynasnips/rand.rb",
-    "lib/vanilla/dynasnips/raw.rb",
-    "lib/vanilla/dynasnips/title.rb",
-    "lib/vanilla/dynasnips/url_to.rb",
-    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -77,37 +57,48 @@ Gem::Specification.new do |s|
     "lib/vanilla/snip_reference.rb",
     "lib/vanilla/snip_reference.treetop",
     "lib/vanilla/snip_reference_parser.rb",
-    "lib/vanilla/snips",
-    "lib/vanilla/snips/system",
-    "lib/vanilla/snips/system/layout.snip",
-    "lib/vanilla/snips/system/start.snip",
-    "lib/vanilla/snips/system/system.snip",
-    "lib/vanilla/snips/tutorial",
-    "lib/vanilla/snips/tutorial/bad_dynasnip.snip",
-    "lib/vanilla/snips/tutorial/hello_world.snip",
-    "lib/vanilla/snips/tutorial/markdown_example.snip",
-    "lib/vanilla/snips/tutorial/snip.snip",
-    "lib/vanilla/snips/tutorial/soup.snip",
-    "lib/vanilla/snips/tutorial/test.snip",
-    "lib/vanilla/snips/tutorial/textile_example.snip",
-    "lib/vanilla/snips/tutorial/tutorial-another-snip.snip",
-    "lib/vanilla/snips/tutorial/tutorial-basic-snip-inclusion.snip",
-    "lib/vanilla/snips/tutorial/vanilla-rb-tutorial.snip",
-    "lib/vanilla/snips/tutorial/vanilla-rb.snip",
-    "lib/vanilla/snips/tutorial/vanilla.snip",
     "lib/vanilla/static.rb",
     "lib/vanilla.rb",
     "bin/vanilla",
-    "public/hatch.png"
+    "pristine_app/config.ru",
+    "pristine_app/Gemfile",
+    "pristine_app/README",
+    "pristine_app/soups/base/layout.snip.erb",
+    "pristine_app/soups/base/start.snip",
+    "pristine_app/soups/dynasnips/current_snip.rb",
+    "pristine_app/soups/dynasnips/debug.rb",
+    "pristine_app/soups/dynasnips/index.rb",
+    "pristine_app/soups/dynasnips/link_to.rb",
+    "pristine_app/soups/dynasnips/link_to_current_snip.rb",
+    "pristine_app/soups/dynasnips/page_title.rb",
+    "pristine_app/soups/dynasnips/pre.rb",
+    "pristine_app/soups/dynasnips/raw.rb",
+    "pristine_app/soups/extras/comments.rb",
+    "pristine_app/soups/extras/kind.rb",
+    "pristine_app/soups/extras/rand.rb",
+    "pristine_app/soups/extras/url_to.rb",
+    "pristine_app/soups/tutorial/bad_dynasnip.snip",
+    "pristine_app/soups/tutorial/hello_world.snip",
+    "pristine_app/soups/tutorial/markdown_example.snip",
+    "pristine_app/soups/tutorial/snip.snip",
+    "pristine_app/soups/tutorial/soup.snip",
+    "pristine_app/soups/tutorial/test.snip",
+    "pristine_app/soups/tutorial/textile_example.snip",
+    "pristine_app/soups/tutorial/tutorial-another-snip.snip",
+    "pristine_app/soups/tutorial/tutorial-basic-snip-inclusion.snip",
+    "pristine_app/soups/tutorial/vanilla-rb-tutorial.snip",
+    "pristine_app/soups/tutorial/vanilla-rb.snip",
+    "pristine_app/soups/tutorial/vanilla.snip"
   ]
   s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.4.1}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
+    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
