@@ -109,7 +109,7 @@ context "When presenting" do
 
   context "and a missing snip is requested" do
     should "render missing snip content in the main template" do
-      assert_response_body "<tag>Couldn't find snip #{LinkTo.new(@app).handle("missing_snip")}</tag>", "/missing_snip"
+      assert_response_body %{<tag>Couldn't find snip "missing_snip"</tag>}, "/missing_snip"
     end
 
     should "have a 404 response code" do

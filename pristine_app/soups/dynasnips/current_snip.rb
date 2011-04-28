@@ -6,26 +6,22 @@ class CurrentSnip < Dynasnip
     'snip' value in the parameters. This way, it can be used in templates to place the currently
     requested snip, in its rendered form, within the page.
 
-    It can also be used to determine the name of the current snip in a consistent way:
+    It can also be used to determine an attribute of the current snip in a consistent way:
 
       {current_snip name}
 
-    will output the name of the current snip, or the name of the snip currently being edited.
+    will output the name of the current snip.
   |
 
-  def handle(*args)
-    if args[0] == 'name'
-      if app.request.snip_name == 'edit' # we're editing so don't use this name
-        app.request.params[:snip_to_edit]
-      else
-        app.request.snip_name
-      end
+  def handle(attribute=nil)
+    if attribute
+      app.request.snip.__send__(attribute)
     else
       if app.request.snip
         app.render(app.request.snip, app.request.part)
       else
         app.response.status = 404
-        "Couldn't find snip {link_to #{app.request.snip_name}}"
+        %{Couldn't find snip "#{app.request.snip_name}"}
       end
     end
   end
