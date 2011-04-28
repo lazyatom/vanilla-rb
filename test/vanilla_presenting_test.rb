@@ -28,6 +28,10 @@ context "When presenting" do
       assert_equal 200, response_code_for("/test/part")
       assert_equal 200, response_code_for("/test/part.html")
     end
+
+    should "not allow rendering of the layout to produce infinite recursion" do
+      assert_response_body "Rendering of the current layout would result in infinite recursion.", "/layout"
+    end
   end
 
   context "as text" do

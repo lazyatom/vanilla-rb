@@ -49,7 +49,12 @@ module Vanilla
     def formatted_render(snip, part=nil, format=nil)
       case format
       when 'html', nil
-        render(layout_for(snip))
+        layout = layout_for(snip)
+        if layout == snip
+          "Rendering of the current layout would result in infinite recursion."
+        else
+          render(layout)
+        end
       when 'raw', 'css', 'js'
         Renderers::Raw.new(self).render(snip, part)
       when 'text', 'atom', 'xml'
