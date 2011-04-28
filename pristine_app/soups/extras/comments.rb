@@ -64,7 +64,7 @@ class Comments < Dynasnip
   }
 
   attribute :comment_form, %{
-    <form class="comments" action="/#{snip_name}?snip=SNIP_NAME" method="POST">
+    <form class="comments" action="/comments?snip=SNIP_NAME" method="POST">
       <label>Name: <input type="text" name="author"></input></label>
       <label>Email: <input type="text" name="email"></input></label>
       <label>Website: <input type="text" name="website"></input></label>
@@ -73,4 +73,6 @@ class Comments < Dynasnip
       <button>Submit</button>
     </form>
   }
+
+  self
 end

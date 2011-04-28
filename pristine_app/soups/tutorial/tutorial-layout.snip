@@ -1,0 +1,56 @@
+{tutorial-links}
+
+Layouts
+=======
+
+Since you almost certainly want your site to look good, one of the first things you'll want to change in your vanilla site is the layout.
+
+When the browser requests a snip, normally vanilla will present it within a _layout_ template. This would typically include a header, a footer, and any other peripheral markup that shouldn't be within the content of the snip itself. If you're familiar with the construction of web applications, this will be exactly as you expect.
+
+Layouts are just like any other snip - they can be sent through a renderer, and include other snips. The default layout snip is called, predictable, `layout.snip`, and here's the content:
+
+    {raw layout}
+
+When you request `/start`, this is the snip that's actually rendered first. If this snip was just text, that's all that would be returned; however, there are some dynasnip calls in here which help us actually return the content that the user requested.
+
+
+`current_snip`
+--------------
+
+The most significant is the call to `current_snip`. This figures out what snip was actually requested (e.g. if the url is `/start`, it's the {link_to start} snip), and renders it in place.
+
+Here's the source of `current_snip`:
+
+    {raw current_snip}
+
+The default case, as in our layout, is `app.render(app.request.snip, app.request.part)` - it delegates rendering back to the application, which then takes care of processing `start` using the right renderer and so on. This method call returns the fully rendered string, and vanilla replaces the call to the dynasnip with that output, placing our snip in the appropriate place in the layout.
+
+
+Other dynas
+-----------
+
+Of course, you can put other plain content in your layout, and other dynasnips too. In the provided layout there are calls to two other dynasnips.
+
+The first is `page_title`, which simply places a (hopefully) meaningful string in the title element of the page. Snips can set the title to be used by defining a `:page_title` attribute. As usual, the source explains it more clearly:
+
+    {raw page_title}
+
+The second dynasnip used is `link_to_current_snip`, which returns an HTML link to the snip that's currently being rendered. I'll let you figure out how to view the source yourself.
+
+
+Other layouts
+-------------
+
+Vanilla looks for a snip called `layout` by default, but this can be changed by passing in a `:default_layout` option to `Vanilla::App.new`, e.g.
+
+    Vanilla::App.new(:default_layout => "my_layout")
+
+
+You can also override the layout on a per-snip basis, simply by setting the `:layout` attribute of the snip to the name of the layout snip to use instead.
+
+Finally, if you implement a custom renderer class (see {link_to tutorial-renderers, "the renderers tutorial"}), you can also specify a layout to be used when the requested snip invokes that renderer. This can be useful if you have a particular kind of content that requires a different layout entirely.
+
+{tutorial-links}
+
+:render_as: Markdown
+:page_title: Tutorial - Layout

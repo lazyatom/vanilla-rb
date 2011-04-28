@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "test/ruby_renderer_test.rb",
     "test/snip_reference_parser_test.rb",
     "test/snip_reference_test.rb",
+    "test/soup",
     "test/soup/blah.snip",
     "test/soup/blah.snip.erb",
     "test/soup/blah.snip.haml",
@@ -39,9 +40,11 @@ Gem::Specification.new do |s|
     "test/vanilla_app_test.rb",
     "test/vanilla_presenting_test.rb",
     "test/vanilla_request_test.rb",
+    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
+    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -62,9 +65,13 @@ Gem::Specification.new do |s|
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
     "pristine_app/Gemfile.lock",
+    "pristine_app/public",
     "pristine_app/README",
-    "pristine_app/soups/base/layout.snip.erb",
+    "pristine_app/soups",
+    "pristine_app/soups/base",
+    "pristine_app/soups/base/layout.snip",
     "pristine_app/soups/base/start.snip",
+    "pristine_app/soups/dynasnips",
     "pristine_app/soups/dynasnips/current_snip.rb",
     "pristine_app/soups/dynasnips/debug.rb",
     "pristine_app/soups/dynasnips/index.rb",
@@ -73,10 +80,12 @@ Gem::Specification.new do |s|
     "pristine_app/soups/dynasnips/page_title.rb",
     "pristine_app/soups/dynasnips/pre.rb",
     "pristine_app/soups/dynasnips/raw.rb",
+    "pristine_app/soups/extras",
     "pristine_app/soups/extras/comments.rb",
     "pristine_app/soups/extras/kind.rb",
     "pristine_app/soups/extras/rand.rb",
     "pristine_app/soups/extras/url_to.rb",
+    "pristine_app/soups/tutorial",
     "pristine_app/soups/tutorial/bad_dynasnip.snip",
     "pristine_app/soups/tutorial/hello_world.snip",
     "pristine_app/soups/tutorial/markdown_example.snip",
@@ -86,19 +95,24 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/textile_example.snip",
     "pristine_app/soups/tutorial/tutorial-another-snip.snip",
     "pristine_app/soups/tutorial/tutorial-basic-snip-inclusion.snip",
+    "pristine_app/soups/tutorial/tutorial-dynasnips.snip.markdown",
+    "pristine_app/soups/tutorial/tutorial-layout.snip",
+    "pristine_app/soups/tutorial/tutorial-links.snip",
+    "pristine_app/soups/tutorial/tutorial-renderers.snip.markdown",
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
-    "pristine_app/soups/tutorial/vanilla.snip"
+    "pristine_app/soups/tutorial/vanilla.snip",
+    "pristine_app/tmp",
+    "pristine_app/tmp/restart.txt"
   ]
   s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.4.1}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then

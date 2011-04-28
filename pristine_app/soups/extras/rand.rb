@@ -24,4 +24,6 @@ class RandomNumber < Dynasnip
     max = max.to_i
     (rand(max-min) + min)
   end
+
+  self
 end

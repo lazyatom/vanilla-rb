@@ -1,3 +1,5 @@
+{tutorial-links}
+
 Snips - the basic concept
 ------------
 
@@ -58,20 +60,10 @@ Vanilla.rb includes a number of dynasnips by default. Here are a couple:
   * `index`, which shows all of the available snips: {link_to index}
   * ... and several others.
 
-### Writing your own Dynasnips
-
-While dynasnip classes can be provided as part of the vanilla codebase, it's envisioned that much of these will be created by end users in their own sites, either by refering to local classes, or defining the classes directly as the content. Here's an example of that, as the raw content of hello_world:
-
-    {raw hello_world}
-
-which, when included here as <tt>&#123;hello\_world&#125;</tt>, gives:
-
-> {hello_world}
-
-Note that the `handle` method can take one (optional) argument. Lets try including it with <tt>&#123;hello\_world Dave&#125;</tt>:
-
-> {hello_world Dave}
 
 Anyway - that should be enough to get you started.
+
+{tutorial-links}
+
 
 :updated_at: 2011-04-28 16:21:00 +01:00
