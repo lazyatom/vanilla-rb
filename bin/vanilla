@@ -4,7 +4,7 @@ def create(new_app_dir)
   require 'fileutils'
   pristine_app = File.expand_path("../../pristine_app", __FILE__)
   FileUtils.cp_r(pristine_app, new_app_dir)
-  FileUtils.mkdir(File.join(new_app_dir, "tmp"))
+  FileUtils.mkdir_p(File.join(new_app_dir, "tmp"))
   require 'vanilla'
   File.open(File.join(new_app_dir, "Gemfile"), "w") do |f|
     f.write "source :rubygems\n\n# Vanilla itself.\ngem 'vanilla', '#{Vanilla::VERSION}'"

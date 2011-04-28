@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vanilla (1.15.pre)
+    vanilla (1.15.1)
       BlueCloth (>= 1.0.0)
       RedCloth (>= 4.1.1)
       haml
