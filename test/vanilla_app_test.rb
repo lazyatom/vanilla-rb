@@ -28,7 +28,7 @@ describe Vanilla::App do
 
   context "when detecting the snip renderer" do
     setup do
-      @app = Vanilla::App.new
+      @app = Vanilla::App.new(:soup => soup_path)
     end
 
     should "return the constant refered to in the render_as property of the snip" do
@@ -52,7 +52,7 @@ describe Vanilla::App do
     end
 
     should "respect snip renderers passed in the config" do
-      app = Vanilla::App.new(:renderers => {"markdown" => "Vanilla::Renderers::Bold"})
+      app = Vanilla::App.new(:soup => soup_path, :renderers => {"markdown" => "Vanilla::Renderers::Bold"})
       snip = create_snip(:name => "blah", :extension => "markdown")
       assert_equal Vanilla::Renderers::Bold, app.renderer_for(snip)
     end
@@ -75,7 +75,7 @@ describe Vanilla::App do
     should "load constants presented as a string" do
       class ::MyRenderer
       end
-      app = Vanilla::App.new(:renderers => {"my_renderer" => "MyRenderer"})
+      app = Vanilla::App.new(:soup => soup_path, :renderers => {"my_renderer" => "MyRenderer"})
       snip = create_snip(:name => "blah", :render_as => "my_renderer")
       assert_equal MyRenderer, app.renderer_for(snip)
     end

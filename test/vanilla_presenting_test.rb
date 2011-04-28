@@ -2,6 +2,7 @@ require "test_helper"
 
 context "When presenting" do
   setup do
+    require File.expand_path("../../pristine_app/soups/dynasnips/link_to", __FILE__)
     @app.soup << LinkTo.snip_attributes
     set_main_template "<tag>{current_snip}</tag>"
     create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
@@ -97,7 +98,9 @@ context "When presenting" do
 
   context "and a custom default renderer has been provided" do
     should "use that renderer" do
-      @app = Vanilla::App.new(:default_renderer => ::Vanilla::Renderers::Bold)
+      @app = Vanilla::App.new(:soup => soup_path, :default_renderer => ::Vanilla::Renderers::Bold)
+      require File.expand_path("../../pristine_app/soups/dynasnips/current_snip", __FILE__)
+      @app.soup << CurrentSnip.snip_attributes
       create_snip :name => "layout", :content => "{current_snip}", :render_as => "base"
       create_snip :name => "test", :content => "test"
       assert_response_body "<b>test</b>", "/test"

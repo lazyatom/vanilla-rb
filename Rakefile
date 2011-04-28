@@ -2,7 +2,8 @@ require "rubygems"
 require "rake/gempackagetask"
 require "rake/rdoctask"
 
-load File.join(File.dirname(__FILE__), *%w[lib tasks vanilla.rake])
+require "bundler/setup"
+require "vanilla"
 
 task :default => :test
 

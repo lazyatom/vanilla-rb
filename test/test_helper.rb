@@ -14,7 +14,7 @@ module Vanilla
       clean_environment
       @app = Vanilla::App.new(:soup => soup_path)
 
-      require "vanilla/dynasnips/current_snip"
+      require File.expand_path("../../pristine_app/soups/dynasnips/current_snip", __FILE__)
       @app.soup << CurrentSnip.snip_attributes
       create_snip :name => "layout", :content => "{current_snip}"
     end
