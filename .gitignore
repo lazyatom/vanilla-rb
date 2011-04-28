@@ -3,8 +3,7 @@ pkg
 *.db
 .DS_Store
 *~
-tmp
-config.yml
 rdoc
-spec/tmp
-soup
+pristine_app/tmp
+pristine_app/log
+test/soup
