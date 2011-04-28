@@ -14,7 +14,7 @@ class ShowRawContent < Dynasnip
   |
 
   def handle(snip_name, part=:content)
-    %{<pre>#{Dynasnip.escape_curly_braces(app.soup[snip_name].__send__(part || :content))}</pre>}
+    %{#{Dynasnip.escape_curly_braces(app.soup[snip_name].__send__(part || :content))}}
   end
 
   self
