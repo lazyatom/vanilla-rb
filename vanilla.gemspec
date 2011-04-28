@@ -62,6 +62,7 @@ Gem::Specification.new do |s|
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
     "pristine_app/Gemfile.lock",
+    "pristine_app/public/vanilla.css",
     "pristine_app/README",
     "pristine_app/soups/base/layout.snip",
     "pristine_app/soups/base/start.snip",
