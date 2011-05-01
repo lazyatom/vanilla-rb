@@ -61,7 +61,7 @@ module Vanilla
       end
 
       def parse_snip_reference(string)
-        @parser ||= SnipReferenceParser.new
+        @parser ||= Vanilla::SnipReferenceParser.new
         @parser.parse(string)
       end
 

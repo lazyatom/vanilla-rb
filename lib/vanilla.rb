@@ -7,6 +7,7 @@ module Vanilla
   autoload :Request, "vanilla/request"
   autoload :Routes, "vanilla/routes"
   autoload :Static, "vanilla/static"
+  autoload :SnipReferenceParser, "vanilla/snip_reference_parser"
 end
 
 # Load all the base dynasnip classes

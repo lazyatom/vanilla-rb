@@ -56,8 +56,6 @@ Gem::Specification.new do |s|
     "lib/vanilla/renderers.rb",
     "lib/vanilla/request.rb",
     "lib/vanilla/routes.rb",
-    "lib/vanilla/snip_reference.rb",
-    "lib/vanilla/snip_reference.treetop",
     "lib/vanilla/snip_reference_parser.rb",
     "lib/vanilla/static.rb",
     "lib/vanilla.rb",
@@ -122,8 +120,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
-      s.add_runtime_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_runtime_dependency(%q<haml>, [">= 0"])
+      s.add_runtime_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_development_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
     else
@@ -132,8 +130,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
-      s.add_dependency(%q<treetop>, [">= 1.4.1"])
       s.add_dependency(%q<haml>, [">= 0"])
+      s.add_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_dependency(%q<mocha>, [">= 0"])
     end
@@ -143,8 +141,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
-    s.add_dependency(%q<treetop>, [">= 1.4.1"])
     s.add_dependency(%q<haml>, [">= 0"])
+    s.add_dependency(%q<parslet>, [">= 1.2.0"])
     s.add_dependency(%q<kintama>, [">= 0.1.6"])
     s.add_dependency(%q<mocha>, [">= 0"])
   end

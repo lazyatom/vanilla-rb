@@ -5,17 +5,7 @@ require "rake/rdoctask"
 require "bundler/setup"
 require "vanilla"
 
-rule ".rb" => ".treetop" do |t|
-  sh "tt #{t.source} -o #{t.name}"
-end
-
-file "lib/vanilla/snip_reference.treetop"
-file "lib/vanilla/snip_reference.rb" => "lib/vanilla/snip_reference.treetop"
-
-
 task :default => :test
-
-task :test => "lib/vanilla/snip_reference.rb"
 
 require "rake/testtask"
 Rake::TestTask.new do |t|
@@ -56,8 +46,8 @@ if Object.const_defined?(:Gem)
     s.add_dependency("ratom", ">= 0.3.5")
     s.add_dependency("RedCloth", ">= 4.1.1")
     s.add_dependency("BlueCloth", ">= 1.0.0")
-    s.add_dependency("treetop", ">= 1.4.1")
     s.add_dependency("haml")
+    s.add_dependency("parslet", ">= 1.2.0")
 
     s.add_development_dependency("kintama", ">= 0.1.6") # add any other gems for testing/development
     s.add_development_dependency("mocha")
@@ -96,7 +86,7 @@ if Object.const_defined?(:Gem)
     File.open(file, "w") {|f| f << output }
   end
 
-  task :package => ["lib/vanilla/snip_reference.rb", :gemspec]
+  task :package => :gemspec
 
   # Generate documentation
   Rake::RDocTask.new do |rd|
