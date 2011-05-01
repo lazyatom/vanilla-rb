@@ -14,7 +14,7 @@ class CurrentSnip < Dynasnip
   |
 
   def handle(attribute=nil)
-    return "the 'current_snip' snip ;)" if app.request.snip.name == self.snip_name
+    return "the 'current_snip' snip ;)" if app.request.snip && app.request.snip.name == self.snip_name
     if attribute
       app.request.snip.__send__(attribute)
     else
