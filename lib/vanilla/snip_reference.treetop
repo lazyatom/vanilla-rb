@@ -45,16 +45,17 @@ grammar SnipReference
   end
 
   rule unquoted_word
-    ([a-zA-Z0-9_\-]+)
+    [a-zA-Z0-9_\-]+
   end
 
   rule quoted_word
-    "\"" (unquoted_words) "\"" <QuotedWord> /
-    "'" (unquoted_words) "'" <QuotedWord>
+    '"' (!'"' . / '\"')* '"' <QuotedWord> /
+    "'" (unquoted_words) "'" <QuotedWord> /
+    '"' (unquoted_words) '"' <QuotedWord>
   end
 
   rule unquoted_words
-    [a-zA-Z0-9_\- ]+
+    unquoted_word (spaces unquoted_words)?
   end
 
   rule optional_spaces

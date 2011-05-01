@@ -16,7 +16,7 @@ GEM
     BlueCloth (1.0.1)
     RedCloth (4.2.7)
     haml (3.0.25)
-    kintama (0.1.5)
+    kintama (0.1.6)
     libxml-ruby (2.0.2)
     mocha (0.9.10)
       rake
@@ -33,6 +33,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  kintama (>= 0.1.5)
+  kintama (>= 0.1.6)
   mocha
   vanilla!

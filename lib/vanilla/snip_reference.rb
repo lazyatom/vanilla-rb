@@ -552,6 +552,12 @@ module SnipReference
   module QuotedWord1
   end
 
+  module QuotedWord2
+  end
+
+  module QuotedWord3
+  end
+
   def _nt_quoted_word
     start_index = index
     if node_cache[:quoted_word].has_key?(index)
@@ -565,31 +571,90 @@ module SnipReference
 
     i0 = index
     i1, s1 = index, []
-    if has_terminal?("\"", false, index)
+    if has_terminal?('"', false, index)
       r2 = instantiate_node(SyntaxNode,input, index...(index + 1))
       @index += 1
     else
-      terminal_parse_failure("\"")
+      terminal_parse_failure('"')
       r2 = nil
     end
     s1 << r2
     if r2
-      r3 = _nt_unquoted_words
-      s1 << r3
-      if r3
-        if has_terminal?("\"", false, index)
-          r4 = instantiate_node(SyntaxNode,input, index...(index + 1))
+      s3, i3 = [], index
+      loop do
+        i4 = index
+        i5, s5 = index, []
+        i6 = index
+        if has_terminal?('"', false, index)
+          r7 = instantiate_node(SyntaxNode,input, index...(index + 1))
           @index += 1
         else
-          terminal_parse_failure("\"")
-          r4 = nil
+          terminal_parse_failure('"')
+          r7 = nil
         end
-        s1 << r4
+        if r7
+          r6 = nil
+        else
+          @index = i6
+          r6 = instantiate_node(SyntaxNode,input, index...index)
+        end
+        s5 << r6
+        if r6
+          if index < input_length
+            r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
+            @index += 1
+          else
+            terminal_parse_failure("any character")
+            r8 = nil
+          end
+          s5 << r8
+        end
+        if s5.last
+          r5 = instantiate_node(SyntaxNode,input, i5...index, s5)
+          r5.extend(QuotedWord0)
+        else
+          @index = i5
+          r5 = nil
+        end
+        if r5
+          r4 = r5
+        else
+          if has_terminal?('\"', false, index)
+            r9 = instantiate_node(SyntaxNode,input, index...(index + 2))
+            @index += 2
+          else
+            terminal_parse_failure('\"')
+            r9 = nil
+          end
+          if r9
+            r4 = r9
+          else
+            @index = i4
+            r4 = nil
+          end
+        end
+        if r4
+          s3 << r4
+        else
+          break
+        end
+      end
+      r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
+      s1 << r3
+      if r3
+        if has_terminal?('"', false, index)
+          r10 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
+        else
+          terminal_parse_failure('"')
+          r10 = nil
+        end
+        s1 << r10
       end
     end
     if s1.last
       r1 = instantiate_node(QuotedWord,input, i1...index, s1)
-      r1.extend(QuotedWord0)
+      r1.extend(QuotedWord1)
     else
       @index = i1
       r1 = nil
@@ -597,47 +662,98 @@ module SnipReference
     if r1
       r0 = r1
     else
-      i5, s5 = index, []
+      i11, s11 = index, []
       if has_terminal?("'", false, index)
-        r6 = instantiate_node(SyntaxNode,input, index...(index + 1))
+        r12 = instantiate_node(SyntaxNode,input, index...(index + 1))
         @index += 1
       else
         terminal_parse_failure("'")
-        r6 = nil
+        r12 = nil
       end
-      s5 << r6
-      if r6
-        r7 = _nt_unquoted_words
-        s5 << r7
-        if r7
+      s11 << r12
+      if r12
+        r13 = _nt_unquoted_words
+        s11 << r13
+        if r13
           if has_terminal?("'", false, index)
-            r8 = instantiate_node(SyntaxNode,input, index...(index + 1))
+            r14 = instantiate_node(SyntaxNode,input, index...(index + 1))
             @index += 1
           else
             terminal_parse_failure("'")
-            r8 = nil
+            r14 = nil
           end
-          s5 << r8
+          s11 << r14
         end
       end
-      if s5.last
-        r5 = instantiate_node(QuotedWord,input, i5...index, s5)
-        r5.extend(QuotedWord1)
+      if s11.last
+        r11 = instantiate_node(QuotedWord,input, i11...index, s11)
+        r11.extend(QuotedWord2)
       else
-        @index = i5
-        r5 = nil
+        @index = i11
+        r11 = nil
       end
-      if r5
-        r0 = r5
+      if r11
+        r0 = r11
       else
-        @index = i0
-        r0 = nil
+        i15, s15 = index, []
+        if has_terminal?('"', false, index)
+          r16 = instantiate_node(SyntaxNode,input, index...(index + 1))
+          @index += 1
+        else
+          terminal_parse_failure('"')
+          r16 = nil
+        end
+        s15 << r16
+        if r16
+          r17 = _nt_unquoted_words
+          s15 << r17
+          if r17
+            if has_terminal?('"', false, index)
+              r18 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              @index += 1
+            else
+              terminal_parse_failure('"')
+              r18 = nil
+            end
+            s15 << r18
+          end
+        end
+        if s15.last
+          r15 = instantiate_node(QuotedWord,input, i15...index, s15)
+          r15.extend(QuotedWord3)
+        else
+          @index = i15
+          r15 = nil
+        end
+        if r15
+          r0 = r15
+        else
+          @index = i0
+          r0 = nil
+        end
       end
     end
 
     node_cache[:quoted_word][start_index] = r0
 
     r0
+  end
+
+  module UnquotedWords0
+    def spaces
+      elements[0]
+    end
+
+    def unquoted_words
+      elements[1]
+    end
+  end
+
+  module UnquotedWords1
+    def unquoted_word
+      elements[0]
+    end
+
   end
 
   def _nt_unquoted_words
@@ -651,25 +767,37 @@ module SnipReference
       return cached
     end
 
-    s0, i0 = [], index
-    loop do
-      if has_terminal?('\G[a-zA-Z0-9_\\- ]', true, index)
-        r1 = true
-        @index += 1
-      else
-        r1 = nil
+    i0, s0 = index, []
+    r1 = _nt_unquoted_word
+    s0 << r1
+    if r1
+      i3, s3 = index, []
+      r4 = _nt_spaces
+      s3 << r4
+      if r4
+        r5 = _nt_unquoted_words
+        s3 << r5
       end
-      if r1
-        s0 << r1
+      if s3.last
+        r3 = instantiate_node(SyntaxNode,input, i3...index, s3)
+        r3.extend(UnquotedWords0)
       else
-        break
+        @index = i3
+        r3 = nil
       end
+      if r3
+        r2 = r3
+      else
+        r2 = instantiate_node(SyntaxNode,input, index...index)
+      end
+      s0 << r2
     end
-    if s0.empty?
+    if s0.last
+      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
+      r0.extend(UnquotedWords1)
+    else
       @index = i0
       r0 = nil
-    else
-      r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
     end
 
     node_cache[:unquoted_words][start_index] = r0
