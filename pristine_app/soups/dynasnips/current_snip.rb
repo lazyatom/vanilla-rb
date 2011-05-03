@@ -14,16 +14,15 @@ class CurrentSnip < Dynasnip
   |
 
   def handle(attribute=nil)
-    return "the 'current_snip' snip ;)" if app.request.snip && app.request.snip.name == self.snip_name
-    if attribute
-      app.request.snip.__send__(attribute)
-    else
-      if app.request.snip
-        app.render(app.request.snip, app.request.part)
+    if app.request.snip
+      if attribute ||= app.request.part
+        "{#{app.request.snip_name}.#{attribute}}"
       else
-        app.response.status = 404
-        %{Couldn't find snip "#{app.request.snip_name}"}
+        "{#{app.request.snip_name}}"
       end
+    else
+      app.response.status = 404
+      %{Couldn't find snip "#{app.request.snip_name}"}
     end
   end
   self
