@@ -26,4 +26,17 @@ describe Dynasnip do
       assert_equal "altered content", TestDyna.new(@app).test_attribute
     end
   end
+
+  context "when rendering usage" do
+    class ::ShowUsage < Dynasnip
+      usage "This is the usage"
+      def handle
+        usage
+      end
+    end
+
+    should "show the usage defined in the snip" do
+      assert_equal "This is the usage", ShowUsage.new(@app).handle
+    end
+  end
 end
