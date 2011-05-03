@@ -1,5 +1,5 @@
 require "test_helper"
-$LOAD_PATH.unshift File.expand_path("../../../pristine_app/soups/dynasnips", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../../../pristine_app/soups/system", __FILE__)
 require "page_title"
 
 context "The page_title dynasnip" do

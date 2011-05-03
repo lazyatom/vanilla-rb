@@ -1,5 +1,5 @@
 require "test_helper"
-$LOAD_PATH.unshift File.expand_path("../../../pristine_app/soups/dynasnips", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../../../pristine_app/soups/system", __FILE__)
 require "link_to_current_snip"
 
 context "The link_to_current_snip dynasnip" do

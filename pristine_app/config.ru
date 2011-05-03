@@ -8,7 +8,7 @@ require 'vanilla'
 # doesn't affect their URL structure on the site (everything is flat).
 soups = [
   "soups/base",
-  "soups/dynasnips"
+  "soups/system"
 ]
 
 # If you don't want the tutorial on your site, remove this and delete the directory
