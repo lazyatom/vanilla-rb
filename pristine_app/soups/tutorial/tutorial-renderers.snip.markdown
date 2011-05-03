@@ -9,7 +9,7 @@ In its simplest form, this means that some content can be written in one format 
 
 This is one of the principle drivers behind {link_to vanilla-rb}; you shouldn't have to make an upfront decision about how best to structure your all of your content.
 
-This has been covered generally in the {link_to tutorial, main tutorial}, but here we'll go into a bit more detail.
+This has been covered generally in the {link_to tutorial, "main tutorial"}, but here we'll go into a bit more detail.
 
 Defining a renderer for a snip
 -------------------
