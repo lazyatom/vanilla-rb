@@ -49,6 +49,10 @@ context "When including snips in other snips" do
     assert_equal "10.times {|x| puts x }", render("10.times {|x| puts x }")
   end
 
+  should "ignore references that contain newlines" do
+    assert_equal "{\nnot a dyna\n}", render("{\nnot a dyna\n}")
+  end
+
   def render(content)
     snip = create_snip :name => "test-content", :content => content
     Vanilla::Renderers::Base.new(@app).render(snip)
