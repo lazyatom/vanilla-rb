@@ -15,15 +15,15 @@ GEM
   specs:
     BlueCloth (1.0.1)
     RedCloth (4.2.7)
-    haml (3.0.25)
+    haml (3.1.1)
     kintama (0.1.6)
-    libxml-ruby (2.0.2)
+    libxml-ruby (2.0.4)
     mocha (0.9.10)
       rake
     polyglot (0.3.1)
     rack (1.2.2)
     rake (0.8.7)
-    ratom (0.6.7)
+    ratom (0.6.8)
       libxml-ruby (>= 1.1.2)
     soup (1.0.6)
     treetop (1.4.9)
