@@ -1,6 +1,6 @@
 require "test_helper"
 
-context "The SnipReference parser" do
+context "When including snips in other snips" do
   setup do
     create_snip :name => "test", :content => "snip content"
   end
