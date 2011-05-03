@@ -53,6 +53,11 @@ context "When including snips in other snips" do
     assert_equal "{\nnot a dyna\n}", render("{\nnot a dyna\n}")
   end
 
+  should "render malformed snip inclusions for easier debugging" do
+    assert_equal %|this is a <span class="malformed_snip_inclusion">(malformed snip inclusion: &#123;link_to blah blah&#125;)</span>|,
+      render("this is a {link_to blah blah}")
+  end
+
   def render(content)
     snip = create_snip :name => "test-content", :content => content
     Vanilla::Renderers::Base.new(@app).render(snip)

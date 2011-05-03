@@ -55,7 +55,7 @@ module Vanilla
               render_missing_snip(snip_name)
             end
           else
-            "malformed snip reference: #{$1.inspect}"
+            %|<span class="malformed_snip_inclusion">(malformed snip inclusion: #{self.class.escape_curly_braces($1)})</span>|
           end
         end
       end
@@ -63,6 +63,8 @@ module Vanilla
       def parse_snip_reference(string)
         @parser ||= Vanilla::SnipReferenceParser.new
         @parser.parse(string)
+      rescue
+        nil
       end
 
       def render_missing_snip(snip_name)
