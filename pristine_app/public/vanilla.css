@@ -13,3 +13,7 @@ pre {
   background-color: #ddd;
   padding: 1em;
 }
+
+.malformed_snip_inclusion {
+  background-color: rgba(180,0,0,0.2);
+}
