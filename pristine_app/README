@@ -16,6 +16,8 @@ For an overview of vanilla, start your site and look at the tutorial:
   $ rackup   # then open http://localhost:9292/tutorial
 
 
+Editing snips
+-------------
 You can edit any file in the soup directory using your favourite editor,
 and the changes will be reflected automatically. The snip files are
 slightly modified YAML files. Here's an example, which you might save
@@ -34,3 +36,12 @@ in a file called 'soup.snip':
 
 The 'content' of the snip is at the top of the file, followed by the
 rest of the snip attributes on lines starting with ':'.
+
+
+The console
+-----------
+
+Within a vanilla app directory, you can run `vanilla console` to start
+an IRB session and interact with your app and snips. The `app` method
+returns your application object, and `app.soup['start']` will return
+the start snip from your soup(s).
