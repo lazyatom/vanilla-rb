@@ -54,8 +54,9 @@ context "When including snips in other snips" do
   end
 
   should "render malformed snip inclusions for easier debugging" do
-    assert_equal %|this is a <span class="malformed_snip_inclusion">(malformed snip inclusion: &#123;link_to blah blah&#125;)</span>|,
-      render("this is a {link_to blah blah}")
+    create_snip :name => "some_dyna"
+    assert_equal %|this is a <span class="malformed_snip_inclusion">(malformed snip inclusion: &#123;some_dyna blah! blah&#125;)</span>|,
+      render("this is a {some_dyna blah! blah}")
   end
 
   def render(content)
