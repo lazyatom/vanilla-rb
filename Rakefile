@@ -36,10 +36,9 @@ if Object.const_defined?(:Gem)
     s.rdoc_options      = %w(--main README)
 
     # Add any extra files to include in the gem
-    s.files             = %w(Rakefile README .gemtest) + Dir.glob("{lib,bin,pristine_app}/**/*")
+    s.files             = %w(Rakefile README .gemtest) + Dir.glob("{test,lib,bin,pristine_app}/**/*")
     s.executables       = ['vanilla']
     s.require_paths     = ["lib"]
-    s.test_files        = Dir.glob("test/**/*")
 
     # All the other gems we need.
     s.add_dependency("rack", ">= 0.9.1")
