@@ -1,17 +1,245 @@
-#controls {
-  padding-left: 0;
+/* VANILLA CSS
+
+  1. Reset styles
+  2. Misc helpers (clearfix, nice defaults)
+  3. Grid
+  4. Main Layout Elements
+    4.1 Spacing
+    4.2 Colour
+  5. Typography
+  6. Chrome
+
+--------------------------------------------- */
+
+
+/* 1. Reset styles
+--------------------------------------------- */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	border: 0;
+	outline: 0;
+	background: transparent;
 }
 
-#controls li {
-  background: #eee;
-  display: inline;
-  padding: 0.2em 0.5em;
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+:focus {
+	outline: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* 2. Misc helpers (clearfix, nice defaults)
+--------------------------------------------- */
+
+hr, .hide {
+	display: none;
+}
+
+a img {
+	border: none;
+}
+
+.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0}
+.clearfix:after{clear:both;content:' ';display:block;font-size:0;line-height:0;visibility:hidden;width:0;height:0}
+* html .clearfix, *:first-child+html .clearfix { zoom:1 }
+
+/* 3. Grid
+--------------------------------------------- */
+
+/*
+ & Columns : 16
+ & Gutter %: 20%
+ & MinWidth: 960px
+ & MaxWidth: 1080px
+ */
+.grid_1 { width: 5%; }
+.grid_2 { width: 11.25%; }
+.grid_3 { width: 17.5%; }
+.grid_4 { width: 23.75%; }
+.grid_5 { width: 30%; }
+.grid_6 { width: 36.25%; }
+.grid_7 { width: 42.5%; }
+.grid_8 { width: 48.75%; }
+.grid_9 { width: 55%; }
+.grid_10 { width: 61.25%; }
+.grid_11 { width: 67.5%; }
+.grid_12 { width: 73.75%; }
+.grid_13 { width: 80%; }
+.grid_14 { width: 86.25%; }
+.grid_15 { width: 92.5%; }
+.grid_16 { width: 98.75%; }
+
+.grid_1,
+.grid_2,
+.grid_3,
+.grid_4,
+.grid_5,
+.grid_6,
+.grid_7,
+.grid_8,
+.grid_9,
+.grid_10,
+.grid_11,
+.grid_12,
+.grid_13,
+.grid_14,
+.grid_15,
+.grid_16 {
+	margin-left: 0.625%;
+	margin-right: 0.625%;
+	float: left;
+	display: block;
+}
+
+.alpha{margin-left:0px;}
+.omega{margin-right:0px;}
+
+.container {
+  min-width: 960px;
+	max-width: 1080px;
+	margin: auto;
+}
+
+/* 4. Main Layout Elements
+--------------------------------------------- */
+
+/* 4.1 Spacing
+--------------------------------------------- */
+
+#content {
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+#content p, #content li {
+  padding-right: 20px;
+}
+
+/* 4.2 Colour
+--------------------------------------------- */
+
+body {
+  color: #333;
+  background: #fff;
+  border-top: 1px solid #333;
+}
+
+.container {
+
+}
+
+#content {
+
+}
+
+a {
+  color: #3cb55c;
+}
+
+a:hover {
+  color: #205f30;
 }
 
 pre {
-  margin-left: 1em;
-  background-color: #ddd;
-  padding: 1em;
+  background-color: #332a32;
+  color: #eee;
+}
+
+/* 5. Typography
+--------------------------------------------- */
+
+body {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 40px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 40px;
+}
+
+p, li, blockquote {
+  font-family: Constantia, Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+ul,
+ol {
+  margin-bottom: 20px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+pre {
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+tt, code, kbd, samp {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+p code {
+  font-size: 14px;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* 6. Chrome
+--------------------------------------------- */
+
+#controls {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  border-top: 5px solid #f3ea7c;
+  color: #bbb;
+}
+
+#controls ul {
+  margin-bottom: 0;
+}
+
+#controls li {
+  float: left;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+  font-size: 12px;
+  margin: 0;
+  padding: 10px 20px;
 }
 
 .malformed_snip_inclusion {

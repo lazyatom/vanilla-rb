@@ -6,13 +6,17 @@
   <link rel="stylesheet" href="/vanilla.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-  <ul id="controls">
-    <li><a href="/">home</a></li>
-    <li>{link_to index}</li>
-    <li>you are viewing: {link_to_current_snip}</li>
-  </ul>
-  <div id="content">
-    {current_snip}
+  <div id="controls">
+    <ul class="container clearfix">
+      <li><a href="/" class="home">Vanilla.rb</a></li>
+      <li>{link_to index}</li>
+      <li>you are viewing: {link_to_current_snip}</li>
+    </ul>
+  </div>
+  <div class="container clearfix">
+    <div id="content" class="grid_12 alpha">
+      {current_snip}
+    </div>
   </div>
 </body>
 </html>
