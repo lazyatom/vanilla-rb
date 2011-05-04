@@ -23,6 +23,7 @@ module Vanilla
       if @config[:soup].nil? && @config[:soups].nil?
         @config.merge!(:soup => File.expand_path("soup"))
       end
+      @root_directory = @config[:root] || Dir.pwd
       @soup = prepare_soup(config)
       prepare_renderers(config[:renderers])
     end
@@ -145,10 +146,12 @@ module Vanilla
 
     def prepare_soup(config)
       if config[:soups]
-        backends = [config[:soups]].flatten.map { |path| ::Soup::Backends::FileBackend.new(path) }
+        backends = [config[:soups]].flatten.map do |path| 
+          ::Soup::Backends::FileBackend.new(File.expand_path(path, @root_directory))
+        end
         ::Soup.new(::Soup::Backends::MultiSoup.new(*backends))
       else
-        ::Soup.new(::Soup::Backends::FileBackend.new(config[:soup]))
+        ::Soup.new(::Soup::Backends::FileBackend.new(File.expand_path(config[:soup], @root_directory)))
       end
     end
   end

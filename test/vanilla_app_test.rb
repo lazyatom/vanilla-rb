@@ -1,4 +1,5 @@
 require "test_helper"
+require "tmpdir"
 
 describe Vanilla::App do
   context "when behaving as a Rack application" do
@@ -23,6 +24,17 @@ describe Vanilla::App do
       create_snip :name => "custom", :content => "custom"
       @app = Vanilla::App.new(:soup => soup_path, :root_snip => "custom")
       assert_response_body "custom", "/"
+    end
+
+    should "allow specification of the root directory to aide loading external soups" do
+      tmp_dir = Dir.tmpdir
+      soup_dir = File.join(tmp_dir, "my_soup")
+      FileUtils.mkdir_p(soup_dir)
+      File.open(File.join(soup_dir, "blah.snip"), "w") { |f| f.write "Hello superfriends" }
+
+      @app = Vanilla::App.new(:soup => "my_soup", :root => tmp_dir)
+
+      assert_equal "Hello superfriends", @app.soup['blah'].content
     end
   end
 
