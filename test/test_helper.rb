@@ -1,7 +1,3 @@
-require 'rubygems'
-require 'bundler/setup'
-$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
-
 require "kintama"
 require "kintama/mocha"
 require "fileutils"
