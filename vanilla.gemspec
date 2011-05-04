@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vanilla}
-  s.version = "1.16.1"
+  s.version = "1.16.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
@@ -17,9 +17,11 @@ Gem::Specification.new do |s|
     "Rakefile",
     "README",
     ".gemtest",
+    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
+    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -38,14 +40,19 @@ Gem::Specification.new do |s|
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
     "pristine_app/Gemfile.lock",
+    "pristine_app/public",
     "pristine_app/public/vanilla.css",
     "pristine_app/README",
+    "pristine_app/soups",
+    "pristine_app/soups/base",
     "pristine_app/soups/base/layout.snip",
     "pristine_app/soups/base/start.snip",
+    "pristine_app/soups/extras",
     "pristine_app/soups/extras/comments.rb",
     "pristine_app/soups/extras/kind.rb",
     "pristine_app/soups/extras/rand.rb",
     "pristine_app/soups/extras/url_to.rb",
+    "pristine_app/soups/system",
     "pristine_app/soups/system/current_snip.rb",
     "pristine_app/soups/system/debug.rb",
     "pristine_app/soups/system/index.rb",
@@ -54,6 +61,7 @@ Gem::Specification.new do |s|
     "pristine_app/soups/system/page_title.rb",
     "pristine_app/soups/system/pre.rb",
     "pristine_app/soups/system/raw.rb",
+    "pristine_app/soups/tutorial",
     "pristine_app/soups/tutorial/bad_dynasnip.snip",
     "pristine_app/soups/tutorial/hello_world.snip",
     "pristine_app/soups/tutorial/markdown_example.snip",
@@ -70,11 +78,14 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
     "pristine_app/soups/tutorial/vanilla.snip",
+    "pristine_app/tmp",
     "pristine_app/tmp/restart.txt",
     "test/dynasnip_test.rb",
+    "test/dynasnips",
     "test/dynasnips/link_to_current_snip_test.rb",
     "test/dynasnips/link_to_test.rb",
     "test/dynasnips/page_title_test.rb",
+    "test/renderers",
     "test/renderers/base_renderer_test.rb",
     "test/renderers/erb_renderer_test.rb",
     "test/renderers/haml_renderer_test.rb",
@@ -96,9 +107,11 @@ Gem::Specification.new do |s|
   s.summary = %q{A bliki-type web content thing.}
   s.test_files = [
     "test/dynasnip_test.rb",
+    "test/dynasnips",
     "test/dynasnips/link_to_current_snip_test.rb",
     "test/dynasnips/link_to_test.rb",
     "test/dynasnips/page_title_test.rb",
+    "test/renderers",
     "test/renderers/base_renderer_test.rb",
     "test/renderers/erb_renderer_test.rb",
     "test/renderers/haml_renderer_test.rb",
