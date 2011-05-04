@@ -46,8 +46,8 @@ context "The SnipReference parser" do
     },
 
     :arguments_with_spaces => {
-      # %|{snip arg spaces}|           => {:snip => 'snip', :attribute => nil, :arguments => ['arg spaces']},
-      # %|{snip arg spaces, and this}| => {:snip => 'snip', :attribute => nil, :arguments => ['arg spaces', 'and this']},
+      %|{snip arg spaces}|           => {:snip => 'snip', :attribute => nil, :arguments => ['arg spaces']},
+      %|{snip arg spaces, and this}| => {:snip => 'snip', :attribute => nil, :arguments => ['arg spaces', 'and this']},
       %|{snip "arg spaces"}|         => {:snip => 'snip', :attribute => nil, :arguments => ['arg spaces']},
       %|{snip 'arg spaces'}|         => {:snip => 'snip', :attribute => nil, :arguments => ['arg spaces']},
       %|{snip "arg spaces", arg2}|   => {:snip => 'snip', :attribute => nil, :arguments => ['arg spaces', 'arg2']}
@@ -64,7 +64,7 @@ context "The SnipReference parser" do
       %|{s :key1 => value1, :key2 => value2}| => {:snip => 's', :arguments => {:key1 => 'value1', :key2 => 'value2'}},
       %|{s key1 => "value with spaces"}|      => {:snip => 's', :arguments => {:key1 => "value with spaces"}},
       %|{s.attr key1=>value1}|                => {:snip => 's', :attribute => 'attr', :arguments => {:key1 => 'value1'}},
-      # %|{s "key with spaces" => value}|       => {:snip => 's', :arguments => {:"key with spaces" => "value"}}
+      %|{s "key with spaces" => value}|       => {:snip => 's', :arguments => {:"key with spaces" => "value"}}
     },
 
     :named_arguments => {

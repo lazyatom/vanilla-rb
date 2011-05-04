@@ -40,7 +40,11 @@ module Vanilla
       rule(:single_quoted_string) do
         squote >> (quotables | dquote).repeat(1).as(:string) >> squote
       end
+      rule(:spaced_string) { (word >> (spaces >> word).repeat).as(:string) }
       rule(:string) do
+        single_quoted_string | double_quoted_string | str("nil").as(:nil) | spaced_string | word.as(:string)
+      end
+      rule(:string_without_spaces) do
         single_quoted_string | double_quoted_string | str("nil").as(:nil) | word.as(:string)
       end
       rule(:symbol) { str(":") >> string }
@@ -62,7 +66,7 @@ module Vanilla
       rule(:further_named_args) { comma_separator >> named_arg.as(:named_arg) }
 
       rule(:arguments) { hash_arg_list | named_arg_list | string_arg_list }
-      rule(:snip_part) { string.as(:snip) >> (dot >> string.as(:attribute)).maybe }
+      rule(:snip_part) { string_without_spaces.as(:snip) >> (dot >> string_without_spaces.as(:attribute)).maybe }
 
       rule(:snip_reference) do
         left_brace >> spaces? >>
