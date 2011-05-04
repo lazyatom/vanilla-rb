@@ -195,6 +195,21 @@ ol {
   margin-bottom: 20px;
 }
 
+#content ul, #content ol {
+  margin-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+}
+
+#content ul {
+  list-style: disc;
+}
+
+#content ol {
+  list-style: decimal;
+}
+
 strong {
   font-weight: bold;
 }
