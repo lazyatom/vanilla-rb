@@ -84,4 +84,10 @@ describe Vanilla::Request do
       assert_equal 'put', Vanilla::Request.new(mock_env_for_url("/snip?_method=put"), app).method
     end
   end
+
+  private
+
+  def mock_env_for_url(url)
+    Rack::MockRequest.env_for(url)
+  end
 end

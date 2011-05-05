@@ -7,6 +7,8 @@ require "rack/test"
 
 module Vanilla
   module Test
+    include Rack::Test::Methods
+
     class ::TestApp < Vanilla::App
     end
 
@@ -23,20 +25,14 @@ module Vanilla
       create_snip :name => "layout", :content => "{current_snip}"
     end
 
-    def response_for(url)
-      app.call(mock_env_for_url(url))
-    end
-
-    def response_body_for(url)
-      response_for(url)[2].body[0]
-    end
-
-    def response_code_for(url)
-      response_for(url)[0]
+    def assert_response_status(expected, uri)
+      get uri
+      assert_equal expected, last_response.status
     end
 
     def assert_response_body(expected, uri)
-      assert_equal expected.strip, response_body_for(uri).strip
+      get uri
+      assert_equal expected.strip, last_response.body.strip
     end
 
     def set_main_template(template_content)
@@ -45,14 +41,6 @@ module Vanilla
 
     def create_snip(params)
       app.soup << params
-    end
-
-    def mock_env_for_url(url)
-      Rack::MockRequest.env_for(url)
-    end
-
-    def mock_request(url)
-      Rack::Request.new(mock_env_for_url(url))
     end
 
     def test_app_directory
@@ -70,6 +58,7 @@ module Vanilla
 end
 
 Kintama.include Vanilla::Test
+
 Kintama.setup do
   setup_clean_environment
 end

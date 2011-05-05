@@ -3,13 +3,12 @@ require "tmpdir"
 
 describe Vanilla::App do
   context "when behaving as a Rack application" do
-    should "return an array of status code, headers and response" do
+    should "return a valid rack response" do
       create_snip(:name => "test", :content => "content")
-      result = app.call(mock_env_for_url("/test.text"))
-      assert_kind_of Array, result
-      assert_equal 200, result[0]
-      assert_kind_of Hash, result[1]
-      result[2].each{ |output| assert_equal "content", output }
+      get "/test.text"
+      assert_equal 200, last_response.status
+      assert_kind_of Hash, last_response.headers
+      assert_equal "content", last_response.body
     end
   end
 

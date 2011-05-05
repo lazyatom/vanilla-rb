@@ -21,7 +21,7 @@ and so lets include {another_snip}
 Markdown
       )
       create_snip(:name => "another_snip", :content => "blah", :render_as => "Bold")
-      assert_equal "<h1>markdown</h1> <p>and so lets include <b>blah</b></p>", response_body_for("/test").gsub(/\s+/, ' ')
+      assert_response_body "<h1>markdown</h1>\n\n<p>and so lets include <b>blah</b></p>", "/test"
     end
   end
 

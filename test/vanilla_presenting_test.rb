@@ -21,10 +21,10 @@ context "When presenting" do
     end
 
     should "have a response code of 200" do
-      assert_equal 200, response_code_for("/test")
-      assert_equal 200, response_code_for("/test.html")
-      assert_equal 200, response_code_for("/test/part")
-      assert_equal 200, response_code_for("/test/part.html")
+      assert_response_status 200, "/test"
+      assert_response_status 200, "/test.html"
+      assert_response_status 200, "/test/part"
+      assert_response_status 200, "/test/part.html"
     end
 
     should "not allow rendering of the layout to produce infinite recursion" do
@@ -42,8 +42,8 @@ context "When presenting" do
     end
 
     should "have a response code of 200" do
-      assert_equal 200, response_code_for("/test.text")
-      assert_equal 200, response_code_for("/test/part.text")
+      assert_response_status 200, "/test.text"
+      assert_response_status 200, "/test/part.text"
     end
   end
 
@@ -61,8 +61,8 @@ context "When presenting" do
     end
 
     should "have a response code of 200" do
-      assert_equal 200, response_code_for("/test.raw")
-      assert_equal 200, response_code_for("/test/part.raw")
+      assert_response_status 200, "/test.raw"
+      assert_response_status 200, "/test/part.raw"
     end
   end
 
@@ -113,13 +113,13 @@ context "When presenting" do
     end
 
     should "have a 404 response code" do
-      assert_equal 404, response_code_for("/missing_snip")
+      assert_response_status 404, "/missing_snip"
     end
   end
 
   context "requesting an unknown format" do
     should "return a 500 status code" do
-      assert_equal 500, response_code_for("/test.monkey")
+      assert_response_status 500, "/test.monkey"
     end
   end
 end

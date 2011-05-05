@@ -31,7 +31,7 @@ describe Vanilla::Renderers::Base do
   should "include other snips using their renderers" do
     create_snip(:name => "including_snip", :content => "lets include {another_snip}")
     create_snip(:name => "another_snip", :content => "blah", :render_as => "Bold")
-    assert_equal "lets include <b>blah</b>", response_body_for("/including_snip").gsub(/\s+/, ' ')
+    assert_response_body "lets include <b>blah</b>", "/including_snip"
   end
   
   context "when trying to include a missing snip" do
