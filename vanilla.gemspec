@@ -22,8 +22,6 @@ Gem::Specification.new do |s|
     "test/dynasnips/link_to_current_snip_test.rb",
     "test/dynasnips/link_to_test.rb",
     "test/dynasnips/page_title_test.rb",
-    "test/monkey",
-    "test/my_soup",
     "test/renderers",
     "test/renderers/base_renderer_test.rb",
     "test/renderers/erb_renderer_test.rb",
@@ -127,6 +125,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<haml>, [">= 3.1"])
       s.add_runtime_dependency(%q<parslet>, [">= 1.2.0"])
+      s.add_runtime_dependency(%q<rack-test>, [">= 0.5.7"])
       s.add_development_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
     else
@@ -137,6 +136,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_dependency(%q<haml>, [">= 3.1"])
       s.add_dependency(%q<parslet>, [">= 1.2.0"])
+      s.add_dependency(%q<rack-test>, [">= 0.5.7"])
       s.add_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_dependency(%q<mocha>, [">= 0"])
     end
@@ -148,6 +148,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
     s.add_dependency(%q<haml>, [">= 3.1"])
     s.add_dependency(%q<parslet>, [">= 1.2.0"])
+    s.add_dependency(%q<rack-test>, [">= 0.5.7"])
     s.add_dependency(%q<kintama>, [">= 0.1.6"])
     s.add_dependency(%q<mocha>, [">= 0"])
   end

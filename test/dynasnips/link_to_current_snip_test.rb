@@ -4,7 +4,7 @@ require "link_to_current_snip"
 
 context "The link_to_current_snip dynasnip" do
   setup do
-    @app.soup << LinkToCurrentSnip.snip_attributes
+    app.soup << LinkToCurrentSnip.snip_attributes
     create_snip :name => "test", :content => "test {link_to_current_snip}"
   end
 

@@ -4,7 +4,7 @@ require "page_title"
 
 context "The page_title dynasnip" do
   setup do
-    @app.soup << PageTitle.snip_attributes
+    app.soup << PageTitle.snip_attributes
   end
 
   should "render as the requested snip name if that snip has no title" do

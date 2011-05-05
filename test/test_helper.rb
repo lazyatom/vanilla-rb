@@ -3,24 +3,28 @@ require "kintama/mocha"
 require "fileutils"
 require "rack/mock"
 require "vanilla"
+require "rack/test"
 
 module Vanilla
   module Test
     class ::TestApp < Vanilla::App
     end
 
+    def app
+      @__app ||= TestApp.new(:soup => soup_path)
+    end
+
     def setup_clean_environment
       clean_environment
       TestApp.reset!
-      @app = TestApp.new(:soup => soup_path)
 
       require File.expand_path("../../pristine_app/soups/system/current_snip", __FILE__)
-      @app.soup << CurrentSnip.snip_attributes
+      app.soup << CurrentSnip.snip_attributes
       create_snip :name => "layout", :content => "{current_snip}"
     end
 
     def response_for(url)
-      @app.call(mock_env_for_url(url))
+      app.call(mock_env_for_url(url))
     end
 
     def response_body_for(url)
@@ -36,11 +40,11 @@ module Vanilla
     end
 
     def set_main_template(template_content)
-      @app.soup << {:name => "layout", :content => template_content}
+      app.soup << {:name => "layout", :content => template_content}
     end
 
     def create_snip(params)
-      @app.soup << params
+      app.soup << params
     end
 
     def mock_env_for_url(url)

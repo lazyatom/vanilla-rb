@@ -140,7 +140,7 @@ module Vanilla
     private
 
     def prepare_renderers(additional_renderers={})
-      @renderers = Hash.new(config[:default_renderer] || Vanilla::Renderers::Base)
+      @renderers = Hash.new { config[:default_renderer] || Vanilla::Renderers::Base }
       @renderers.merge!({
         "base" => Vanilla::Renderers::Base,
         "markdown" => Vanilla::Renderers::Markdown,

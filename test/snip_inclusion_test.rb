@@ -61,6 +61,6 @@ context "When including snips in other snips" do
 
   def render(content)
     snip = create_snip :name => "test-content", :content => content
-    Vanilla::Renderers::Base.new(@app).render(snip)
+    Vanilla::Renderers::Base.new(app).render(snip)
   end
 end

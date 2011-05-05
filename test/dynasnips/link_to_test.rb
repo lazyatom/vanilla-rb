@@ -22,6 +22,6 @@ context "The link_to dynasnip" do
   private
 
   def render_dynasnip(klass, *args)
-    klass.new(@app).handle(*args)
+    klass.new(app).handle(*args)
   end
 end

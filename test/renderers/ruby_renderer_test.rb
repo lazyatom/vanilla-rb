@@ -1,4 +1,5 @@
 require "test_helper"
+require "vanilla/dynasnip"
 
 describe Vanilla::Renderers::Ruby do
   context "when rendering normally" do
@@ -9,7 +10,7 @@ describe Vanilla::Renderers::Ruby do
     end
 
     setup do
-      @app.soup << TestDyna.snip_attributes
+      app.soup << TestDyna.snip_attributes
     end
 
     should "render the result of the handle method" do
@@ -28,7 +29,7 @@ describe Vanilla::Renderers::Ruby do
     end
 
     setup do
-      @app.soup << RestishDyna.snip_attributes
+      app.soup << RestishDyna.snip_attributes
     end
 
     should "render the result of the get method on GET requests" do
@@ -48,7 +49,7 @@ describe Vanilla::Renderers::Ruby do
     end
 
     setup do
-      @app.soup << Encloser.snip_attributes
+      app.soup << Encloser.snip_attributes
       create_snip(:name => "test", :content => "{encloser}")
     end
 

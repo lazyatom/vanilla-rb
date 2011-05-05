@@ -5,7 +5,7 @@ describe Vanilla::App do
   context "when behaving as a Rack application" do
     should "return an array of status code, headers and response" do
       create_snip(:name => "test", :content => "content")
-      result = @app.call(mock_env_for_url("/test.text"))
+      result = app.call(mock_env_for_url("/test.text"))
       assert_kind_of Array, result
       assert_equal 200, result[0]
       assert_kind_of Hash, result[1]
@@ -22,7 +22,7 @@ describe Vanilla::App do
     should "allow a customised root snip" do
       create_snip :name => "start", :content => "default"
       create_snip :name => "custom", :content => "custom"
-      @app = TestApp.new(:soup => soup_path, :root_snip => "custom")
+      app.config[:root_snip] = "custom"
       assert_response_body "custom", "/"
     end
 
@@ -32,9 +32,9 @@ describe Vanilla::App do
       FileUtils.mkdir_p(soup_dir)
       File.open(File.join(soup_dir, "blah.snip"), "w") { |f| f.write "Hello superfriends" }
 
-      @app = TestApp.new(:soup => "my_soup", :root => tmp_dir)
+      app = TestApp.new(:soup => "my_soup", :root => tmp_dir)
 
-      assert_equal "Hello superfriends", @app.soup['blah'].content
+      assert_equal "Hello superfriends", app.soup['blah'].content
     end
 
     should "allow configuration against the class" do
@@ -49,13 +49,9 @@ describe Vanilla::App do
   end
 
   context "when detecting the snip renderer" do
-    setup do
-      @app = TestApp.new(:soup => soup_path)
-    end
-
     should "return the constant refered to in the render_as property of the snip" do
       snip = create_snip(:name => "blah", :render_as => "Raw")
-      assert_equal Vanilla::Renderers::Raw, @app.renderer_for(snip)
+      assert_equal Vanilla::Renderers::Raw, app.renderer_for(snip)
     end
 
     context "using the snip extension" do
@@ -68,7 +64,7 @@ describe Vanilla::App do
       }.each do |extension, renderer|
         should "return the renderer #{renderer} when the snip has extension #{extension}" do
           snip = create_snip(:name => "blah", :extension => extension)
-          assert_equal renderer, @app.renderer_for(snip)
+          assert_equal renderer, app.renderer_for(snip)
         end
       end
     end
@@ -81,12 +77,12 @@ describe Vanilla::App do
 
     should "return Vanilla::Renderers::Base if no render_as property exists" do
       snip = create_snip(:name => "blah")
-      assert_equal Vanilla::Renderers::Base, @app.renderer_for(snip)
+      assert_equal Vanilla::Renderers::Base, app.renderer_for(snip)
     end
 
     should "return Vanilla::Renderers::Base if the render_as property is blank" do
       snip = create_snip(:name => "blah", :render_as => '')
-      assert_equal Vanilla::Renderers::Base, @app.renderer_for(snip)
+      assert_equal Vanilla::Renderers::Base, app.renderer_for(snip)
     end
 
     should "raise an error if the specified renderer doesn't exist" do

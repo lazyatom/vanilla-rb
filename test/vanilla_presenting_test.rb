@@ -82,7 +82,7 @@ context "When presenting" do
 
   context "a snip using a renderer that specifies a template" do
     setup do
-      @app.register_renderer CustomRenderer, "custom"
+      app.register_renderer CustomRenderer, "custom"
       create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
     end
 
@@ -100,7 +100,7 @@ context "When presenting" do
 
   context "and a custom default renderer has been provided" do
     should "use that renderer" do
-      @app = TestApp.new(:soup => soup_path, :default_renderer => ::Vanilla::Renderers::Bold)
+      app.config[:default_renderer] = ::Vanilla::Renderers::Bold
       create_snip :name => "layout", :content => "{test}", :render_as => "base"
       create_snip :name => "test", :content => "test"
       assert_response_body "<b>test</b>", "/test"
