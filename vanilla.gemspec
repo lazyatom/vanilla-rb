@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-05-04}
+  s.date = %q{2011-05-05}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -18,9 +18,13 @@ Gem::Specification.new do |s|
     "README",
     ".gemtest",
     "test/dynasnip_test.rb",
+    "test/dynasnips",
     "test/dynasnips/link_to_current_snip_test.rb",
     "test/dynasnips/link_to_test.rb",
     "test/dynasnips/page_title_test.rb",
+    "test/monkey",
+    "test/my_soup",
+    "test/renderers",
     "test/renderers/base_renderer_test.rb",
     "test/renderers/erb_renderer_test.rb",
     "test/renderers/haml_renderer_test.rb",
@@ -33,9 +37,11 @@ Gem::Specification.new do |s|
     "test/vanilla_app_test.rb",
     "test/vanilla_presenting_test.rb",
     "test/vanilla_request_test.rb",
+    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
+    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -48,20 +54,30 @@ Gem::Specification.new do |s|
     "lib/vanilla/request.rb",
     "lib/vanilla/routes.rb",
     "lib/vanilla/snip_reference_parser.rb",
+    "lib/vanilla/soups",
+    "lib/vanilla/soups/base",
+    "lib/vanilla/soups/system",
+    "lib/vanilla/soups/tutorial",
     "lib/vanilla/static.rb",
     "lib/vanilla.rb",
     "bin/vanilla",
+    "pristine_app/application.rb",
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
     "pristine_app/Gemfile.lock",
+    "pristine_app/public",
     "pristine_app/public/vanilla.css",
     "pristine_app/README",
+    "pristine_app/soups",
+    "pristine_app/soups/base",
     "pristine_app/soups/base/layout.snip",
     "pristine_app/soups/base/start.snip",
+    "pristine_app/soups/extras",
     "pristine_app/soups/extras/comments.rb",
     "pristine_app/soups/extras/kind.rb",
     "pristine_app/soups/extras/rand.rb",
     "pristine_app/soups/extras/url_to.rb",
+    "pristine_app/soups/system",
     "pristine_app/soups/system/current_snip.rb",
     "pristine_app/soups/system/debug.rb",
     "pristine_app/soups/system/index.rb",
@@ -70,6 +86,7 @@ Gem::Specification.new do |s|
     "pristine_app/soups/system/page_title.rb",
     "pristine_app/soups/system/pre.rb",
     "pristine_app/soups/system/raw.rb",
+    "pristine_app/soups/tutorial",
     "pristine_app/soups/tutorial/bad_dynasnip.snip",
     "pristine_app/soups/tutorial/hello_world.snip",
     "pristine_app/soups/tutorial/markdown_example.snip",
@@ -86,13 +103,17 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
     "pristine_app/soups/tutorial/vanilla.snip",
+    "pristine_app/soups/wiki-tools",
+    "pristine_app/soups/wiki-tools/edit-link.rb",
+    "pristine_app/soups/wiki-tools/edit.rb",
+    "pristine_app/tmp",
     "pristine_app/tmp/restart.txt"
   ]
   s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.5.0}
+  s.rubygems_version = %q{1.4.1}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
@@ -104,7 +125,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
-      s.add_runtime_dependency(%q<haml>, [">= 0"])
+      s.add_runtime_dependency(%q<haml>, [">= 3.1"])
       s.add_runtime_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_development_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
@@ -114,7 +135,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
-      s.add_dependency(%q<haml>, [">= 0"])
+      s.add_dependency(%q<haml>, [">= 3.1"])
       s.add_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_dependency(%q<mocha>, [">= 0"])
@@ -125,7 +146,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
-    s.add_dependency(%q<haml>, [">= 0"])
+    s.add_dependency(%q<haml>, [">= 3.1"])
     s.add_dependency(%q<parslet>, [">= 1.2.0"])
     s.add_dependency(%q<kintama>, [">= 0.1.6"])
     s.add_dependency(%q<mocha>, [">= 0"])
