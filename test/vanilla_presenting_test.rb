@@ -100,7 +100,7 @@ context "When presenting" do
 
   context "and a custom default renderer has been provided" do
     should "use that renderer" do
-      @app = Vanilla::App.new(:soup => soup_path, :default_renderer => ::Vanilla::Renderers::Bold)
+      @app = TestApp.new(:soup => soup_path, :default_renderer => ::Vanilla::Renderers::Bold)
       create_snip :name => "layout", :content => "{test}", :render_as => "base"
       create_snip :name => "test", :content => "test"
       assert_response_body "<b>test</b>", "/test"

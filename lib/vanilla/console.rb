@@ -1,23 +1,12 @@
-require 'vanilla'
-
-module Vanilla
-  class RackShim
-    def run(app)
-      app # return it
-    end
-    def use(*args)
-      # ignore
-    end
-    def get_binding
-      binding
-    end
-  end
+unless File.exist?("application.rb")
+  puts "Your application must reside in application.rb to use this console"
+  exit -1
 end
 
 def app(reload=false)
   if !@__vanilla_console_app || reload
-    shim_binding = Vanilla::RackShim.new.get_binding
-    @__vanilla_console_app = eval File.read("config.ru"), shim_binding
+    load "application.rb"
+    @__vanilla_console_app = Application.new
   end
   @__vanilla_console_app
 end

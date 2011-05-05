@@ -1,16 +1,45 @@
 require 'soup'
+require 'ostruct'
 
 module Vanilla
   class App
     include Vanilla::Routes
 
+    class << self
+      attr_reader :config
+      def configure(&block)
+        reset! unless @config
+        yield @config
+        self
+      end
+      def reset!
+        @config = OpenStruct.new
+      end
+    end
+
     attr_reader :request, :response, :config, :soup
+
+    def class_config
+      if self.class.config
+        {:soup => self.class.config.soup,
+         :soups => self.class.config.soups,
+         :root => self.class.config.root,
+         :root_snip => self.class.config.root_snip,
+         :renderers => self.class.config.renderers,
+         :default_layout_snip => self.class.config.default_layout_snip,
+         :default_renderer => self.class.config.default_renderer}
+      else
+        {}
+      end
+    end
 
     # Create a new Vanilla application
     # Configuration options:
     #
     #  :soup - provide the path to the soup data
     #  :soups - provide an array of paths to soup data
+    #  :root - the directory that the soup paths are relative to;
+    #          defaults to Dir.pwd
     #  :renderers - a hash of names to classes
     #  :default_renderer - the class to use when no renderer is provided;
     #                      defaults to 'Vanilla::Renderers::Base'
@@ -18,12 +47,12 @@ module Vanilla
     #                         defaults to 'layout'
     #  :root_snip - the snip to load for the root ('/') url;
     #               defaults to 'start'
-    def initialize(config={})
-      @config = config
-      if @config[:soup].nil? && @config[:soups].nil?
-        @config.merge!(:soup => File.expand_path("soup"))
-      end
+    def initialize(additional_configuration={})
+      @config = class_config.merge(additional_configuration)
       @root_directory = @config[:root] || Dir.pwd
+      if @config[:soup].nil? && @config[:soups].nil?
+        @config[:soup] = File.expand_path("soup", @root_directory)
+      end
       @soup = prepare_soup(config)
       prepare_renderers(config[:renderers])
     end

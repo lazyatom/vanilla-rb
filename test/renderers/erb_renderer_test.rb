@@ -19,7 +19,7 @@ describe Vanilla::Renderers::Erb do
 
     should "expose the app as an instance variable" do
       erb_snip(:name => "test", :content => "<%= @app.class.name %>")
-      assert_response_body "Vanilla::App", "/test"
+      assert_response_body "TestApp", "/test"
     end
   end
 

@@ -25,7 +25,7 @@ describe Vanilla::Renderers::Haml do
 
     should "expose the app as an instance variable" do
       haml_snip(:name => "test", :content => "= @app.class.name")
-      assert_response_body "Vanilla::App", "/test"
+      assert_response_body "TestApp", "/test"
     end
   end
 

@@ -22,7 +22,7 @@ describe Vanilla::App do
     should "allow a customised root snip" do
       create_snip :name => "start", :content => "default"
       create_snip :name => "custom", :content => "custom"
-      @app = Vanilla::App.new(:soup => soup_path, :root_snip => "custom")
+      @app = TestApp.new(:soup => soup_path, :root_snip => "custom")
       assert_response_body "custom", "/"
     end
 
@@ -32,15 +32,24 @@ describe Vanilla::App do
       FileUtils.mkdir_p(soup_dir)
       File.open(File.join(soup_dir, "blah.snip"), "w") { |f| f.write "Hello superfriends" }
 
-      @app = Vanilla::App.new(:soup => "my_soup", :root => tmp_dir)
+      @app = TestApp.new(:soup => "my_soup", :root => tmp_dir)
 
       assert_equal "Hello superfriends", @app.soup['blah'].content
+    end
+
+    should "allow configuration against the class" do
+      TestApp.configure do |config|
+        config.soups = ["blah", "monkey"]
+      end
+
+      app = TestApp.new
+      assert_equal ["blah", "monkey"], app.config[:soups]
     end
   end
 
   context "when detecting the snip renderer" do
     setup do
-      @app = Vanilla::App.new(:soup => soup_path)
+      @app = TestApp.new(:soup => soup_path)
     end
 
     should "return the constant refered to in the render_as property of the snip" do
@@ -64,7 +73,7 @@ describe Vanilla::App do
     end
 
     should "respect snip renderers passed in the config" do
-      app = Vanilla::App.new(:soup => soup_path, :renderers => {"markdown" => "Vanilla::Renderers::Bold"})
+      app = TestApp.new(:soup => soup_path, :renderers => {"markdown" => "Vanilla::Renderers::Bold"})
       snip = create_snip(:name => "blah", :extension => "markdown")
       assert_equal Vanilla::Renderers::Bold, app.renderer_for(snip)
     end
@@ -87,7 +96,7 @@ describe Vanilla::App do
     should "load constants presented as a string" do
       class ::MyRenderer
       end
-      app = Vanilla::App.new(:soup => soup_path, :renderers => {"my_renderer" => "MyRenderer"})
+      app = TestApp.new(:soup => soup_path, :renderers => {"my_renderer" => "MyRenderer"})
       snip = create_snip(:name => "blah", :render_as => "my_renderer")
       assert_equal MyRenderer, app.renderer_for(snip)
     end

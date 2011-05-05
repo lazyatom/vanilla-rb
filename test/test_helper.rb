@@ -6,9 +6,13 @@ require "vanilla"
 
 module Vanilla
   module Test
+    class ::TestApp < Vanilla::App
+    end
+
     def setup_clean_environment
       clean_environment
-      @app = Vanilla::App.new(:soup => soup_path)
+      TestApp.reset!
+      @app = TestApp.new(:soup => soup_path)
 
       require File.expand_path("../../pristine_app/soups/system/current_snip", __FILE__)
       @app.soup << CurrentSnip.snip_attributes
