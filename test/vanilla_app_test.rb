@@ -40,6 +40,7 @@ describe Vanilla::App do
     should "allow configuration against the class" do
       TestApp.configure do |config|
         config.soups = ["blah", "monkey"]
+        config.root = Dir.tmpdir
       end
 
       app = TestApp.new
