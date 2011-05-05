@@ -7,17 +7,37 @@ require 'vanilla'
 class Application < Vanilla::App
 end
 
-# This is where you can configure it.
 Application.configure do |config|
-  # You can partition your snips into subdirectories to keep things tidy. This
-  # doesn't affect their URL structure on the site (everything is flat).
+  # The root directory of the application; normally the directory this 
+  # file is in.
+  config.root_path = File.expand_path(__FILE__)
+
+  # You can partition your snips into subdirectories to keep things tidy.
+  # This doesn't affect their URL structure on the site (everything is 
+  # flat).
+  #
+  # You should ensure that the system soup is at the bottom of this list
+  # unless you really know what you are doing.
   config.soups = [
     "soups/base",
     "soups/system"
   ]
+
   # If you don't want the tutorial on your site, remove this and delete the directory
   config.soups << "soups/tutorial"
 
   # This is a dumping ground of ideas at the moment
+  #
   # config.soups << "soups/extras"
+
+  # The snip to render on requests to "/". This defaults to "start"
+  #
+  # config.root_snip = "some-other-snip"
+
+  # You can register additional renderer classes, to be used with snips
+  # with the given extensions or 'render_as' attributes
+  #
+  # config.renderers = {
+  #   :awesome => "My::Custom::RendererClass"
+  # }
 end

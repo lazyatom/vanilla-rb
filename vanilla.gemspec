@@ -52,17 +52,13 @@ Gem::Specification.new do |s|
     "lib/vanilla/request.rb",
     "lib/vanilla/routes.rb",
     "lib/vanilla/snip_reference_parser.rb",
-    "lib/vanilla/soups",
-    "lib/vanilla/soups/base",
-    "lib/vanilla/soups/system",
-    "lib/vanilla/soups/tutorial",
     "lib/vanilla/static.rb",
+    "lib/vanilla/test_helper.rb",
     "lib/vanilla.rb",
     "bin/vanilla",
     "pristine_app/application.rb",
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
-    "pristine_app/Gemfile.lock",
     "pristine_app/public",
     "pristine_app/public/vanilla.css",
     "pristine_app/README",
@@ -100,12 +96,7 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/tutorial-renderers.snip.markdown",
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
-    "pristine_app/soups/tutorial/vanilla.snip",
-    "pristine_app/soups/wiki-tools",
-    "pristine_app/soups/wiki-tools/edit-link.rb",
-    "pristine_app/soups/wiki-tools/edit.rb",
-    "pristine_app/tmp",
-    "pristine_app/tmp/restart.txt"
+    "pristine_app/soups/tutorial/vanilla.snip"
   ]
   s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
   s.rdoc_options = ["--main", "README"]
