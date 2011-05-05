@@ -260,3 +260,50 @@ a {
 .malformed_snip_inclusion {
   background-color: rgba(180,0,0,0.2);
 }
+
+/* 7. Welcome page
+--------------------------------------------- */
+
+.container {
+}
+
+#welcome {
+  margin-bottom: 40px;
+  border-bottom: 1px solid #ddd;
+}
+
+#welcome h1 {
+  font-style: italic;
+  padding-top: 80px;
+  font-size: 40px;
+  font-family: Constantia, Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  line-height: 40px;
+  margin-bottom: 0;
+}
+
+#welcome h1 a {
+  font-size: 80px;
+  line-height: 80px;
+  display: block;
+  font-style: normal;
+  border-bottom: 4px solid #f3ea7c;
+}
+
+#welcome p {
+  margin-top: 100px;
+  line-height: 40px;
+  font-style: italic;
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+#welcome p strong {
+  font-size: 22px;
+}
+
+#description p {
+}
+
+#description p:first-child {
+
+}
