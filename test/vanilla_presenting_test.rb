@@ -66,6 +66,20 @@ context "When presenting" do
     end
   end
 
+  context "the root URL" do
+    should "render the start snip by default" do
+      create_snip :name => "start", :content => "default"
+      assert_response_body "<tag>default</tag>", "/"
+    end
+
+    should "render any custom-set root snip if provided" do
+      create_snip :name => "start", :content => "default"
+      create_snip :name => "custom", :content => "custom"
+      app.config[:root_snip] = "custom"
+      assert_response_body "<tag>custom</tag>", "/"
+    end
+  end
+
   context "a snip with a custom layout" do
     should "render the snips contents within that layout" do
       create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"

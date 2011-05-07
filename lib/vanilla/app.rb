@@ -49,10 +49,11 @@ module Vanilla
     #               defaults to 'start'
     def initialize(additional_configuration={})
       @config = class_config.merge(additional_configuration)
-      @root_directory = @config[:root] || Dir.pwd
-      if @config[:soup].nil? && @config[:soups].nil?
-        @config[:soup] = File.expand_path("soup", @root_directory)
-      end
+      @config[:root] ||= Dir.pwd
+      @root_directory = @config[:root]
+      @config[:soups] = ["soups/base", "soups/system"] if @config[:soups].nil?
+      @config[:default_layout_snip]  ||= 'layout'
+      @config[:default_renderer] ||= Vanilla::Renderers::Base
       @soup = prepare_soup(config)
       prepare_renderers(config[:renderers])
     end
@@ -108,12 +109,12 @@ module Vanilla
       if snip
         find_renderer(snip.render_as || snip.extension)
       else
-        default_renderer
+        config[:default_renderer]
       end
     end
 
     def default_layout_snip
-      soup[config[:default_layout_snip] || 'layout']
+      soup[config[:default_layout_snip]]
     end
 
     def layout_for(snip)
@@ -140,7 +141,7 @@ module Vanilla
     private
 
     def prepare_renderers(additional_renderers={})
-      @renderers = Hash.new { config[:default_renderer] || Vanilla::Renderers::Base }
+      @renderers = Hash.new { config[:default_renderer] }
       @renderers.merge!({
         "base" => Vanilla::Renderers::Base,
         "markdown" => Vanilla::Renderers::Markdown,
@@ -159,10 +160,6 @@ module Vanilla
       @renderers[(name ? name.downcase : nil)]
     end
 
-    def default_renderer
-      @renderers[nil]
-    end
-
     def rendering(snip)
       renderer_instance = renderer_for(snip).new(self)
       yield renderer_instance
@@ -176,11 +173,11 @@ module Vanilla
     def prepare_soup(config)
       if config[:soups]
         backends = [config[:soups]].flatten.map do |path| 
-          ::Soup::Backends::FileBackend.new(File.expand_path(path, @root_directory))
+          ::Soup::Backends::FileBackend.new(File.expand_path(path, config[:root]))
         end
         ::Soup.new(::Soup::Backends::MultiSoup.new(*backends))
       else
-        ::Soup.new(::Soup::Backends::FileBackend.new(File.expand_path(config[:soup], @root_directory)))
+        raise "No soups defined!"
       end
     end
   end
