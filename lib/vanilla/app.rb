@@ -57,7 +57,7 @@ module Vanilla
     # This method can be useful if a dynasnip or other part of the
     # system needs to get a fully rendered version of a snip.
     def render(snip, part=:content, args=[], enclosing_snip=snip)
-      rendering(snip) do |renderer|
+      rendering_and_handling_errors(snip) do |renderer|
         renderer.render(snip, part, args, enclosing_snip)
       end
     end
@@ -94,7 +94,7 @@ module Vanilla
       @renderers[(name ? name.downcase : nil)]
     end
 
-    def rendering(snip)
+    def rendering_and_handling_errors(snip)
       renderer_instance = renderer_for(snip).new(self)
       yield renderer_instance
     rescue Exception => e
