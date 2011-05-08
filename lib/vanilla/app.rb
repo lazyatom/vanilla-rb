@@ -1,6 +1,9 @@
 require 'soup'
 
 module Vanilla
+
+  # This is the main App class for Vanilla applications; this should
+  # be subclassed for each instance of Vanilla that you want to run.
   class App
     include Vanilla::Routes
 
@@ -93,10 +96,6 @@ module Vanilla
       else
         default_layout_snip
       end
-    end
-
-    def snip(attributes)
-      @soup << attributes
     end
 
     def register_renderer(klass, *types)
