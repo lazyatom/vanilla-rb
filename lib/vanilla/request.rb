@@ -56,7 +56,7 @@ module Vanilla
     def request_uri_parts(request)
       case CGI.unescape(uri_path(request))
       when URL_ROOT
-        [@app.config[:root_snip] || 'start', nil, 'html']
+        [@app.config.root_snip, nil, 'html']
       when URL_SNIP
         [$1, nil, $3]
       when URL_SNIP_AND_PART

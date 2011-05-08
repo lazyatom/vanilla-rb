@@ -75,7 +75,7 @@ context "When presenting" do
     should "render any custom-set root snip if provided" do
       create_snip :name => "start", :content => "default"
       create_snip :name => "custom", :content => "custom"
-      app.config[:root_snip] = "custom"
+      app.config.root_snip = "custom"
       assert_response_body "<tag>custom</tag>", "/"
     end
   end
@@ -114,7 +114,7 @@ context "When presenting" do
 
   context "and a custom default renderer has been provided" do
     should "use that renderer" do
-      app.config[:default_renderer] = ::Vanilla::Renderers::Bold
+      app.config.default_renderer = ::Vanilla::Renderers::Bold
       create_snip :name => "layout", :content => "{test}", :render_as => "base"
       create_snip :name => "test", :content => "test"
       assert_response_body "<b>test</b>", "/test"

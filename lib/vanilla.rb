@@ -3,6 +3,7 @@ module Vanilla
 
   autoload :Renderers, "vanilla/renderers"
   autoload :App, "vanilla/app"
+  autoload :Config, "vanilla/config"
   autoload :Dynasnip, "vanilla/dynasnip"
   autoload :Request, "vanilla/request"
   autoload :Routes, "vanilla/routes"

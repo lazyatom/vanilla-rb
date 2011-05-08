@@ -20,6 +20,7 @@ Kintama.include TestHelper
 
 Kintama.setup do
   vanilla_setup
+  Application.reset!
   create_simple_layout
 end
 

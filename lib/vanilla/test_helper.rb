@@ -15,7 +15,7 @@ module Vanilla
           config.soups.unshift test_soup_path
           # Ensure that the root path is set; this helps with
           # running tests from different directories
-          config.root_path = File.expand_path("../.", __FILE__)
+          config.root = File.expand_path("../.", __FILE__)
         end
         @__app = Application.new
       end

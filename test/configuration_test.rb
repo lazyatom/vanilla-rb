@@ -10,19 +10,19 @@ context "Configuring a Vanilla app" do
 
   context "with defaults" do
     should "set the soups to base and system" do
-      assert_equal ["soups/base", "soups/system"], TestConfigurationApp.new.config[:soups]
+      assert_equal ["soups/base", "soups/system"], TestConfigurationApp.new.config.soups
     end
 
     should "set the default layout snip to 'layout'" do
-      assert_equal "layout", TestConfigurationApp.new.config[:default_layout_snip]
+      assert_equal "layout", TestConfigurationApp.new.config.default_layout_snip
     end
 
     should "set the default root directory to the current directory" do
-      assert_equal Dir.pwd, TestConfigurationApp.new.config[:root]
+      assert_equal Dir.pwd, TestConfigurationApp.new.config.root
     end
 
     should "use Vanilla::Renderers::Base as the default renderer" do
-      assert_equal Vanilla::Renderers::Base, TestConfigurationApp.new.config[:default_renderer]
+      assert_equal Vanilla::Renderers::Base, TestConfigurationApp.new.config.default_renderer
     end
   end
 
@@ -51,7 +51,7 @@ context "Configuring a Vanilla app" do
     end
 
     should "use the given snip as the root_snip" do
-      assert_equal "hello", TestConfigurationApp.new.config[:root_snip]
+      assert_equal "hello", TestConfigurationApp.new.config.root_snip
     end
   end
 
@@ -63,7 +63,7 @@ context "Configuring a Vanilla app" do
     end
 
     should "use only the specified soups" do
-      assert_equal ["blah", "monkey"], TestConfigurationApp.new.config[:soups]
+      assert_equal ["blah", "monkey"], TestConfigurationApp.new.config.soups
     end
   end
 
@@ -72,7 +72,7 @@ context "Configuring a Vanilla app" do
       class ::MyRenderer
       end
       TestConfigurationApp.configure do |c|
-        c.renderers = {"my_renderer" => "MyRenderer"}
+        c.renderers[:my_renderer] = "MyRenderer"
       end
       snip = create_snip(:name => "blah", :render_as => "my_renderer")
       assert_equal MyRenderer, TestConfigurationApp.new.renderer_for(snip)
@@ -80,7 +80,7 @@ context "Configuring a Vanilla app" do
 
     should "allow existing renderers to be overridden" do
       TestConfigurationApp.configure do |c|
-        c.renderers = {"markdown" => "Vanilla::Renderers::Bold"}
+        c.renderers["markdown"] = "Vanilla::Renderers::Bold"
       end
       snip = create_snip(:name => "blah", :extension => "markdown")
       assert_equal Vanilla::Renderers::Bold, TestConfigurationApp.new.renderer_for(snip)

@@ -1,5 +1,4 @@
 require 'soup'
-require 'ostruct'
 
 module Vanilla
   class App
@@ -13,49 +12,20 @@ module Vanilla
         self
       end
       def reset!
-        @config = OpenStruct.new
+        @config = Vanilla::Config.new
       end
     end
 
-    attr_reader :request, :response, :config, :soup
+    attr_reader :request, :response, :soup
 
-    def class_config
-      if self.class.config
-        {:soup => self.class.config.soup,
-         :soups => self.class.config.soups,
-         :root => self.class.config.root,
-         :root_snip => self.class.config.root_snip,
-         :renderers => self.class.config.renderers,
-         :default_layout_snip => self.class.config.default_layout_snip,
-         :default_renderer => self.class.config.default_renderer}
-      else
-        {}
-      end
+    def initialize
+      @renderers = Hash.new { config.default_renderer }
+      @soup = prepare_soup
+      prepare_renderers
     end
 
-    # Create a new Vanilla application
-    # Configuration options:
-    #
-    #  :soup - provide the path to the soup data
-    #  :soups - provide an array of paths to soup data
-    #  :root - the directory that the soup paths are relative to;
-    #          defaults to Dir.pwd
-    #  :renderers - a hash of names to classes
-    #  :default_renderer - the class to use when no renderer is provided;
-    #                      defaults to 'Vanilla::Renderers::Base'
-    #  :default_layout_snip - the snip to use as a layout when rendering to HTML;
-    #                         defaults to 'layout'
-    #  :root_snip - the snip to load for the root ('/') url;
-    #               defaults to 'start'
-    def initialize(additional_configuration={})
-      @config = class_config.merge(additional_configuration)
-      @config[:root] ||= Dir.pwd
-      @root_directory = @config[:root]
-      @config[:soups] = ["soups/base", "soups/system"] if @config[:soups].nil?
-      @config[:default_layout_snip]  ||= 'layout'
-      @config[:default_renderer] ||= Vanilla::Renderers::Base
-      @soup = prepare_soup(config)
-      prepare_renderers(config[:renderers])
+    def config
+      self.class.config
     end
 
     # Returns a Rack-appropriate 3-element array (via Rack::Response#finish)
@@ -109,12 +79,12 @@ module Vanilla
       if snip
         find_renderer(snip.render_as || snip.extension)
       else
-        config[:default_renderer]
+        config.default_renderer
       end
     end
 
     def default_layout_snip
-      soup[config[:default_layout_snip]]
+      soup[config.default_layout_snip]
     end
 
     def layout_for(snip)
@@ -140,20 +110,8 @@ module Vanilla
 
     private
 
-    def prepare_renderers(additional_renderers={})
-      @renderers = Hash.new { config[:default_renderer] }
-      @renderers.merge!({
-        "base" => Vanilla::Renderers::Base,
-        "markdown" => Vanilla::Renderers::Markdown,
-        "bold" => Vanilla::Renderers::Bold,
-        "erb" => Vanilla::Renderers::Erb,
-        "rb" => Vanilla::Renderers::Ruby,
-        "ruby" => Vanilla::Renderers::Ruby,
-        "haml" => Vanilla::Renderers::Haml,
-        "raw" => Vanilla::Renderers::Raw,
-        "textile" => Vanilla::Renderers::Textile
-      })
-      additional_renderers.each { |name, klass| register_renderer(klass, name) } if additional_renderers
+    def prepare_renderers
+      config.renderers.each { |name, klass| register_renderer(klass, name) }
     end
 
     def find_renderer(name)
@@ -170,10 +128,10 @@ module Vanilla
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
     end
 
-    def prepare_soup(config)
-      if config[:soups]
-        backends = [config[:soups]].flatten.map do |path| 
-          ::Soup::Backends::FileBackend.new(File.expand_path(path, config[:root]))
+    def prepare_soup
+      if config.soups
+        backends = [config.soups].flatten.map do |path|
+          ::Soup::Backends::FileBackend.new(File.expand_path(path, config.root))
         end
         ::Soup.new(::Soup::Backends::MultiSoup.new(*backends))
       else

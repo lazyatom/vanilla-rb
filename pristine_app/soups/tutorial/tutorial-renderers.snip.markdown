@@ -42,9 +42,15 @@ Adding renderers
 
 New renderers can be added as part of the application configuration:
 
-    Vanilla::App.new(:renderers => {
-      "rdoc" => MyRenderers::RDoc
-    })
+    class Application < Vanilla::App; end
+
+    Application.configure do |config|
+
+      # other stuff..
+
+      config.renderers[:my_format] = MyRenderer # the class
+    end
+
 
 These will be added to the lookup, and can also used to override the defaults (changing the renderer for "markdown" snips to use RDiscount, or Redcarpet, for example).
 
@@ -57,7 +63,7 @@ The simplest renderer inherits from `Vanilla::Renderers::Base`, and reimplement 
     module Vanilla::Renderers
       class Bold < Base
         def process_text(content)
-          "<b>#{content}</b>" 
+          "<b>#{content}</b>"
         end
       end
     end

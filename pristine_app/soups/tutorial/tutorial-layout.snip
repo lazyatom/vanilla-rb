@@ -41,9 +41,16 @@ The second dynasnip used is `link_to_current_snip`, which returns an HTML link t
 Other layouts
 -------------
 
-Vanilla looks for a snip called `layout` by default, but this can be changed by passing in a `:default_layout` option to `Vanilla::App.new`, e.g.
+Vanilla looks for a snip called `layout` by default, but this can be changed by setting the `default_layout` configuration option in your application, e.g.
 
-    Vanilla::App.new(:default_layout => "my_layout")
+    class Application < Vanilla::App; end
+
+    Application.configure do |config|
+
+      # other stuff..
+
+      config.default_layout = "my_layout"
+    end
 
 
 You can also override the layout on a per-snip basis, simply by setting the `:layout` attribute of the snip to the name of the layout snip to use instead.
