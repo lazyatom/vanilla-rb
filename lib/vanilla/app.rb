@@ -38,7 +38,7 @@ module Vanilla
       @response = Rack::Response.new
 
       begin
-        output = formatted_render(request.snip, request.part, request.format)
+        output = render_in_format(request.snip, request.part, request.format)
       rescue => e
         @response.status = 500
         output = e.to_s + e.backtrace.join("\n")
@@ -50,27 +50,12 @@ module Vanilla
       @response.finish # returns the array
     end
 
-    def formatted_render(snip, part=nil, format=nil)
-      case format
-      when 'html', nil
-        layout = layout_for(snip)
-        if layout == snip
-          "Rendering of the current layout would result in infinite recursion."
-        else
-          render(layout)
-        end
-      when 'raw', 'css', 'js'
-        Renderers::Raw.new(self).render(snip, part)
-      when 'text', 'atom', 'xml'
-        render(snip, part)
-      else
-        raise "Unknown format '#{format}'"
-      end
-    end
-
     # render a snip using either the renderer given, or the renderer
     # specified by the snip's "render_as" property, or Render::Base
     # if nothing else is given.
+    #
+    # This method can be useful if a dynasnip or other part of the
+    # system needs to get a fully rendered version of a snip.
     def render(snip, part=:content, args=[], enclosing_snip=snip)
       rendering(snip) do |renderer|
         renderer.render(snip, part, args, enclosing_snip)
@@ -117,6 +102,24 @@ module Vanilla
       "<pre>[Error rendering '#{snip_name}' - \"" +
         e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" +
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
+    end
+
+    def render_in_format(snip, part=nil, format=nil)
+      case format
+      when 'html', nil
+        layout = layout_for(snip)
+        if layout == snip
+          "Rendering of the current layout would result in infinite recursion."
+        else
+          render(layout)
+        end
+      when 'raw', 'css', 'js'
+        Renderers::Raw.new(self).render(snip, part)
+      when 'text', 'atom', 'xml'
+        render(snip, part)
+      else
+        raise "Unknown format '#{format}'"
+      end
     end
 
     def layout_for(snip)
