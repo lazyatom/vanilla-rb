@@ -90,14 +90,6 @@ module Vanilla
       soup[config.default_layout_snip]
     end
 
-    def layout_for(snip)
-      if snip
-        renderer_for(snip).new(self).layout_for(snip)
-      else
-        default_layout_snip
-      end
-    end
-
     def register_renderer(klass, *types)
       types.each do |type|
         if klass.is_a?(String)
@@ -125,6 +117,14 @@ module Vanilla
       "<pre>[Error rendering '#{snip_name}' - \"" +
         e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" +
         e.backtrace.join("\n").gsub("<", "&lt;").gsub(">", "&gt;") + "</pre>"
+    end
+
+    def layout_for(snip)
+      if snip
+        renderer_for(snip).new(self).layout_for(snip)
+      else
+        default_layout_snip
+      end
     end
 
     def prepare_soup
