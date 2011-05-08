@@ -11,8 +11,3 @@ module Vanilla
   autoload :SnipReferenceParser, "vanilla/snip_reference_parser"
   autoload :TestHelper, "vanilla/test_helper"
 end
-
-# Load all the base dynasnip classes
-Dir[File.join(File.dirname(__FILE__), 'vanilla', 'dynasnips', '*.rb')].each do |dynasnip|
-  require dynasnip
-end
