@@ -10,7 +10,7 @@ end
 Application.configure do |config|
   # The root directory of the application; normally the directory this 
   # file is in.
-  config.root_path = File.expand_path(__FILE__)
+  config.root = File.dirname(File.expand_path(__FILE__))
 
   # You can partition your snips into subdirectories to keep things tidy.
   # This doesn't affect their URL structure on the site (everything is 

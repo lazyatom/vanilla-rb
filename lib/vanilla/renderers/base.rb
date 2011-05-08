@@ -3,7 +3,6 @@ require 'vanilla/snip_reference_parser'
 module Vanilla
   module Renderers
     class Base
-      include Routes
 
       # Render a snip.
       def self.render(snip, part=:content)
@@ -20,9 +19,12 @@ module Vanilla
         @app = app
       end
 
-      # defined for the routes
       def soup
         @app.soup
+      end
+
+      def url_to(*args)
+        @app.url_to(*args)
       end
 
       def self.snip_regexp
