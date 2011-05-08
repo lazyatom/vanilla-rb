@@ -37,7 +37,5 @@ Application.configure do |config|
   # You can register additional renderer classes, to be used with snips
   # with the given extensions or 'render_as' attributes
   #
-  # config.renderers = {
-  #   :awesome => "My::Custom::RendererClass"
-  # }
+  # config.renderers[:awesome] = My::Custom::RendererClass
 end
