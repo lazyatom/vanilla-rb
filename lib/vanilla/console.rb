@@ -6,7 +6,7 @@ end
 def app(reload=false)
   if !@__vanilla_console_app || reload
     load "application.rb"
-    @__vanilla_console_app = Application.new
+    @__vanilla_console_app = Vanilla.apps.first.new
   end
   @__vanilla_console_app
 end

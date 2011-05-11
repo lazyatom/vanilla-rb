@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-05-05}
+  s.date = %q{2011-05-11}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -17,11 +17,19 @@ Gem::Specification.new do |s|
     "Rakefile",
     "README",
     ".gemtest",
+    "test/configuration_test.rb",
     "test/dynasnip_test.rb",
     "test/dynasnips",
     "test/dynasnips/link_to_current_snip_test.rb",
     "test/dynasnips/link_to_test.rb",
     "test/dynasnips/page_title_test.rb",
+    "test/pristine_app",
+    "test/pristine_app/capybara-20110511143347.html",
+    "test/pristine_app/page_title_test.rb",
+    "test/pristine_app/soups",
+    "test/pristine_app/soups/base",
+    "test/pristine_app/soups/system",
+    "test/pristine_app/test_helper.rb",
     "test/renderers",
     "test/renderers/base_renderer_test.rb",
     "test/renderers/erb_renderer_test.rb",
@@ -29,6 +37,7 @@ Gem::Specification.new do |s|
     "test/renderers/markdown_renderer_test.rb",
     "test/renderers/raw_renderer_test.rb",
     "test/renderers/ruby_renderer_test.rb",
+    "test/routing_test.rb",
     "test/snip_inclusion_test.rb",
     "test/snip_reference_parser_test.rb",
     "test/test_helper.rb",
@@ -37,6 +46,7 @@ Gem::Specification.new do |s|
     "test/vanilla_request_test.rb",
     "lib/vanilla",
     "lib/vanilla/app.rb",
+    "lib/vanilla/config.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
     "lib/vanilla/renderers",
@@ -50,8 +60,11 @@ Gem::Specification.new do |s|
     "lib/vanilla/renderers/textile.rb",
     "lib/vanilla/renderers.rb",
     "lib/vanilla/request.rb",
-    "lib/vanilla/routes.rb",
+    "lib/vanilla/routing.rb",
     "lib/vanilla/snip_reference_parser.rb",
+    "lib/vanilla/soups",
+    "lib/vanilla/soups/base",
+    "lib/vanilla/soups/system",
     "lib/vanilla/static.rb",
     "lib/vanilla/test_helper.rb",
     "lib/vanilla.rb",
@@ -59,6 +72,7 @@ Gem::Specification.new do |s|
     "pristine_app/application.rb",
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
+    "pristine_app/Gemfile.lock",
     "pristine_app/public",
     "pristine_app/public/vanilla.css",
     "pristine_app/README",
@@ -96,13 +110,15 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/tutorial-renderers.snip.markdown",
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
-    "pristine_app/soups/tutorial/vanilla.snip"
+    "pristine_app/soups/tutorial/vanilla.snip",
+    "pristine_app/tmp",
+    "pristine_app/tmp/restart.txt"
   ]
   s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.4.1}
+  s.rubygems_version = %q{1.5.0}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
@@ -119,6 +135,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rack-test>, [">= 0.5.7"])
       s.add_development_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
+      s.add_development_dependency(%q<capybara>, [">= 0"])
+      s.add_development_dependency(%q<launchy>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
       s.add_dependency(%q<soup>, [">= 1.0.6"])
@@ -130,6 +148,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rack-test>, [">= 0.5.7"])
       s.add_dependency(%q<kintama>, [">= 0.1.6"])
       s.add_dependency(%q<mocha>, [">= 0"])
+      s.add_dependency(%q<capybara>, [">= 0"])
+      s.add_dependency(%q<launchy>, [">= 0"])
     end
   else
     s.add_dependency(%q<rack>, [">= 0.9.1"])
@@ -142,5 +162,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rack-test>, [">= 0.5.7"])
     s.add_dependency(%q<kintama>, [">= 0.1.6"])
     s.add_dependency(%q<mocha>, [">= 0"])
+    s.add_dependency(%q<capybara>, [">= 0"])
+    s.add_dependency(%q<launchy>, [">= 0"])
   end
 end

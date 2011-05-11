@@ -8,7 +8,7 @@ end
 
 module TestHelper
   include Vanilla::TestHelper
-  
+
   def create_simple_layout
     require File.expand_path("../../pristine_app/soups/system/current_snip", __FILE__)
     app.soup << CurrentSnip.snip_attributes

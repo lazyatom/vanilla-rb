@@ -7,12 +7,24 @@ require "vanilla"
 
 task :default => :test
 
-require "rake/testtask"
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.ruby_opts << "-rubygems"
-  t.test_files = FileList["test/**/*_test.rb"]
-  t.verbose = true
+task :test => ["test:core", "test:app"]
+
+namespace :test do
+  require "rake/testtask"
+  Rake::TestTask.new(:core) do |t|
+    t.libs << "test"
+    t.ruby_opts << "-rubygems"
+    t.test_files = FileList["test/*_test.rb"] + FileList["test/{dynasnips,renderers}/**/*_test.rb"]
+    t.verbose = true
+  end
+
+  require "rake/testtask"
+  Rake::TestTask.new(:app) do |t|
+    t.libs << "test/pristine_app"
+    t.ruby_opts << "-rubygems"
+    t.test_files = FileList["test/pristine_app/**/*_test.rb"]
+    t.verbose = true
+  end
 end
 
 if Object.const_defined?(:Gem)
@@ -52,6 +64,8 @@ if Object.const_defined?(:Gem)
 
     s.add_development_dependency("kintama", ">= 0.1.6") # add any other gems for testing/development
     s.add_development_dependency("mocha")
+    s.add_development_dependency("capybara")
+    s.add_development_dependency("launchy")
 
     # If you want to publish automatically to rubyforge, you'll may need
     # to tweak this, and the publishing task below too.

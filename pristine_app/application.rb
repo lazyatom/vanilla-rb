@@ -4,10 +4,10 @@ require 'bundler/setup'
 require 'vanilla'
 
 # This is your application subclass.
-class Application < Vanilla::App
+class PristineApplication < Vanilla::App
 end
 
-Application.configure do |config|
+PristineApplication.configure do |config|
   # The root directory of the application; normally the directory this 
   # file is in.
   config.root = File.dirname(File.expand_path(__FILE__))

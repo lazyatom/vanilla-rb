@@ -10,4 +10,11 @@ module Vanilla
   autoload :Static, "vanilla/static"
   autoload :SnipReferenceParser, "vanilla/snip_reference_parser"
   autoload :TestHelper, "vanilla/test_helper"
+
+  class << self
+    # The set of currently loaded Vanilla::App subclasses
+    def apps
+      @apps ||= []
+    end
+  end
 end

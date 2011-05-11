@@ -17,6 +17,9 @@ module Vanilla
       def reset!
         @config = Vanilla::Config.new
       end
+      def inherited(app)
+        Vanilla.apps << app
+      end
     end
 
     attr_reader :request, :response, :soup

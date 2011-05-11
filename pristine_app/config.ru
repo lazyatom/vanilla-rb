@@ -3,4 +3,4 @@ require 'vanilla/static'
 use Vanilla::Static, File.join(File.dirname(__FILE__), 'public')
 
 require "application"
-run Application.new
+run PristineApplication.new
