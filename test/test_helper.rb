@@ -3,7 +3,7 @@ require "kintama"
 require "kintama/mocha"
 require "vanilla/test_helper"
 
-class Application < Vanilla::App
+class TestApplication < Vanilla::App
 end
 
 module TestHelper
@@ -20,7 +20,7 @@ Kintama.include TestHelper
 
 Kintama.setup do
   vanilla_setup
-  Application.reset!
+  TestApplication.reset!
   create_simple_layout
 end
 
