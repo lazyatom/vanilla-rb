@@ -12,9 +12,9 @@ task :test => ["test:core", "test:app"]
 namespace :test do
   require "rake/testtask"
   Rake::TestTask.new(:core) do |t|
-    t.libs << "test"
+    t.libs << "test/core"
     t.ruby_opts << "-rubygems"
-    t.test_files = FileList["test/*_test.rb"] + FileList["test/{dynasnips,renderers}/**/*_test.rb"]
+    t.test_files = FileList["test/core/**/*_test.rb"]
     t.verbose = true
   end
 
