@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift(File.expand_path("../../../lib"), __FILE__)
 require "bundler/setup"
 require "kintama"
+require "kintama/mocha"
 require "vanilla/test_helper"
 require 'capybara'
 require 'capybara/dsl'

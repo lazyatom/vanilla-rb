@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-05-11}
+  s.date = %q{2011-05-12}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -17,33 +17,30 @@ Gem::Specification.new do |s|
     "Rakefile",
     "README",
     ".gemtest",
-    "test/configuration_test.rb",
-    "test/dynasnip_test.rb",
-    "test/dynasnips",
-    "test/dynasnips/link_to_current_snip_test.rb",
-    "test/dynasnips/link_to_test.rb",
-    "test/dynasnips/page_title_test.rb",
+    "test/core",
+    "test/core/configuration_test.rb",
+    "test/core/dynasnip_test.rb",
+    "test/core/renderers",
+    "test/core/renderers/base_renderer_test.rb",
+    "test/core/renderers/erb_renderer_test.rb",
+    "test/core/renderers/haml_renderer_test.rb",
+    "test/core/renderers/markdown_renderer_test.rb",
+    "test/core/renderers/raw_renderer_test.rb",
+    "test/core/renderers/ruby_renderer_test.rb",
+    "test/core/routing_test.rb",
+    "test/core/snip_inclusion_test.rb",
+    "test/core/snip_reference_parser_test.rb",
+    "test/core/test_helper.rb",
+    "test/core/vanilla_app_test.rb",
+    "test/core/vanilla_presenting_test.rb",
+    "test/core/vanilla_request_test.rb",
     "test/pristine_app",
-    "test/pristine_app/capybara-20110511143347.html",
+    "test/pristine_app/index_test.rb",
+    "test/pristine_app/link_to_current_snip_test.rb",
+    "test/pristine_app/link_to_test.rb",
     "test/pristine_app/page_title_test.rb",
-    "test/pristine_app/soups",
-    "test/pristine_app/soups/base",
-    "test/pristine_app/soups/system",
+    "test/pristine_app/raw_test.rb",
     "test/pristine_app/test_helper.rb",
-    "test/renderers",
-    "test/renderers/base_renderer_test.rb",
-    "test/renderers/erb_renderer_test.rb",
-    "test/renderers/haml_renderer_test.rb",
-    "test/renderers/markdown_renderer_test.rb",
-    "test/renderers/raw_renderer_test.rb",
-    "test/renderers/ruby_renderer_test.rb",
-    "test/routing_test.rb",
-    "test/snip_inclusion_test.rb",
-    "test/snip_reference_parser_test.rb",
-    "test/test_helper.rb",
-    "test/vanilla_app_test.rb",
-    "test/vanilla_presenting_test.rb",
-    "test/vanilla_request_test.rb",
     "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/config.rb",
@@ -62,9 +59,6 @@ Gem::Specification.new do |s|
     "lib/vanilla/request.rb",
     "lib/vanilla/routing.rb",
     "lib/vanilla/snip_reference_parser.rb",
-    "lib/vanilla/soups",
-    "lib/vanilla/soups/base",
-    "lib/vanilla/soups/system",
     "lib/vanilla/static.rb",
     "lib/vanilla/test_helper.rb",
     "lib/vanilla.rb",
@@ -107,6 +101,7 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/tutorial-dynasnips.snip.markdown",
     "pristine_app/soups/tutorial/tutorial-layout.snip",
     "pristine_app/soups/tutorial/tutorial-links.snip",
+    "pristine_app/soups/tutorial/tutorial-removing.snip.markdown",
     "pristine_app/soups/tutorial/tutorial-renderers.snip.markdown",
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
@@ -118,7 +113,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.5.0}
+  s.rubygems_version = %q{1.4.1}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
@@ -126,7 +121,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_runtime_dependency(%q<soup>, [">= 1.0.6"])
+      s.add_runtime_dependency(%q<soup>, [">= 1.0.8"])
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -139,7 +134,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<launchy>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_dependency(%q<soup>, [">= 1.0.6"])
+      s.add_dependency(%q<soup>, [">= 1.0.8"])
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -153,7 +148,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rack>, [">= 0.9.1"])
-    s.add_dependency(%q<soup>, [">= 1.0.6"])
+    s.add_dependency(%q<soup>, [">= 1.0.8"])
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
