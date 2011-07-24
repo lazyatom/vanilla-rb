@@ -15,10 +15,10 @@ end
 def upgrade
   require 'fileutils'
   soups_directory = File.join(Dir.pwd, "soups")
-  if File.directory(soups_directory)
+  if File.directory?(soups_directory)
     confirm("Upgrade system snips?") do
       pristine_system = File.expand_path("../../pristine_app/soups/system", __FILE__)
-      copy(pristine_system, system_directory)
+      copy(pristine_system, soups_directory)
     end
     confirm("Upgrade tutorial snips?") do
       pristine_system = File.expand_path("../../pristine_app/soups/tutorial", __FILE__)

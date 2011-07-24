@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vanilla}
-  s.version = "1.17"
+  s.version = "1.17.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-05-12}
+  s.date = %q{2011-07-24}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -17,10 +17,8 @@ Gem::Specification.new do |s|
     "Rakefile",
     "README",
     ".gemtest",
-    "test/core",
     "test/core/configuration_test.rb",
     "test/core/dynasnip_test.rb",
-    "test/core/renderers",
     "test/core/renderers/base_renderer_test.rb",
     "test/core/renderers/erb_renderer_test.rb",
     "test/core/renderers/haml_renderer_test.rb",
@@ -34,19 +32,17 @@ Gem::Specification.new do |s|
     "test/core/vanilla_app_test.rb",
     "test/core/vanilla_presenting_test.rb",
     "test/core/vanilla_request_test.rb",
-    "test/pristine_app",
+    "test/pristine_app/current_snip_test.rb",
     "test/pristine_app/index_test.rb",
     "test/pristine_app/link_to_current_snip_test.rb",
     "test/pristine_app/link_to_test.rb",
     "test/pristine_app/page_title_test.rb",
     "test/pristine_app/raw_test.rb",
     "test/pristine_app/test_helper.rb",
-    "lib/vanilla",
     "lib/vanilla/app.rb",
     "lib/vanilla/config.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
-    "lib/vanilla/renderers",
     "lib/vanilla/renderers/base.rb",
     "lib/vanilla/renderers/bold.rb",
     "lib/vanilla/renderers/erb.rb",
@@ -67,19 +63,14 @@ Gem::Specification.new do |s|
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
     "pristine_app/Gemfile.lock",
-    "pristine_app/public",
     "pristine_app/public/vanilla.css",
     "pristine_app/README",
-    "pristine_app/soups",
-    "pristine_app/soups/base",
     "pristine_app/soups/base/layout.snip",
     "pristine_app/soups/base/start.snip",
-    "pristine_app/soups/extras",
     "pristine_app/soups/extras/comments.rb",
     "pristine_app/soups/extras/kind.rb",
     "pristine_app/soups/extras/rand.rb",
     "pristine_app/soups/extras/url_to.rb",
-    "pristine_app/soups/system",
     "pristine_app/soups/system/current_snip.rb",
     "pristine_app/soups/system/debug.rb",
     "pristine_app/soups/system/index.rb",
@@ -88,7 +79,6 @@ Gem::Specification.new do |s|
     "pristine_app/soups/system/page_title.rb",
     "pristine_app/soups/system/pre.rb",
     "pristine_app/soups/system/raw.rb",
-    "pristine_app/soups/tutorial",
     "pristine_app/soups/tutorial/bad_dynasnip.snip",
     "pristine_app/soups/tutorial/hello_world.snip",
     "pristine_app/soups/tutorial/markdown_example.snip",
@@ -106,7 +96,6 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
     "pristine_app/soups/tutorial/vanilla.snip",
-    "pristine_app/tmp",
     "pristine_app/tmp/restart.txt"
   ]
   s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
