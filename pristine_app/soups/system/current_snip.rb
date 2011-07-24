@@ -16,9 +16,9 @@ class CurrentSnip < Dynasnip
   def handle(attribute=nil)
     if app.request.snip
       if attribute ||= app.request.part
-        "{#{app.request.snip_name}.#{attribute}}"
+        %|{"#{app.request.snip_name}"."#{attribute}"}|
       else
-        "{#{app.request.snip_name}}"
+        %|{"#{app.request.snip_name}"}|
       end
     else
       app.response.status = 404

@@ -23,6 +23,12 @@ context "The current_snip dynasnip" do
     assert page.has_content?("this is my flange")
   end
 
+  should "be able to handle snips with spaces in their names" do
+    create_snip :name => "test snip", :content => "this is a test"
+    visit "/test+snip"
+    assert page.has_content?("this is a test")
+  end
+
   context "when the requested snip is missing" do
     setup do
       set_main_template "<layout>{current_snip}</layout>"
