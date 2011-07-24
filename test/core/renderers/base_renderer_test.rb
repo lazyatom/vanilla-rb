@@ -40,4 +40,41 @@ describe Vanilla::Renderers::Base do
       assert_response_body "include a [snip 'missing_snip' cannot be found]", "/blah"
     end
   end
+
+  context "when generating a link" do
+    setup do
+      snip = create_snip(:name => "blah")
+      @soup = stub('soup', :[] => snip)
+      @app = stub('app', :url_to => "/url", :soup => @soup)
+      @renderer = Vanilla::Renderers::Base.new(@app)
+    end
+
+    should "call url_to on the app to generate the url" do
+      @app.expects(:url_to).with("blah", nil).returns("/blah")
+      link = @renderer.link_to("blah")
+      assert_equal %{<a href="/blah">blah</a>}, link
+    end
+
+    should "use the snip name as the link text" do
+      link = @renderer.link_to("blah")
+      assert_equal %{<a href="/url">blah</a>}, link
+    end
+
+    should "use any explicit link text given" do
+      link = @renderer.link_to("something", "blah")
+      assert_equal %{<a href="/url">something</a>}, link
+    end
+
+    should "render a missing link if the snip couldn't be found" do
+      @soup.stubs(:[]).returns(nil)
+      link = @renderer.link_to("blah")
+      assert_equal %{<a class="missing" href="/url">blah</a>}, link
+    end
+
+    should "be able to link to a specified part" do
+      @app.expects(:url_to).with("blah", "part").returns("/blah/part")
+      link = @renderer.link_to("blah part", "blah", "part")
+      assert_equal %{<a href="/blah/part">blah part</a>}, link
+    end
+  end
 end

@@ -27,6 +27,14 @@ module Vanilla
         @app.url_to(*args)
       end
 
+      def link_to(link_text, snip_name=link_text, part=nil)
+        if soup[snip_name]
+          %{<a href="#{url_to(snip_name, part)}">#{link_text}</a>}
+        else
+          %{<a class="missing" href="#{url_to(snip_name, part)}">#{link_text}</a>}
+        end
+      end
+
       def self.snip_regexp
         %r{(\{[\w\-_\d\.\"\' ]+( +[^\}.]+)?\})}
       end
