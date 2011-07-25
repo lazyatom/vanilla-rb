@@ -26,6 +26,16 @@ context "The index dynasnip" do
     assert_equal %w(beta alpha gamma), links
   end
 
+  should "render links to snips with weird characters and spaces" do
+    app.soup.stubs(:all_snips).returns([
+      snip(:name => "fun fun", :updated_at => Time.at(20))
+    ])
+
+    visit "/index"
+    links = page.all("ol#index li a").map { |l| l.text }
+    assert_equal ["fun fun"], links
+  end
+
   private
 
   def snip(attributes)
