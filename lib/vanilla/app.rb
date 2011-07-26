@@ -68,7 +68,13 @@ module Vanilla
     # Returns the renderer class for a given snip
     def renderer_for(snip)
       if snip
-        find_renderer(snip.render_as || snip.extension)
+        renderer_name = snip.render_as || snip.extension
+        renderer_name = nil if renderer_name == ''
+      else
+        renderer_name = nil
+      end
+      if renderer_name
+        find_renderer(renderer_name)
       else
         config.default_renderer
       end
@@ -94,7 +100,11 @@ module Vanilla
     end
 
     def find_renderer(name)
-      @renderers[(name ? name.downcase : nil)]
+      if @renderers.has_key?(name.downcase)
+        @renderers[name.downcase]
+      else
+        raise MissingRendererError.new(name)
+      end
     end
 
     def rendering_and_handling_errors(snip)

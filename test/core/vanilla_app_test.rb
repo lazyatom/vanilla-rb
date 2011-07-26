@@ -45,7 +45,7 @@ describe Vanilla::App do
 
     should "raise an error if the specified renderer doesn't exist" do
       snip = create_snip(:name => "blah", :render_as => "NonExistentClass")
-      assert_raises(NameError) { app.renderer_for(snip) }
+      assert_raises(Vanilla::MissingRendererError) { app.renderer_for(snip) }
     end
   end
 end
