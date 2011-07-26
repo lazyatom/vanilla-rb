@@ -65,6 +65,10 @@ context "Configuring a Vanilla app" do
     should "use only the specified soups" do
       assert_equal ["blah", "monkey"], TestConfigurationApp.new.config.soups
     end
+
+    teardown do
+      ["blah", "monkey"].each { |dir| FileUtils.rm_rf(dir) }
+    end
   end
 
   context "with new renderers" do
