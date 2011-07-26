@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-07-24}
+  s.date = %q{2011-07-25}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -131,7 +131,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<haml>, [">= 3.1"])
       s.add_runtime_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_runtime_dependency(%q<rack-test>, [">= 0.5.7"])
-      s.add_development_dependency(%q<kintama>, [">= 0.1.6"])
+      s.add_development_dependency(%q<kintama>, [">= 0.1.7"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<capybara>, [">= 0"])
       s.add_development_dependency(%q<launchy>, [">= 0"])
@@ -144,7 +144,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<haml>, [">= 3.1"])
       s.add_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_dependency(%q<rack-test>, [">= 0.5.7"])
-      s.add_dependency(%q<kintama>, [">= 0.1.6"])
+      s.add_dependency(%q<kintama>, [">= 0.1.7"])
       s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<capybara>, [">= 0"])
       s.add_dependency(%q<launchy>, [">= 0"])
@@ -158,7 +158,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<haml>, [">= 3.1"])
     s.add_dependency(%q<parslet>, [">= 1.2.0"])
     s.add_dependency(%q<rack-test>, [">= 0.5.7"])
-    s.add_dependency(%q<kintama>, [">= 0.1.6"])
+    s.add_dependency(%q<kintama>, [">= 0.1.7"])
     s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<capybara>, [">= 0"])
     s.add_dependency(%q<launchy>, [">= 0"])

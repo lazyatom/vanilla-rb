@@ -62,7 +62,7 @@ if Object.const_defined?(:Gem)
     s.add_dependency("parslet", ">= 1.2.0")
     s.add_dependency("rack-test", ">=0.5.7")
 
-    s.add_development_dependency("kintama", ">= 0.1.6") # add any other gems for testing/development
+    s.add_development_dependency("kintama", ">= 0.1.7") # add any other gems for testing/development
     s.add_development_dependency("mocha")
     s.add_development_dependency("capybara")
     s.add_development_dependency("launchy")
