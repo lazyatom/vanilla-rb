@@ -23,19 +23,23 @@ Here's the source of `current_snip`:
 
     {raw current_snip}
 
-The default case, as in our layout, is `app.render(app.request.snip, app.request.part)` - it delegates rendering back to the application, which then takes care of processing `start` using the right renderer and so on. This method call returns the fully rendered string, and vanilla replaces the call to the dynasnip with that output, placing our snip in the appropriate place in the layout.
+The default case just renders a string corresponding to snip inclusion of whichever snip was actually requested. In the case of `/start`, this will generate the string "&#123;start&#125;", which Vanilla itself then deals with, including the contents of that snip using the right renderer and so on, placing our snip in the appropriate place in the layout.
 
 
 Other dynas
 -----------
 
-Of course, you can put other plain content in your layout, and other dynasnips too. In the provided layout there are calls to two other dynasnips.
+Of course, you can put other plain content in your layout, and other dynasnips too. In the provided layout there are calls to three other dynasnips.
 
 The first is `page_title`, which simply places a (hopefully) meaningful string in the title element of the page. Snips can set the title to be used by defining a `:page_title` attribute. As usual, the source explains it more clearly:
 
     {raw page_title}
 
-The second dynasnip used is `link_to_current_snip`, which returns an HTML link to the snip that's currently being rendered. I'll let you figure out how to view the source yourself.
+The second is `link_to`, which is used to create links to other snips by name; although of course you can still just write HTML, this is often more convenient and wiki-esque. Here's the source:
+
+    {raw link_to}
+
+The third dynasnip used is `link_to_current_snip`, which returns an HTML link to the snip that's currently being rendered. I'll let you figure out how to view the source yourself.
 
 
 Other layouts
