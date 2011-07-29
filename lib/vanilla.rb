@@ -9,6 +9,7 @@ module Vanilla
   autoload :Routing, "vanilla/routing"
   autoload :Static, "vanilla/static"
   autoload :SnipReferenceParser, "vanilla/snip_reference_parser"
+  autoload :AtomFeed, "vanilla/atom_feed"
   autoload :TestHelper, "vanilla/test_helper"
 
   class MissingRendererError < RuntimeError; end

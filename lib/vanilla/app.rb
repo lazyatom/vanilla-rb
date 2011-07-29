@@ -93,6 +93,10 @@ module Vanilla
       end
     end
 
+    def atom_feed(options={})
+      AtomFeed.new(options.merge(:app => self))
+    end
+
     private
 
     def prepare_renderers
