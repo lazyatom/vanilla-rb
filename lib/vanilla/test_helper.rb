@@ -2,10 +2,12 @@ require "vanilla"
 require "rack/test"
 require "tmpdir"
 require "fileutils"
+require "soup"
 
 module Vanilla
   module TestHelper
     include Rack::Test::Methods
+    include Soup::TestHelper
 
     def app(klass=Vanilla.apps.first)
       unless @__app
@@ -53,6 +55,10 @@ module Vanilla
 
     def vanilla_teardown
       FileUtils.rm_rf(test_soup_path)
+    end
+
+    def stub_app_soup(*snips)
+      app.stubs(:soup).returns(stub_soup(*snips))
     end
   end
 end

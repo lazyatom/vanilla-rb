@@ -8,9 +8,17 @@ module Vanilla
       @domain = params[:domain] || "yourdomain.example.com"
       @title = params[:title] || domain
       @app = params[:app]
-      @snips = params[:snips] || app.soup.all_snips
+      @criteria = params[:matching]
+      @snips = params[:snips]
+      if @snips.nil?
+        if @criteria.nil?
+          @snips = app.soup.all_snips
+        else
+          @snips = app.soup[@criteria]
+        end
+      end
     end
-    
+
     def to_s
       Atom::Feed.new do |f|
         f.title = title

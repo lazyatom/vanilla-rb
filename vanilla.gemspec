@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-07-25}
+  s.date = %q{2011-07-29}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
     "README",
     ".gemtest",
     "test/core",
+    "test/core/atom_feed_test.rb",
     "test/core/configuration_test.rb",
     "test/core/dynasnip_test.rb",
     "test/core/renderers",
@@ -45,6 +46,7 @@ Gem::Specification.new do |s|
     "test/pristine_app/test_helper.rb",
     "lib/vanilla",
     "lib/vanilla/app.rb",
+    "lib/vanilla/atom_feed.rb",
     "lib/vanilla/config.rb",
     "lib/vanilla/console.rb",
     "lib/vanilla/dynasnip.rb",
@@ -74,6 +76,7 @@ Gem::Specification.new do |s|
     "pristine_app/README",
     "pristine_app/soups",
     "pristine_app/soups/base",
+    "pristine_app/soups/base/feed.rb",
     "pristine_app/soups/base/layout.snip",
     "pristine_app/soups/base/start.snip",
     "pristine_app/soups/extras",
@@ -84,7 +87,6 @@ Gem::Specification.new do |s|
     "pristine_app/soups/system",
     "pristine_app/soups/system/current_snip.rb",
     "pristine_app/soups/system/debug.rb",
-    "pristine_app/soups/system/feed.rb",
     "pristine_app/soups/system/index.rb",
     "pristine_app/soups/system/link_to.rb",
     "pristine_app/soups/system/link_to_current_snip.rb",
@@ -124,7 +126,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_runtime_dependency(%q<soup>, [">= 1.0.8"])
+      s.add_runtime_dependency(%q<soup>, [">= 1.0.9"])
       s.add_runtime_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -137,7 +139,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<launchy>, [">= 0"])
     else
       s.add_dependency(%q<rack>, [">= 0.9.1"])
-      s.add_dependency(%q<soup>, [">= 1.0.8"])
+      s.add_dependency(%q<soup>, [">= 1.0.9"])
       s.add_dependency(%q<ratom>, [">= 0.3.5"])
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
@@ -151,7 +153,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<rack>, [">= 0.9.1"])
-    s.add_dependency(%q<soup>, [">= 1.0.8"])
+    s.add_dependency(%q<soup>, [">= 1.0.9"])
     s.add_dependency(%q<ratom>, [">= 0.3.5"])
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])

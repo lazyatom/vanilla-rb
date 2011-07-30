@@ -7,6 +7,7 @@ require 'capybara'
 require 'capybara/dsl'
 
 require File.expand_path("../../../pristine_app/application", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../../../pristine_app/soups", __FILE__)
 
 module TestHelper
   include Vanilla::TestHelper
