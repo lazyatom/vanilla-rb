@@ -75,6 +75,14 @@ context "An atom feed" do
       assert feed.entries.first.content =~ %r{http://yourdomain\.example\.com/x.jpg},
              "single-quoted links external should work (got: #{feed.entries.first.content})"
     end
+
+    should "not alter urls that are already absolute" do
+      stub_app_soup({:name => "x", :content => %|<img src='http://x.com/' />|})
+
+      feed = get_feed
+      assert feed.entries.first.content =~ %r{src='http://x\.com/'},
+             "should not alter absolute links (got: #{feed.entries.first.content})"
+    end
   end
 
   should "allow inclusion of only specific snips" do
