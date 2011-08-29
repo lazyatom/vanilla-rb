@@ -59,6 +59,13 @@ context "An atom feed" do
     assert_equal Time.parse("2011-05-23 12:34"), feed.updated
   end
 
+  should "format updated_at as an RFC-3339 date-time" do
+    stub_app_soup({:name => "x", :content => "y", :updated_at => Time.parse("2011-01-01 12:23").to_s})
+
+    feed_xml = app.atom_feed(:domain => "whatever", :snips => [app.soup["x"]]).to_s
+    assert feed_xml.include?("2011-01-01T12:23:00+00:00")
+  end
+
   should "work even without any snips" do
     feed_xml = app.atom_feed(:domain => "whatever", :snips => []).to_s
     feed = Atom::Feed.load_feed(feed_xml)

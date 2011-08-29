@@ -51,7 +51,7 @@ module Vanilla
     def atom_time(time)
       return Time.at(0) if time.nil?
       time = Time.parse(time) unless time.respond_to?(:strftime)
-      time.strftime("%Y-%m-%dT%H:%M:%S%z")
+      time.strftime("%Y-%m-%dT%H:%M:%S%z").insert(-3, ":")
     end
 
     def externalise_links(content)
