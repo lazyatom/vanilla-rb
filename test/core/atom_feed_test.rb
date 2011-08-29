@@ -45,7 +45,7 @@ context "An atom feed" do
     feed_xml = app.atom_feed(:domain => "whatever", :matching => {:kind => "blog"}).to_s
     feed = Atom::Feed.load_feed(feed_xml)
     assert_equal 2, feed.entries.length
-    assert_equal ["a", "c"], feed.entries.map { |e| e.title }
+    assert_same_elements ["a", "c"], feed.entries.map { |e| e.title }
   end
 
   should "set updated to be the latest updated_at of the included snips" do

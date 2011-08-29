@@ -2,7 +2,7 @@ require "atom"
 
 module Vanilla
   class AtomFeed
-    attr_reader :domain, :snips, :app, :title
+    attr_reader :domain, :app, :title
 
     def initialize(params={})
       @domain = params[:domain] || "yourdomain.example.com"
@@ -30,6 +30,18 @@ module Vanilla
 
     private
 
+    def snips
+      @snips.sort_by { |s| atom_time(s.updated_at) }.reverse
+    end
+
+    def most_recent_updated_at
+      if snips.first
+        atom_time(snips.first.updated_at)
+      else
+        atom_time(nil)
+      end
+    end
+
     def entries
       snips.map do |snip|
         Atom::Entry.new do |e|
@@ -42,10 +54,6 @@ module Vanilla
           e.id = "tag:#{domain},#{atom_time(snip.created_at || Time.now).split("T")[0]}:/#{snip.name}"
         end
       end
-    end
-
-    def most_recent_updated_at
-      snips.map { |s| atom_time(s.updated_at) }.sort.last
     end
 
     def atom_time(time)
