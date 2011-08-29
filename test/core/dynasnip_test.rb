@@ -4,7 +4,7 @@ require 'vanilla/dynasnip'
 describe Dynasnip do
   context "when storing attributes" do
 
-    class ::TestDyna < Dynasnip
+    class TestDyna < Dynasnip
       attribute :test_attribute, "test attribute content"
     end
 
@@ -27,16 +27,51 @@ describe Dynasnip do
     end
   end
 
+  context "determining name" do
+    module X
+      class TestDyna < Dynasnip
+        def handle(*args)
+          "name: #{snip_name}"
+        end
+      end
+    end
+
+    should "strip out modules from the name" do
+      assert_equal "test_dyna", X::TestDyna.snip_name
+    end
+
+    should "allow the snip to reference its own name" do
+      assert_equal "name: test_dyna", X::TestDyna.new(app).handle
+    end
+  end
+
+  context "setting name" do
+    class AnotherDyna < Dynasnip
+    end
+
+    should "be possible" do
+      AnotherDyna.snip_name "some_other_name"
+      assert_equal "some_other_name", AnotherDyna.snip_name
+    end
+  end
+
   context "when rendering usage" do
     class ::ShowUsage < Dynasnip
-      usage "This is the usage"
       def handle
         usage
       end
     end
 
     should "show the usage defined in the snip" do
+      ShowUsage.usage "This is the usage"
+
       assert_equal "This is the usage", ShowUsage.new(app).handle
+    end
+
+    should "automatically escape curly braces to prevent snip inclusion" do
+      ShowUsage.usage "like {this}"
+
+      assert_equal "like &#123;this&#125;", ShowUsage.new(app).handle
     end
   end
 end
