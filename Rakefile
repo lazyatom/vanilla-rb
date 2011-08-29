@@ -18,7 +18,6 @@ namespace :test do
     t.verbose = true
   end
 
-  require "rake/testtask"
   Rake::TestTask.new(:app) do |t|
     t.libs << "test/pristine_app"
     t.ruby_opts << "-rubygems"
