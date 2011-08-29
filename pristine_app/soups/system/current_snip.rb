@@ -14,6 +14,7 @@ class CurrentSnip < Dynasnip
   |
 
   def handle(attribute=nil)
+    return usage if app.request.snip_name == snip_name
     if app.request.snip
       if attribute ||= app.request.part
         %|{"#{app.request.snip_name}"."#{attribute}"}|

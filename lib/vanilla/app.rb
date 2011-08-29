@@ -115,6 +115,7 @@ module Vanilla
       renderer_instance = renderer_for(snip).new(self)
       yield renderer_instance
     rescue Exception => e
+      response.status = 500
       snip_name = snip ? snip.name : nil
       "<pre>[Error rendering '#{snip_name}' - \"" +
         e.message.gsub("<", "&lt;").gsub(">", "&gt;") + "\"]\n" +

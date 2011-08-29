@@ -14,7 +14,8 @@ class ShowRawContent < Dynasnip
       {raw my_snip,specific_part}
   |
 
-  def handle(snip_name, part=:content)
+  def handle(snip_name=nil, part=:content)
+    return usage if requesting_this_snip?
     %{#{Dynasnip.escape_curly_braces(CGI.escapeHTML(app.soup[snip_name].__send__(part || :content)))}}
   end
 

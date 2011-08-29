@@ -8,11 +8,13 @@ The link_to dyna lets you create links between snips:
 
 would insert a link to the blah snip.|
 
-  def handle(snip_name, link_text=snip_name, part=nil)
-    if app.soup[snip_name]
-      %{<a href="#{url_to(snip_name, part)}">#{link_text}</a>}
+  def handle(name=nil, link_text=name, part=nil)
+    return usage if requesting_this_snip?
+    return "You must provide a snip name" unless name
+    if app.soup[name]
+      %{<a href="#{url_to(name, part)}">#{link_text}</a>}
     else
-      %{<a class="missing" href="#{url_to(snip_name, part)}">#{link_text}</a>}
+      %{<a class="missing" href="#{url_to(name, part)}">#{link_text}</a>}
     end
   end
 
