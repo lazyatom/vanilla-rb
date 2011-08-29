@@ -28,6 +28,22 @@ context "An atom feed" do
              "single-quoted links external should work (got: #{feed.entries.first.content})"
     end
 
+    should "handle double quoted a tags without slahes" do
+      stub_app_soup({:name => "x", :content => %|<a href="x">x</a>.|})
+
+      feed = get_feed
+      assert feed.entries.first.content =~ %r{http://yourdomain\.example\.com/x},
+             "double-quoted links external should work (got: #{feed.entries.first.content})"
+    end
+
+    should "handle single quoted a tags without slashes" do
+      stub_app_soup({:name => "x", :content => %|<a href='x'>x</a>.|})
+
+      feed = get_feed
+      assert feed.entries.first.content =~ %r{http://yourdomain\.example\.com/x},
+             "single-quoted links external should work (got: #{feed.entries.first.content})"
+    end
+
     should "handle double quoted img tags" do
       stub_app_soup({:name => "x", :content => %|<img src="/x.jpg" />|})
 
@@ -38,6 +54,22 @@ context "An atom feed" do
 
     should "handle single quoted img tags" do
       stub_app_soup({:name => "x", :content => %|<img src='/x.jpg' />|})
+
+      feed = get_feed
+      assert feed.entries.first.content =~ %r{http://yourdomain\.example\.com/x.jpg},
+             "single-quoted links external should work (got: #{feed.entries.first.content})"
+    end
+
+    should "handle double quoted img tags without slashes" do
+      stub_app_soup({:name => "x", :content => %|<img src="x.jpg" />|})
+
+      feed = get_feed
+      assert feed.entries.first.content =~ %r{http://yourdomain\.example\.com/x.jpg},
+             "single-quoted links external should work (got: #{feed.entries.first.content})"
+    end
+
+    should "handle single quoted img tags without slashes" do
+      stub_app_soup({:name => "x", :content => %|<img src='x.jpg' />|})
 
       feed = get_feed
       assert feed.entries.first.content =~ %r{http://yourdomain\.example\.com/x.jpg},

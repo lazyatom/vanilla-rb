@@ -63,7 +63,10 @@ module Vanilla
     end
 
     def externalise_links(content)
-      content.gsub(/href=(["'])\//, "href=\\1http://#{domain}/").gsub(/src=(["'])\//, "src=\\1http://#{domain}/")
+      content.gsub(/href=(["'])\//, "href=\\1http://#{domain}/").
+              gsub(/href=(["'])/, "href=\\1http://#{domain}/").
+              gsub(/src=(["'])\//, "src=\\1http://#{domain}/").
+              gsub(/src=(["'])/, "src=\\1http://#{domain}/")
     end
   end
 end
