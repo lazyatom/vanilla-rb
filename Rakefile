@@ -27,6 +27,20 @@ namespace :test do
 end
 
 if Object.const_defined?(:Gem)
+
+  def files_for_inclusion
+    base_files = %w(Rakefile README .gemtest) + Dir.glob("{test,lib,bin,pristine_app}/**/*")
+    files_to_ignore = File.readlines(".gitignore").inject([]) do |a,p|
+      path = p.strip
+      a += Dir.glob(path)
+      if File.directory?(path)
+        a += Dir.glob(path + "/*")
+      end
+      a
+    end
+    base_files - files_to_ignore
+  end
+
   # This builds the actual gem. For details of what all these options
   # mean, and other ones you can add, check the documentation here:
   #
@@ -47,7 +61,7 @@ if Object.const_defined?(:Gem)
     s.rdoc_options      = %w(--main README)
 
     # Add any extra files to include in the gem
-    s.files             = %w(Rakefile README .gemtest) + Dir.glob("{test,lib,bin,pristine_app}/**/*")
+    s.files             = files_for_inclusion
     s.executables       = ['vanilla']
     s.require_paths     = ["lib"]
 

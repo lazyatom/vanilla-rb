@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-07-29}
+  s.date = %q{2011-10-23}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -43,6 +43,7 @@ Gem::Specification.new do |s|
     "test/pristine_app/link_to_test.rb",
     "test/pristine_app/page_title_test.rb",
     "test/pristine_app/raw_test.rb",
+    "test/pristine_app/site_test.rb",
     "test/pristine_app/test_helper.rb",
     "lib/vanilla",
     "lib/vanilla/app.rb",
@@ -70,7 +71,6 @@ Gem::Specification.new do |s|
     "pristine_app/application.rb",
     "pristine_app/config.ru",
     "pristine_app/Gemfile",
-    "pristine_app/Gemfile.lock",
     "pristine_app/public",
     "pristine_app/public/vanilla.css",
     "pristine_app/README",
@@ -110,15 +110,13 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/tutorial-renderers.snip.markdown",
     "pristine_app/soups/tutorial/tutorial.snip.markdown",
     "pristine_app/soups/tutorial/vanilla-rb.snip",
-    "pristine_app/soups/tutorial/vanilla.snip",
-    "pristine_app/tmp",
-    "pristine_app/tmp/restart.txt"
+    "pristine_app/soups/tutorial/vanilla.snip"
   ]
   s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.4.1}
+  s.rubygems_version = %q{1.6.2}
   s.summary = %q{A bliki-type web content thing.}
 
   if s.respond_to? :specification_version then
