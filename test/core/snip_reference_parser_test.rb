@@ -83,6 +83,10 @@ context "The SnipReference parser" do
       %|{s 'arg, comma'}|     => {:snip => 's', :attribute => nil, :arguments => ['arg, comma']},
       # %|{s "arg { open"}|     => {:snip => 's', :attribute => nil, :arguments => ['arg { open']},
       # %|{s "arg } close"}|    => {:snip => 's', :attribute => nil, :arguments => ['arg } close']}
+    },
+
+    :html_quoting_arguments => {
+      %|{s &ldquo;arg&rdquo;}|  => {:snip => 's', :attribute => nil, :arguments => ['arg']},
     }
   }
 

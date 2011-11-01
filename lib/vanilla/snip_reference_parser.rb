@@ -26,8 +26,12 @@ module Vanilla
       rule(:spaces?) { spaces.maybe }
       rule(:comma)  { match(',') }
       rule(:dot)    { str(".") }
-      rule(:squote) { str("'") }
-      rule(:dquote) { str('"') }
+      rule(:normal_squote) { str("'") }
+      rule(:html_squote) { str("&lsquo;") | str('&rsquo;') }
+      rule(:squote) { normal_squote | html_squote }
+      rule(:normal_dquote) { str('"') }
+      rule(:html_dquote) { str('&ldquo;') | str('&rdquo;') }
+      rule(:dquote) { normal_dquote | html_dquote }
       rule(:escaped_dquote) { str('"') }
       rule(:left_brace) { str("{") }
       rule(:right_brace) { str("}") }
