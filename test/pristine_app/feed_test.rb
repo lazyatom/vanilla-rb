@@ -25,4 +25,15 @@ context "The feed dynasnip" do
     feed = Atom::Feed.load_feed(page.source)
     assert_equal "<p>This is <em>the</em> content</p>", feed.entries.first.content
   end
+
+  should "ensure relative links are made absolute" do
+     stub_app_soup({:name => "Hello", :content => "a [relative](/link)",
+                    :render_as => "markdown", :kind => "blog"},
+                    Feed.snip_attributes)
+
+    visit "/feed.xml"
+
+    feed = Atom::Feed.load_feed(page.source)
+    assert_equal %{<p>a <a href="http://yourdomain.example.com/link">relative</a></p>}, feed.entries.first.content
+  end
 end

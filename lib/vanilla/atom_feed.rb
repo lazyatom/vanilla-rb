@@ -63,14 +63,20 @@ module Vanilla
     end
 
     def externalise_links(content)
-      content.gsub(/(href|src)=(["'])(\/?.*)\2/) do
-        type, quote, link = $1, $2, $3
-        if link =~ /^http/
-          "#{type}=#{quote}#{link}#{quote}"
-        else
-          absolute_link = "http://#{domain}" + (link =~ /^\// ? "" : "/") + link
-          "#{type}=#{quote}#{absolute_link}#{quote}"
-        end
+      # "([^"]*)"
+      content.gsub(/(href|src)="([^"]*)"/) do
+        externalised_link($1, '"', $2)
+      end.gsub(/(href|src)='([^']*)'/) do
+        externalised_link($1, "'", $2)
+      end
+    end
+
+    def externalised_link(type, quote, link)
+      if link =~ /^http/
+        "#{type}=#{quote}#{link}#{quote}"
+      else
+        absolute_link = "http://#{domain}" + (link =~ /^\// ? "" : "/") + link
+        "#{type}=#{quote}#{absolute_link}#{quote}"
       end
     end
   end
