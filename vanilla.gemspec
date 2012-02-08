@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2011-11-01}
+  s.date = %q{2012-02-08}
   s.default_executable = %q{vanilla}
   s.email = %q{james@lazyatom.com.com}
   s.executables = ["vanilla"]
@@ -31,9 +31,6 @@ Gem::Specification.new do |s|
     "test/core/routing_test.rb",
     "test/core/snip_inclusion_test.rb",
     "test/core/snip_reference_parser_test.rb",
-    "test/core/soups",
-    "test/core/soups/base",
-    "test/core/soups/system",
     "test/core/test_helper.rb",
     "test/core/vanilla_app_test.rb",
     "test/core/vanilla_presenting_test.rb",
