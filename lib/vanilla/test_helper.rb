@@ -16,7 +16,7 @@ module Vanilla
           # to the application's soup without actually affecting the
           # app's content.
           config.soups ||= []
-          config.soups.unshift test_soup_path
+          config.soups.unshift temp_soup_path
         end
         @__app = klass.new
       end
@@ -24,7 +24,7 @@ module Vanilla
     end
 
     def vanilla_setup
-      FileUtils.mkdir_p(test_soup_path)
+      FileUtils.mkdir_p(temp_soup_path)
     end
 
     def vanilla_reset
@@ -49,12 +49,12 @@ module Vanilla
       app.soup << params
     end
 
-    def test_soup_path
+    def temp_soup_path
       File.expand_path(File.join(Dir.tmpdir, "soup"))
     end
 
     def vanilla_teardown
-      FileUtils.rm_rf(test_soup_path)
+      FileUtils.rm_rf(temp_soup_path)
     end
 
     def stub_app_soup(*snips)
