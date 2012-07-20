@@ -17,6 +17,7 @@ module Vanilla
           @snips = app.soup[@criteria]
         end
       end
+      @count = params[:count] || @snips.length
     end
 
     def to_s
@@ -31,7 +32,7 @@ module Vanilla
     private
 
     def snips
-      @snips.sort_by { |s| atom_time(s.updated_at) }.reverse
+      @snips.sort_by { |s| atom_time(s.updated_at) }.reverse[0, @count]
     end
 
     def most_recent_updated_at

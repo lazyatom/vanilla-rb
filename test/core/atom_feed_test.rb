@@ -107,6 +107,16 @@ context "An atom feed" do
     assert_same_elements ["a", "c"], feed.entries.map { |e| e.title }
   end
 
+  should "allow limiting of the number of snips" do
+    stub_app_soup({:name => "a", :content => "x", :kind => "blog"},
+                  {:name => "b", :content => "x", :kind => "blog"})
+
+    feed_xml = app.atom_feed(:domain => "whatever", :matching => {:kind => "blog"}, :count => 1).to_s
+    feed = Atom::Feed.load_feed(feed_xml)
+    assert_equal 1, feed.entries.length
+    assert_equal "a", feed.entries.first.title
+  end
+
   should "set updated to be the latest updated_at of the included snips" do
     snip_a_data = {:name => "a", :content => "x", :updated_at => Time.parse("2011-05-22 12:00")}
     snip_b_data = {:name => "b", :content => "x", :updated_at => Time.parse("2011-05-23 12:34")}
