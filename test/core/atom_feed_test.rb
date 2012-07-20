@@ -108,8 +108,8 @@ context "An atom feed" do
   end
 
   should "allow limiting of the number of snips" do
-    stub_app_soup({:name => "a", :content => "x", :kind => "blog"},
-                  {:name => "b", :content => "x", :kind => "blog"})
+    stub_app_soup({:name => "a", :content => "x", :kind => "blog", :updated_at => (Time.now - 10)},
+                  {:name => "b", :content => "x", :kind => "blog", :updated_at => (Time.now - 20)})
 
     feed_xml = app.atom_feed(:domain => "whatever", :matching => {:kind => "blog"}, :count => 1).to_s
     feed = Atom::Feed.load_feed(feed_xml)

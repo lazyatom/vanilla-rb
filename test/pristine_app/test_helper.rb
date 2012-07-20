@@ -14,7 +14,7 @@ module TestHelper
 end
 
 Kintama.include TestHelper
-Kintama.include Capybara
+Kintama.include Capybara::DSL
 
 Kintama.setup do
   vanilla_setup
