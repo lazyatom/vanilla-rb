@@ -1,14 +1,13 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{vanilla}
+  s.name = "vanilla"
   s.version = "1.17.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = %q{2012-02-08}
-  s.default_executable = %q{vanilla}
-  s.email = %q{james@lazyatom.com.com}
+  s.date = "2012-09-04"
+  s.email = "james@lazyatom.com.com"
   s.executables = ["vanilla"]
   s.extra_rdoc_files = [
     "README"
@@ -31,6 +30,9 @@ Gem::Specification.new do |s|
     "test/core/routing_test.rb",
     "test/core/snip_inclusion_test.rb",
     "test/core/snip_reference_parser_test.rb",
+    "test/core/soups",
+    "test/core/soups/base",
+    "test/core/soups/system",
     "test/core/test_helper.rb",
     "test/core/vanilla_app_test.rb",
     "test/core/vanilla_presenting_test.rb",
@@ -93,6 +95,12 @@ Gem::Specification.new do |s|
     "pristine_app/soups/system/page_title.rb",
     "pristine_app/soups/system/pre.rb",
     "pristine_app/soups/system/raw.rb",
+    "pristine_app/soups/tmp",
+    "pristine_app/soups/tmp/blog-1.snip.markdown",
+    "pristine_app/soups/tmp/blog-2.snip.markdown",
+    "pristine_app/soups/tmp/blog-3.snip.markdown",
+    "pristine_app/soups/tmp/blog.snip",
+    "pristine_app/soups/tmp/set.snip.rb",
     "pristine_app/soups/tutorial",
     "pristine_app/soups/tutorial/bad_dynasnip.snip",
     "pristine_app/soups/tutorial/hello_world.snip",
@@ -112,12 +120,12 @@ Gem::Specification.new do |s|
     "pristine_app/soups/tutorial/vanilla-rb.snip",
     "pristine_app/soups/tutorial/vanilla.snip"
   ]
-  s.homepage = %q{http://github.com/lazyatom/vanilla-rb}
+  s.homepage = "http://github.com/lazyatom/vanilla-rb"
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{vanilla}
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{A bliki-type web content thing.}
+  s.rubyforge_project = "vanilla"
+  s.rubygems_version = "1.8.23"
+  s.summary = "A bliki-type web content thing."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
@@ -131,6 +139,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<haml>, [">= 3.1"])
       s.add_runtime_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_runtime_dependency(%q<rack-test>, [">= 0.5.7"])
+      s.add_development_dependency(%q<rake>, [">= 0.9.1"])
       s.add_development_dependency(%q<kintama>, [">= 0.1.7"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<capybara>, [">= 0"])
@@ -144,6 +153,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<haml>, [">= 3.1"])
       s.add_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_dependency(%q<rack-test>, [">= 0.5.7"])
+      s.add_dependency(%q<rake>, [">= 0.9.1"])
       s.add_dependency(%q<kintama>, [">= 0.1.7"])
       s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<capybara>, [">= 0"])
@@ -158,6 +168,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<haml>, [">= 3.1"])
     s.add_dependency(%q<parslet>, [">= 1.2.0"])
     s.add_dependency(%q<rack-test>, [">= 0.5.7"])
+    s.add_dependency(%q<rake>, [">= 0.9.1"])
     s.add_dependency(%q<kintama>, [">= 0.1.7"])
     s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<capybara>, [">= 0"])
