@@ -2,7 +2,7 @@ module Vanilla
   module Routing
 
     def url_to(snip_name, part=nil)
-      return "/" if snip_name == config.root_snip
+      return "/" if snip_name == config.root_snip && part.nil?
       url = "/#{snip_name.gsub(" ", "+")}"
       url += "/#{part}" if part
       url

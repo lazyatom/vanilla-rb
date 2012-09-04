@@ -33,4 +33,8 @@ context "Generating routes" do
   should "generate root path for root snip" do
     assert_equal "/", app.url_to(app.config.root_snip)
   end
+
+  should "include the full snip and part if the root snip part was requested" do
+    assert_equal "/start/part", app.url_to(app.config.root_snip, "part")
+  end
 end
