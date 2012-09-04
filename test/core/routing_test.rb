@@ -28,3 +28,9 @@ context "Parsing routes" do
   end
 
 end
+
+context "Generating routes" do
+  should "generate root path for root snip" do
+    assert_equal "/", app.url_to(app.config.root_snip)
+  end
+end
