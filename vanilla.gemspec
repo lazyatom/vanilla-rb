@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "vanilla"
-  s.version = "1.17.2"
+  s.version = "1.17.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
@@ -95,12 +95,6 @@ Gem::Specification.new do |s|
     "pristine_app/soups/system/page_title.rb",
     "pristine_app/soups/system/pre.rb",
     "pristine_app/soups/system/raw.rb",
-    "pristine_app/soups/tmp",
-    "pristine_app/soups/tmp/blog-1.snip.markdown",
-    "pristine_app/soups/tmp/blog-2.snip.markdown",
-    "pristine_app/soups/tmp/blog-3.snip.markdown",
-    "pristine_app/soups/tmp/blog.snip",
-    "pristine_app/soups/tmp/set.snip.rb",
     "pristine_app/soups/tutorial",
     "pristine_app/soups/tutorial/bad_dynasnip.snip",
     "pristine_app/soups/tutorial/hello_world.snip",
