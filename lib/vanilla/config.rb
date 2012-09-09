@@ -22,7 +22,8 @@ module Vanilla
                   :soups,
                   :renderers,
                   :default_layout_snip,
-                  :default_renderer
+                  :default_renderer,
+                  :raise_errors
 
     def initialize
       @root = Dir.pwd
@@ -30,6 +31,7 @@ module Vanilla
       @soups = ["soups/base", "soups/system"]
       @default_layout_snip = "layout"
       @default_renderer = Vanilla::Renderers::Base
+      @raise_errors = false
       @renderers = {
         "base" => Vanilla::Renderers::Base,
         "markdown" => Vanilla::Renderers::Markdown,

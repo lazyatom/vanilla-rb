@@ -43,6 +43,7 @@ module Vanilla
       begin
         output = render_in_format(request.snip, request.part, request.format)
       rescue => e
+        raise e if config.raise_errors
         @response.status = 500
         output = e.to_s + e.backtrace.join("\n")
       end
@@ -116,6 +117,7 @@ module Vanilla
       renderer_instance = renderer_for(snip).new(self)
       yield renderer_instance
     rescue Exception => e
+      raise e if config.raise_errors
       response.status = 500
       snip_name = snip ? snip.name : nil
       "<pre>[Error rendering '#{snip_name}' - \"" +
