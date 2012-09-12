@@ -126,6 +126,7 @@ module Vanilla
     end
 
     def render_in_format(snip, part=nil, format=nil)
+      format = nil unless snip
       case format
       when 'html', nil
         layout = layout_for(snip)

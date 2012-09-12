@@ -43,4 +43,15 @@ context "The current_snip dynasnip" do
       assert_equal 404, page.status_code
     end
   end
+
+  context "when the requested snip with extension is missing" do
+    setup do
+      set_main_template "<layout>{current_snip}</layout>"
+      visit "/monkey.png"
+    end
+
+    should "set the response code to 404" do
+      assert_equal 404, page.status_code
+    end
+  end
 end
