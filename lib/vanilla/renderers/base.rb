@@ -95,7 +95,12 @@ module Vanilla
       end
 
       def render_without_including_snips(snip, part=:content)
-        process_text(raw_content(snip, part))
+        if content = raw_content(snip, part)
+          process_text(content)
+        else
+          app.response.status = 404
+          %{Couldn't find part "#{part}" for snip "#{snip.name}"}
+        end
       end
 
       # Handles processing the text of the content.
