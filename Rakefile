@@ -76,7 +76,7 @@ if Object.const_defined?(:Gem)
     s.add_dependency("rack-test", ">=0.5.7")
 
     s.add_development_dependency("rake", ">= 0.9.1")
-    s.add_development_dependency("kintama", ">= 0.1.7") # add any other gems for testing/development
+    s.add_development_dependency("kintama", ">= 0.1.11") # add any other gems for testing/development
     s.add_development_dependency("mocha")
     s.add_development_dependency("capybara")
     s.add_development_dependency("launchy")
