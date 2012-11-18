@@ -199,6 +199,13 @@ context "An atom feed" do
       assert_equal "tag:yourdomain.example.com,2011-01-01:/Hello", get_feed.entries.first.id
     end
 
+    should "not include snip name spaces in ID" do
+      stub_app_soup({:name => "snip name", :content => "The *content*",
+               :render_as => "markdown", :created_at => Time.parse("2011-01-01 12:23").to_s})
+
+      assert_equal "tag:yourdomain.example.com,2011-01-01:/snip+name", get_feed.entries.first.id
+    end
+
     should "set the published date based on the snip created_at date" do
       assert_equal Time.parse("2011-01-01 12:23"), get_feed.entries.first.published
     end

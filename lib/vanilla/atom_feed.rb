@@ -52,7 +52,7 @@ module Vanilla
           e.title = snip.title || snip.name
           e.authors = [Atom::Person.new(:name => snip.author || domain)]
           e.links << Atom::Link.new(:href => "http://#{domain}#{app.url_to(snip.name)}")
-          e.id = "tag:#{domain},#{atom_time(snip.created_at || Time.now).split("T")[0]}:/#{snip.name}"
+          e.id = "tag:#{domain},#{atom_time(snip.created_at || Time.now).split("T")[0]}:#{app.url_to(snip.name)}"
         end
       end
     end
