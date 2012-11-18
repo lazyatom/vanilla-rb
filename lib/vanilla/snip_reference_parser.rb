@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "parslet"
 
 module Vanilla
@@ -30,7 +31,7 @@ module Vanilla
       rule(:html_squote) { str("&lsquo;") | str('&rsquo;') }
       rule(:squote) { normal_squote | html_squote }
       rule(:normal_dquote) { str('"') }
-      rule(:html_dquote) { str('&ldquo;') | str('&rdquo;') }
+      rule(:html_dquote) { str('&ldquo;') | str('&rdquo;') | str('“') | str('”') }
       rule(:dquote) { normal_dquote | html_dquote }
       rule(:escaped_dquote) { str('"') }
       rule(:left_brace) { str("{") }

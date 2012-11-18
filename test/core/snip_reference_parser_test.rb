@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require "test_helper"
 
 context "The SnipReference parser" do
@@ -88,6 +90,7 @@ context "The SnipReference parser" do
 
     :html_quoting_arguments => {
       %|{s &ldquo;arg&rdquo;}|  => {:snip => 's', :attribute => nil, :arguments => ['arg']},
+      %|{s “arg”}|              => {:snip => 's', :attribute => nil, :arguments => ['arg']}
     }
   }
 
