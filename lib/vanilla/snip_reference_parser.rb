@@ -37,12 +37,11 @@ module Vanilla
       rule(:right_brace) { str("}") }
 
       rule(:word) { match("[a-zA-Z0-9_\\-]").repeat(1) }
-      rule(:quotables) { word | comma | spaces }
       rule(:double_quoted_string) do
-        dquote >> (quotables | squote).repeat(1).as(:string) >> dquote
+        dquote >> (dquote.absent? >> any).repeat(1).as(:string) >> dquote
       end
       rule(:single_quoted_string) do
-        squote >> (quotables | dquote).repeat(1).as(:string) >> squote
+        squote >> (squote.absent? >> any).repeat(1).as(:string) >> squote
       end
       rule(:spaced_string) { (word >> (spaces >> word).repeat).as(:string) }
       rule(:string) do
