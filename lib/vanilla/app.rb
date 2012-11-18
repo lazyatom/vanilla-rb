@@ -49,6 +49,7 @@ module Vanilla
       response_format = request.format
       response_format = 'plain' if response_format == 'raw'
       @response['Content-Type'] = "text/#{response_format}"
+      output = "" if @request.method == "head"
       @response.write(output)
       @response.finish # returns the array
     end

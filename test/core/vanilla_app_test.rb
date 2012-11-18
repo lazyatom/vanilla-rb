@@ -10,6 +10,14 @@ describe Vanilla::App do
       assert_kind_of Hash, last_response.headers
       assert_equal "content", last_response.body
     end
+
+    should "return an empty body for HEAD request" do
+      create_snip(:name => "test", :content => "content")
+      head "/test.text"
+      assert_equal 200, last_response.status
+      assert_kind_of Hash, last_response.headers
+      assert last_response.body.empty?
+    end
   end
 
   context "when detecting the snip renderer" do
