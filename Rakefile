@@ -67,7 +67,7 @@ if Object.const_defined?(:Gem)
 
     # All the other gems we need.
     s.add_dependency("rack", ">= 0.9.1")
-    s.add_dependency("soup", ">= 1.0.10")
+    s.add_dependency("soup", ">= 1.0.11")
     s.add_dependency("ratom", ">= 0.3.5")
     s.add_dependency("RedCloth", ">= 4.1.1")
     s.add_dependency("BlueCloth", ">= 1.0.0")

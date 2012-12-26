@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vanilla (1.17.7)
+    vanilla (1.17.9)
       BlueCloth (>= 1.0.0)
       RedCloth (>= 4.1.1)
       haml (>= 3.1)
@@ -9,7 +9,7 @@ PATH
       rack (>= 0.9.1)
       rack-test (>= 0.5.7)
       ratom (>= 0.3.5)
-      soup (>= 1.0.10)
+      soup (>= 1.0.11)
 
 GEM
   remote: http://rubygems.org/
@@ -55,7 +55,7 @@ GEM
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
-    soup (1.0.10)
+    soup (1.0.11)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
