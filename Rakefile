@@ -29,7 +29,7 @@ end
 if Object.const_defined?(:Gem)
 
   def files_for_inclusion
-    base_files = %w(Rakefile README .gemtest) + Dir.glob("{test,lib,bin,pristine_app}/**/*")
+    base_files = %w(Rakefile README .gemtest) + Dir.glob("{test,lib,bin,pristine_app}/**/*").select { |f| File.file?(f) }
     files_to_ignore = File.readlines(".gitignore").inject([]) do |a,p|
       path = p.strip
       a += Dir.glob(path)
