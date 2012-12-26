@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = "vanilla"
-  s.version = "1.17.6"
+  s.version = "1.17.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["James Adam"]
-  s.date = "2012-11-19"
+  s.date = "2012-12-26"
   s.email = "james@lazyatom.com.com"
   s.executables = ["vanilla"]
   s.extra_rdoc_files = [
@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
     "test/pristine_app/link_to_current_snip_test.rb",
     "test/pristine_app/link_to_test.rb",
     "test/pristine_app/page_title_test.rb",
+    "test/pristine_app/raise_errors_test.rb",
     "test/pristine_app/raw_test.rb",
     "test/pristine_app/site_test.rb",
     "test/pristine_app/test_helper.rb",
