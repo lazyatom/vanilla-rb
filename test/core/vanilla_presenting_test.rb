@@ -132,8 +132,8 @@ context "When presenting" do
   end
 
   context "requesting an unknown format" do
-    should "return a 500 status code" do
-      assert_response_status 500, "/test.monkey"
+    should "return a 404 status code" do
+      assert_response_status 404, "/test.monkey"
     end
   end
 end

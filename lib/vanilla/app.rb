@@ -6,6 +6,7 @@ module Vanilla
   # be subclassed for each instance of Vanilla that you want to run.
   class App
     include Vanilla::Routing
+    class NotFound < RuntimeError; end
 
     class << self
       attr_reader :config
@@ -42,6 +43,9 @@ module Vanilla
 
       begin
         output = render_in_format(request.snip, request.part, request.format)
+      rescue NotFound => e
+        @response.status = 404
+        output = e.to_s
       rescue => e
         raise e if config.raise_errors
         @response.status = 500
@@ -140,7 +144,7 @@ module Vanilla
       when 'text', 'atom', 'xml'
         render(snip, part)
       else
-        raise "Unknown format '#{format}'"
+        raise NotFound, "Unknown format '#{format}'"
       end
     end
 
