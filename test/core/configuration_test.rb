@@ -71,6 +71,19 @@ context "Configuring a Vanilla app" do
     end
   end
 
+  context "with a specific soup" do
+    setup do
+      @custom_soup = stub('custom soup')
+      TestConfigurationApp.configure do |c|
+        c.soup = @custom_soup
+      end
+    end
+
+    should "use only the specified soup" do
+      assert_equal @custom_soup, TestConfigurationApp.new.soup
+    end
+  end
+
   context "with new renderers" do
     should "load new renderer constants presented as a string" do
       class ::MyRenderer

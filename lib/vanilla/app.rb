@@ -27,7 +27,7 @@ module Vanilla
 
     def initialize
       @renderers = Hash.new { config.default_renderer }
-      @soup = prepare_soup
+      @soup = config.soup || prepare_soup
       prepare_renderers
     end
 

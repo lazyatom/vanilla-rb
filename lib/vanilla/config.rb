@@ -19,6 +19,7 @@ module Vanilla
   class Config
     attr_accessor :root,
                   :root_snip,
+                  :soup,
                   :soups,
                   :renderers,
                   :default_layout_snip,
@@ -28,6 +29,7 @@ module Vanilla
     def initialize
       @root = Dir.pwd
       @root_snip = "start"
+      @soup = nil
       @soups = ["soups/base", "soups/system"]
       @default_layout_snip = "layout"
       @default_renderer = Vanilla::Renderers::Base
