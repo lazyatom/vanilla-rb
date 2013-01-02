@@ -3,7 +3,7 @@ require "vanilla"
 module Vanilla
 
   # Create a new Vanilla application
-  # Configuration options:
+  # Configuration options include:
   #
   #  :soup - provide the path to the soup data
   #  :soups - provide an array of paths to soup data
@@ -17,34 +17,36 @@ module Vanilla
   #  :root_snip - the snip to load for the root ('/') url;
   #               defaults to 'start'
   class Config
-    attr_accessor :root,
-                  :root_snip,
-                  :soup,
-                  :soups,
-                  :renderers,
-                  :default_layout_snip,
-                  :default_renderer,
-                  :raise_errors
-
     def initialize
-      @root = Dir.pwd
-      @root_snip = "start"
-      @soup = nil
-      @soups = ["soups/base", "soups/system"]
-      @default_layout_snip = "layout"
-      @default_renderer = Vanilla::Renderers::Base
-      @raise_errors = false
-      @renderers = {
-        "base" => Vanilla::Renderers::Base,
-        "markdown" => Vanilla::Renderers::Markdown,
-        "bold" => Vanilla::Renderers::Bold,
-        "erb" => Vanilla::Renderers::Erb,
-        "rb" => Vanilla::Renderers::Ruby,
-        "ruby" => Vanilla::Renderers::Ruby,
-        "haml" => Vanilla::Renderers::Haml,
-        "raw" => Vanilla::Renderers::Raw,
-        "textile" => Vanilla::Renderers::Textile
+      @attributes = {
+        :root => Dir.pwd,
+        :root_snip => "start",
+        :soup => nil,
+        :soups => ["soups/base", "soups/system"],
+        :default_layout_snip => "layout",
+        :default_renderer => Vanilla::Renderers::Base,
+        :raise_errors => false,
+        :renderers => {
+          "base" => Vanilla::Renderers::Base,
+          "markdown" => Vanilla::Renderers::Markdown,
+          "bold" => Vanilla::Renderers::Bold,
+          "erb" => Vanilla::Renderers::Erb,
+          "rb" => Vanilla::Renderers::Ruby,
+          "ruby" => Vanilla::Renderers::Ruby,
+          "haml" => Vanilla::Renderers::Haml,
+          "raw" => Vanilla::Renderers::Raw,
+          "textile" => Vanilla::Renderers::Textile
+        }
       }
+    end
+
+    def method_missing(method, value=nil)
+      attribute_name = method.to_s.gsub(/=$/, '').to_sym
+      if method =~ /=$/
+        @attributes[attribute_name] = value
+      else
+        @attributes[attribute_name]
+      end
     end
   end
 end
