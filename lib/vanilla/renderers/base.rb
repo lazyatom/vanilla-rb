@@ -36,7 +36,7 @@ module Vanilla
       end
 
       def self.snip_regexp
-        %r{(\{[\w\-_\d\.\"\' ]+( +[^\}.]+)?\})}
+        %r|(\{[\w\-_\d\.\"\' ]+( +[^\}]+)?\})|
       end
 
       def default_layout_snip

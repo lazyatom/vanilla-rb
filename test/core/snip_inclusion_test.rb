@@ -32,6 +32,11 @@ context "When including snips in other snips" do
     assert_equal "rendering snip content", render("rendering {test1}")
   end
 
+  should "match snips with dots in their arguments" do
+    create_snip :name => "test", :content => "dot arguments"
+    assert_equal %{allow dot arguments}, render(%|allow {test "allow but ignore this argument..."}|)
+  end
+
   should "match snips with ruby 1.9 style hashes" do
     create_snip :name => "test", :content => %{
       class Blah
