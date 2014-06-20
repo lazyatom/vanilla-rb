@@ -73,7 +73,7 @@ module Vanilla
       def parse_snip_reference(string)
         @parser ||= Vanilla::SnipReferenceParser.new
         @parser.parse(string)
-      rescue
+      rescue Vanilla::SnipReferenceParser::ParseError
         nil
       end
 
