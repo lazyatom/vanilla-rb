@@ -3,6 +3,8 @@ require "parslet"
 
 module Vanilla
   class SnipReferenceParser
+    class ParseError < RuntimeError; end
+
     class Reference
       def initialize(attributes)
         @attributes = attributes
@@ -20,6 +22,8 @@ module Vanilla
 
     def parse(string)
       Reference.new(SnipTransform.new.apply(SnipParser.new.parse(string)))
+    rescue Parslet::ParseFailed
+      raise ParseError
     end
 
     class SnipParser < Parslet::Parser

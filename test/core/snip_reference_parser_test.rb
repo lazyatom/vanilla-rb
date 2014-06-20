@@ -112,6 +112,12 @@ context "The SnipReference parser" do
     end
   end
 
+  should "raise a ParseError if the snip reference was malformed" do
+    assert_raises Vanilla::SnipReferenceParser::ParseError do
+      @parser.parse('{s "}')
+    end
+  end
+
   private
 
   def assert_parsable_by_vanilla(example, expected)
