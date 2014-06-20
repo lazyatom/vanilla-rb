@@ -132,7 +132,7 @@ context "An atom feed" do
     stub_app_soup({:name => "x", :content => "y", :updated_at => Time.parse("2011-01-01 12:23 +0000").to_s})
 
     feed_xml = app.atom_feed(:domain => "whatever", :snips => [app.soup["x"]]).to_s
-    assert_match %r{2011\-01\-01T12\:23\:00\+00\:00}, feed_xml
+    assert_match %r{2011\-01\-01T\d{2}\:23\:00[\+\-]\d{2}\:\d{2}}, feed_xml
   end
 
   should "work even without any snips" do
