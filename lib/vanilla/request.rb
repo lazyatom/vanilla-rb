@@ -15,7 +15,6 @@ module Vanilla
 
     # returns the parameters of the request, with every key as a symbol
     def params
-      # Don't you just love how terse functional programming tends to look like maths?
       @symbolised_params ||= @rack_request.params.inject({}) { |p, (k,v)| p[k.to_sym] = v; p }
     end
 
