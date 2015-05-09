@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
-# stub: vanilla 1.17.11 ruby lib
+# stub: vanilla 1.17.12 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "vanilla"
-  s.version = "1.17.11"
+  s.version = "1.17.12"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["James Adam"]
-  s.date = "2014-06-20"
+  s.date = "2015-05-09"
   s.email = "james@lazyatom.com.com"
   s.executables = ["vanilla"]
   s.extra_rdoc_files = [
@@ -106,7 +106,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/lazyatom/vanilla-rb"
   s.rdoc_options = ["--main", "README"]
   s.rubyforge_project = "vanilla"
-  s.rubygems_version = "2.2.2"
+  s.rubygems_version = "2.4.5"
   s.summary = "A bliki-type web content thing."
 
   if s.respond_to? :specification_version then
