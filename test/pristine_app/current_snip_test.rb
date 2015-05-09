@@ -7,7 +7,7 @@ context "The current_snip dynasnip" do
 
     visit "/test"
 
-    assert page.has_css?("layout", :content => "test")
+    assert page.has_css?("layout", :text => "test")
   end
 
   should "render a given attribute of the current snip" do

@@ -72,7 +72,7 @@ if Object.const_defined?(:Gem)
     s.add_dependency("RedCloth", ">= 4.1.1")
     s.add_dependency("BlueCloth", ">= 1.0.0")
     s.add_dependency("haml", ">=3.1")
-    s.add_dependency("parslet", "~> 1.5.0")
+    s.add_dependency("parslet", ">= 1.5.0")
     s.add_dependency("rack-test", ">=0.5.7")
 
     s.add_development_dependency("rake", ">= 0.9.1")
