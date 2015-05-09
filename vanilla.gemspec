@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# stub: vanilla 1.17.11 ruby lib
+# stub: vanilla 1.17.12 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "vanilla"
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["James Adam"]
-  s.date = "2014-06-20"
+  s.date = "2015-05-09"
   s.email = "james@lazyatom.com.com"
   s.executables = ["vanilla"]
   s.extra_rdoc_files = [
@@ -106,7 +106,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/lazyatom/vanilla-rb"
   s.rdoc_options = ["--main", "README"]
   s.rubyforge_project = "vanilla"
-  s.rubygems_version = "2.2.2"
+  s.rubygems_version = "2.4.5"
   s.summary = "A bliki-type web content thing."
 
   if s.respond_to? :specification_version then
@@ -119,7 +119,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_runtime_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_runtime_dependency(%q<haml>, [">= 3.1"])
-      s.add_runtime_dependency(%q<parslet>, ["~> 1.5.0"])
+      s.add_runtime_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_runtime_dependency(%q<rack-test>, [">= 0.5.7"])
       s.add_development_dependency(%q<rake>, [">= 0.9.1"])
       s.add_development_dependency(%q<kintama>, [">= 0.1.11"])
@@ -133,7 +133,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
       s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
       s.add_dependency(%q<haml>, [">= 3.1"])
-      s.add_dependency(%q<parslet>, ["~> 1.5.0"])
+      s.add_dependency(%q<parslet>, [">= 1.2.0"])
       s.add_dependency(%q<rack-test>, [">= 0.5.7"])
       s.add_dependency(%q<rake>, [">= 0.9.1"])
       s.add_dependency(%q<kintama>, [">= 0.1.11"])
@@ -148,7 +148,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<RedCloth>, [">= 4.1.1"])
     s.add_dependency(%q<BlueCloth>, [">= 1.0.0"])
     s.add_dependency(%q<haml>, [">= 3.1"])
-    s.add_dependency(%q<parslet>, ["~> 1.5.0"])
+    s.add_dependency(%q<parslet>, [">= 1.2.0"])
     s.add_dependency(%q<rack-test>, [">= 0.5.7"])
     s.add_dependency(%q<rake>, [">= 0.9.1"])
     s.add_dependency(%q<kintama>, [">= 0.1.11"])
