@@ -1,5 +1,5 @@
 module Vanilla
-  VERSION = "1.17.12"
+  VERSION = "1.17.13"
 
   autoload :Renderers, "vanilla/renderers"
   autoload :App, "vanilla/app"
