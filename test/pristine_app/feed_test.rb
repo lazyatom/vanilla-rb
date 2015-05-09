@@ -4,9 +4,9 @@ require "base/feed"
 
 context "The feed dynasnip" do
   should "include snips of the specified kind" do
-     stub_app_soup({:name => "Hello", :content => "This is the content", :kind => "blog"},
-                   {:name => "Goodbye", :content => "More content", :kind => "blog"},
-                   {:name => "system", :content => "not to be shown"},
+     stub_app_soup({name: "Hello", content: "This is the content", kind: "blog"},
+                   {name: "Goodbye", content: "More content", kind: "blog"},
+                   {name: "system", content: "not to be shown"},
                    Feed.snip_attributes)
 
     visit "/feed.xml"
@@ -16,8 +16,8 @@ context "The feed dynasnip" do
   end
 
   should "included rendered snip contents" do
-     stub_app_soup({:name => "Hello", :content => "This is *the* content",
-                    :render_as => "markdown", :kind => "blog"},
+     stub_app_soup({name: "Hello", content: "This is *the* content",
+                    render_as: "markdown", kind: "blog"},
                     Feed.snip_attributes)
 
     visit "/feed.xml"
@@ -27,8 +27,8 @@ context "The feed dynasnip" do
   end
 
   should "ensure relative links are made absolute" do
-     stub_app_soup({:name => "Hello", :content => "a [relative](/link)",
-                    :render_as => "markdown", :kind => "blog"},
+     stub_app_soup({name: "Hello", content: "a [relative](/link)",
+                    render_as: "markdown", kind: "blog"},
                     Feed.snip_attributes)
 
     visit "/feed.xml"

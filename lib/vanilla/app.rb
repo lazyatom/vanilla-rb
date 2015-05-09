@@ -100,7 +100,7 @@ module Vanilla
     end
 
     def atom_feed(options={})
-      AtomFeed.new(options.merge(:app => self))
+      AtomFeed.new(options.merge(app: self))
     end
 
     private

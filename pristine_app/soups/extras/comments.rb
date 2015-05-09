@@ -14,7 +14,7 @@ class Comments < Dynasnip
 
   def get(disable_new_comments=false)
     return usage if self.class.snip_name == app.request.snip_name
-    comments = app.soup.with(:commenting_on => enclosing_snip.name)
+    comments = app.soup.with(commenting_on: enclosing_snip.name)
     comments_html = if app.request.snip_name == enclosing_snip.name
       rendered_comments = render_comments(comments)
       rendered_comments += comment_form.gsub('SNIP_NAME', enclosing_snip.name) unless disable_new_comments
@@ -27,16 +27,16 @@ class Comments < Dynasnip
 
   def post(*args)
     snip_name = app.request.params[:snip]
-    existing_comments = app.soup.with(:commenting_on => snip_name)
+    existing_comments = app.soup.with(commenting_on: snip_name)
     comment = app.request.params.reject { |k,v| ![:author, :email, :website, :content].include?(k) }
 
     return "You need to add some details!" if comment.empty?
     return "No spam today, thanks anyway" unless app.request.params[:human] == 'human'
 
     app.soup << comment.merge({
-     :name => "#{snip_name}-comment-#{existing_comments.length + 1}",
-     :commenting_on => snip_name,
-     :created_at => Time.now
+     name: "#{snip_name}-comment-#{existing_comments.length + 1}",
+     commenting_on: snip_name,
+     created_at: Time.now
     })
     "Thanks for your comment! Back to {link_to #{snip_name}}"
   end

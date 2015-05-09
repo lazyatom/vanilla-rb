@@ -12,7 +12,7 @@ module TestHelper
   def create_simple_layout
     require File.expand_path("../../../pristine_app/soups/system/current_snip", __FILE__)
     app.soup << CurrentSnip.snip_attributes
-    create_snip :name => "layout", :content => "{current_snip}"
+    create_snip name: "layout", content: "{current_snip}"
   end
 end
 

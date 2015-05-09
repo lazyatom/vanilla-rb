@@ -5,9 +5,9 @@ require "rdoc/task"
 require "bundler/setup"
 require "vanilla"
 
-task :default => :test
+task default: :test
 
-task :test => ["test:core", "test:app"]
+task test: ["test:core", "test:app"]
 
 namespace :test do
   require "rake/testtask"
@@ -115,7 +115,7 @@ if Object.const_defined?(:Gem)
     File.open(file, "w") {|f| f << output }
   end
 
-  task :package => :gemspec
+  task package: :gemspec
 
   # Generate documentation
   Rake::RDocTask.new do |rd|
@@ -125,10 +125,10 @@ if Object.const_defined?(:Gem)
   end
 
   desc 'Clear out RDoc and generated packages'
-  task :clean => [:clobber_rdoc, :clobber_package]
+  task clean: [:clobber_rdoc, :clobber_package]
 
   desc 'Tag the repository in git with gem version number'
-  task :tag => [:gemspec, :package] do
+  task tag: [:gemspec, :package] do
     if `git diff --cached`.empty?
       if `git tag`.split("\n").include?("v#{spec.version}")
         raise "Version #{spec.version} has already been released"
@@ -144,7 +144,7 @@ if Object.const_defined?(:Gem)
   end
 
   desc "Tag and publish the gem to rubygems.org"
-  task :publish => :tag do
+  task publish: :tag do
     `gem push pkg/#{spec.name}-#{spec.version}.gem`
   end
 else

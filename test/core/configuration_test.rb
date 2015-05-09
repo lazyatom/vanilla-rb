@@ -91,7 +91,7 @@ context "Configuring a Vanilla app" do
       TestConfigurationApp.configure do |c|
         c.renderers[:my_renderer] = "MyRenderer"
       end
-      snip = create_snip(:name => "blah", :render_as => "my_renderer")
+      snip = create_snip(name: "blah", render_as: "my_renderer")
       assert_equal MyRenderer, TestConfigurationApp.new.renderer_for(snip)
     end
 
@@ -99,7 +99,7 @@ context "Configuring a Vanilla app" do
       TestConfigurationApp.configure do |c|
         c.renderers["markdown"] = "Vanilla::Renderers::Bold"
       end
-      snip = create_snip(:name => "blah", :extension => "markdown")
+      snip = create_snip(name: "blah", extension: "markdown")
       assert_equal Vanilla::Renderers::Bold, TestConfigurationApp.new.renderer_for(snip)
     end
   end

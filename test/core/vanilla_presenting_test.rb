@@ -3,8 +3,8 @@ require "test_helper"
 context "When presenting" do
   setup do
     set_main_template "<tag>{current_snip}</tag>"
-    create_snip :name => "test", :content => "blah {other_snip}", :part => 'part content'
-    create_snip :name => "other_snip", :content => "blah!"
+    create_snip name: "test", content: "blah {other_snip}", part: 'part content'
+    create_snip name: "other_snip", content: "blah!"
   end
 
   context "HTML" do
@@ -68,13 +68,13 @@ context "When presenting" do
 
   context "the root URL" do
     should "render the start snip by default" do
-      create_snip :name => "start", :content => "default"
+      create_snip name: "start", content: "default"
       assert_response_body "<tag>default</tag>", "/"
     end
 
     should "render any custom-set root snip if provided" do
-      create_snip :name => "start", :content => "default"
-      create_snip :name => "custom", :content => "custom"
+      create_snip name: "start", content: "default"
+      create_snip name: "custom", content: "custom"
       app.config.root_snip = "custom"
       assert_response_body "<tag>custom</tag>", "/"
     end
@@ -82,8 +82,8 @@ context "When presenting" do
 
   context "a snip with a custom layout" do
     should "render the snips contents within that layout" do
-      create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
-      create_snip :name => "test", :content => "this is a test", :layout => "custom-layout"
+      create_snip name: "custom-layout", content: "<custom>{current_snip}</custom>"
+      create_snip name: "test", content: "this is a test", layout: "custom-layout"
       assert_response_body "<custom>this is a test</custom>", "/test"
     end
   end
@@ -97,17 +97,17 @@ context "When presenting" do
   context "a snip using a renderer that specifies a template" do
     setup do
       app.register_renderer CustomRenderer, "custom"
-      create_snip :name => "custom-layout", :content => "<custom>{current_snip}</custom>"
+      create_snip name: "custom-layout", content: "<custom>{current_snip}</custom>"
     end
 
     should "use the renderer's specified layout" do
-      create_snip :name => "test", :content => "this is a test", :render_as => "custom"
+      create_snip name: "test", content: "this is a test", render_as: "custom"
       assert_response_body "<custom>this is a test</custom>", "/test"
     end
 
     should "use the snips layout when given" do
-      create_snip :name => "snip-custom-layout", :content => "<snipcustom>{current_snip}</snipcustom>"
-      create_snip :name => "test", :content => "this is a test", :render_as => "custom", :layout => "snip-custom-layout"
+      create_snip name: "snip-custom-layout", content: "<snipcustom>{current_snip}</snipcustom>"
+      create_snip name: "test", content: "this is a test", render_as: "custom", layout: "snip-custom-layout"
       assert_response_body "<snipcustom>this is a test</snipcustom>", "/test"
     end
   end
@@ -115,8 +115,8 @@ context "When presenting" do
   context "and a custom default renderer has been provided" do
     should "use that renderer" do
       app.config.default_renderer = ::Vanilla::Renderers::Bold
-      create_snip :name => "layout", :content => "{test}", :render_as => "base"
-      create_snip :name => "test", :content => "test"
+      create_snip name: "layout", content: "{test}", render_as: "base"
+      create_snip name: "test", content: "test"
       assert_response_body "<b>test</b>", "/test"
     end
   end

@@ -43,7 +43,7 @@ class Dynasnip < Vanilla::Renderers::Base
   end
 
   def self.snip_attributes
-    full_snip_attributes = {:name => snip_name, :content => self.name, :render_as => "Ruby"}
+    full_snip_attributes = {name: snip_name, content: self.name, render_as: "Ruby"}
     @attributes ? full_snip_attributes.merge!(@attributes) : full_snip_attributes
   end
 

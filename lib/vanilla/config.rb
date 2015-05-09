@@ -19,14 +19,14 @@ module Vanilla
   class Config
     def initialize
       @attributes = {
-        :root => Dir.pwd,
-        :root_snip => "start",
-        :soup => nil,
-        :soups => ["soups/base", "soups/system"],
-        :default_layout_snip => "layout",
-        :default_renderer => Vanilla::Renderers::Base,
-        :raise_errors => false,
-        :renderers => {
+        root: Dir.pwd,
+        root_snip: "start",
+        soup: nil,
+        soups: ["soups/base", "soups/system"],
+        default_layout_snip: "layout",
+        default_renderer: Vanilla::Renderers::Base,
+        raise_errors: false,
+        renderers: {
           "base" => Vanilla::Renderers::Base,
           "markdown" => Vanilla::Renderers::Markdown,
           "bold" => Vanilla::Renderers::Bold,

@@ -86,21 +86,21 @@ module Vanilla
     end
 
     class SnipTransform < Parslet::Transform
-      rule(:nil => simple(:x)) { nil }
-      rule(:string => simple(:x)) { x.to_s }
-      rule(:string_arg => simple(:x)) { x }
-      rule(:string_arg_list => simple(:x)) { [x] }
-      rule(:string_arg_list => sequence(:x)) { x }
+      rule(nil: simple(:x)) { nil }
+      rule(string: simple(:x)) { x.to_s }
+      rule(string_arg: simple(:x)) { x }
+      rule(string_arg_list: simple(:x)) { [x] }
+      rule(string_arg_list: sequence(:x)) { x }
 
       class Arg
         def initialize(k, v); @k, @v = k, v; end
         def to_h; {@k.to_sym => @v}; end
       end
 
-      rule(:hash_arg => subtree(:x)) { Arg.new(x[:key], x[:value]) }
-      rule(:named_arg => subtree(:x)) { Arg.new(x[:key], x[:value]) }
-      rule(:key_value_arg_list => simple(:x)) { x.to_h }
-      rule(:key_value_arg_list => sequence(:x)) { x.inject({}) { |h, kv| h.merge(kv.to_h) } }
+      rule(hash_arg: subtree(:x)) { Arg.new(x[:key], x[:value]) }
+      rule(named_arg: subtree(:x)) { Arg.new(x[:key], x[:value]) }
+      rule(key_value_arg_list: simple(:x)) { x.to_h }
+      rule(key_value_arg_list: sequence(:x)) { x.inject({}) { |h, kv| h.merge(kv.to_h) } }
     end
   end
 end
