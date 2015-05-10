@@ -1,7 +1,7 @@
-                      WELCOME IN VANILLA
-                                 Vanilla
-                                 vanilla
-                                 .........vanillaaaaaAAAAAAAAAAA
+       WELCOME IN VANILLA
+                  Vanilla
+                  vanilla
+                  .........vanillaaaaaAAAAAAAAAAA
 
 What you've got:
 
@@ -24,7 +24,7 @@ slightly modified YAML files. Here's an example, which you might save
 in a file called 'soup.snip':
 
 
-    Soup is a data store supporting the {link_to snip}-space that 
+    Soup is a data store supporting the {link_to snip}-space that
     {link_to vanilla-rb} expects.
 
     It's hosted on github [here](http://github.com/lazyatom/soup).

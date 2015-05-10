@@ -1,3 +1,5 @@
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
 require "application"
 
 # If you're running your site under a proper webserver, you probably don't need this.
