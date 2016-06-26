@@ -71,4 +71,21 @@ context "The current_snip dynasnip" do
       assert_equal 404, page.status_code
     end
   end
+
+  context "when the requested part method of a snip has wrong arity" do
+    setup do
+      set_main_template "<layout>{current_snip}</layout>"
+      create_snip name: "test", content: "test"
+
+      visit "/test/h"
+    end
+
+    should "render an explanatory message" do
+      assert page.has_content?(%{Couldn't find part "h" for snip "test"})
+    end
+
+    should "set the response code to 404" do
+      assert_equal 404, page.status_code
+    end
+  end
 end

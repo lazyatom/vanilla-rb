@@ -113,6 +113,9 @@ module Vanilla
       # Returns the raw content for the selected part of the selected snip
       def raw_content(snip, part)
         snip.__send__((part || :content).to_sym)
+      rescue ArgumentError => e
+        raise unless e.message.match(/wrong number of arguments/)
+        nil
       end
     end
   end
