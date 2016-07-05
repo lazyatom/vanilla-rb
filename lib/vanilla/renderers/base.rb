@@ -112,7 +112,8 @@ module Vanilla
 
       # Returns the raw content for the selected part of the selected snip
       def raw_content(snip, part)
-        snip.__send__((part || :content).to_sym)
+        selected_part = (part || :content).to_sym
+        snip.__send__(selected_part) if snip.respond_to?(selected_part)
       end
     end
   end
