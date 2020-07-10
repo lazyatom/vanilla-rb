@@ -11,7 +11,7 @@ module Vanilla
     class << self
       attr_reader :config
       def configure(&block)
-        reset! unless @config
+        reset! unless instance_variable_defined?(:@config)
         yield @config
         self
       end

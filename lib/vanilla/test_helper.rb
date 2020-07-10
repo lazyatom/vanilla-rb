@@ -10,7 +10,7 @@ module Vanilla
     include Soup::TestHelper
 
     def app(klass=Vanilla.apps.first)
-      unless @__app
+      unless instance_variable_defined?(:@__app)
         klass.configure do |config|
           # inject a sandbox soup path first. This ensures we can write
           # to the application's soup without actually affecting the
