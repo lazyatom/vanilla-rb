@@ -18,4 +18,10 @@ context "Every snip" do
       end
     end
   end
+
+  should "return a 404 for an unknown snip" do
+    get 'definitely-not-present-snip'
+    assert_equal 404, last_response.status,
+                 "should respond with 404 not found for missing snips"
+  end
 end
