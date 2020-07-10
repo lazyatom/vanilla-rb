@@ -13,14 +13,12 @@ namespace :test do
   require "rake/testtask"
   Rake::TestTask.new(:core) do |t|
     t.libs << "test/core"
-    t.ruby_opts << "-rubygems"
     t.test_files = FileList["test/core/**/*_test.rb"]
     t.verbose = true
   end
 
   Rake::TestTask.new(:app) do |t|
     t.libs << "test/pristine_app"
-    t.ruby_opts << "-rubygems"
     t.test_files = FileList["test/pristine_app/**/*_test.rb"]
     t.verbose = true
   end
