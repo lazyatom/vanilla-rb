@@ -5,7 +5,7 @@ describe Vanilla::Renderers::Haml do
   context "when rendering" do
     should "render Haml into HTML" do
       haml_snip(:name => "test", :content => "#hello\n  stuff")
-      assert_response_body %{<div id='hello'>\n  stuff\n</div>}, "/test"
+      assert_response_body %{<div id='hello'>\nstuff\n</div>}, "/test"
     end
 
     should "insert evaluated Haml content into the snip" do
