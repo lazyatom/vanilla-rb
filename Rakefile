@@ -56,7 +56,6 @@ if Object.const_defined?(:Gem)
     s.email             = "james@lazyatom.com.com"
     s.homepage          = "http://github.com/lazyatom/vanilla-rb"
 
-    s.has_rdoc          = true
     s.extra_rdoc_files  = %w(README)
     s.rdoc_options      = %w(--main README)
 
