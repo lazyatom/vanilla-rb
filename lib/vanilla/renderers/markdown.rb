@@ -1,5 +1,4 @@
 require 'rubygems'
-gem 'BlueCloth' # from http://www.deveiate.org/projects/BlueCloth
 require 'bluecloth'
 
 module Vanilla::Renderers
