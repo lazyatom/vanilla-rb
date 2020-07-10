@@ -17,6 +17,8 @@ Kintama.include TestHelper
 Kintama.include Capybara::DSL
 
 Kintama.setup do
+  Dir.chdir(File.expand_path("../../../pristine_app", __FILE__))
+  vanilla_reset
   vanilla_setup
   Capybara.app = app
 end
