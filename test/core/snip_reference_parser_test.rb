@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require "test_helper"
+require 'securerandom'
 
 context "The SnipReference parser" do
 
@@ -127,7 +128,8 @@ context "The SnipReference parser" do
   end
 
   def create_snip_from_expected(expected)
-    simple_dyna = %|class SimpleDyna;def handle(*args); 'ok'; end;self;end|
+    random_class_name = "SimpleDyna#{SecureRandom.hex(4)}"
+    simple_dyna = %|class #{random_class_name};def handle(*args); 'ok'; end;self;end|
     attributes = {name: expected[:snip], content: simple_dyna, render_as: "ruby"}
     if expected[:attribute]
       attributes[expected[:attribute]] = simple_dyna
