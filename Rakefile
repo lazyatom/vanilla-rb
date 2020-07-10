@@ -77,6 +77,7 @@ if Object.const_defined?(:Gem)
     s.add_development_dependency("mocha")
     s.add_development_dependency("capybara")
     s.add_development_dependency("launchy")
+    s.add_development_dependency("byebug")
 
     # If you want to publish automatically to rubyforge, you'll may need
     # to tweak this, and the publishing task below too.
