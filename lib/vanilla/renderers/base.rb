@@ -44,7 +44,7 @@ module Vanilla
       end
 
       def layout_for(snip)
-        layout_snip = (snip && snip.layout) ? soup[snip.layout] : default_layout_snip
+        (snip && snip.layout) ? soup[snip.layout] : default_layout_snip
       end
 
       # Default behaviour to include a snip's content

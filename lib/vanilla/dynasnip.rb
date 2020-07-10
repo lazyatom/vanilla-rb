@@ -15,7 +15,7 @@ class Dynasnip < Vanilla::Renderers::Base
 
   def self.default_snip_name
     # borrowed from ActiveSupport
-    formatted_name = self.name.
+    self.name.
       split("::").last.
       gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
       gsub(/([a-z\d])([A-Z])/,'\1_\2').

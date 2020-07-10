@@ -137,7 +137,7 @@ context "An atom feed" do
 
   should "work even without any snips" do
     feed_xml = app.atom_feed(domain: "whatever", snips: []).to_s
-    feed = Atom::Feed.load_feed(feed_xml)
+    Atom::Feed.load_feed(feed_xml)
   end
 
   context "title" do
