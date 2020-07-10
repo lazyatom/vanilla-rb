@@ -20,7 +20,7 @@ namespace :test do
   Rake::TestTask.new(:app) do |t|
     t.libs << "test/pristine_app"
     t.test_files = FileList["test/pristine_app/**/*_test.rb"]
-    t.verbose = true
+    # t.verbose = true # it's hard to avoid warnings for these tests
   end
 end
 
