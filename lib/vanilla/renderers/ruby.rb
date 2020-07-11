@@ -41,7 +41,7 @@ module Vanilla::Renderers
     end
 
     def dynasnip(&block)
-      Class.new(Dynasnip) do
+      Class.new(Vanilla::Dynasnip) do
         define_method(:handle, &block)
       end
     end

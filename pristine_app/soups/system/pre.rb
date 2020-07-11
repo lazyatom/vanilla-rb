@@ -1,6 +1,4 @@
-require 'vanilla/dynasnip'
-
-class ShowContentInPreTag < Dynasnip
+class ShowContentInPreTag < Vanilla::Dynasnip
   snip_name "pre"
 
   usage %|

@@ -1,8 +1,7 @@
-require 'vanilla/dynasnip'
 require 'atom'
 require 'date'
 
-class Kind < Dynasnip
+class Kind < Vanilla::Dynasnip
   def handle(kind, limit=10, as=:html)
     as = as.to_sym
     snips = app.soup.with(kind: kind)

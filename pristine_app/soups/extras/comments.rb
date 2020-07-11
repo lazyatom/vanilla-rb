@@ -1,7 +1,6 @@
-require 'vanilla/dynasnip'
 require 'date'
 
-class Comments < Dynasnip
+class Comments < Vanilla::Dynasnip
   usage %|
     Embed comments within snips!
 

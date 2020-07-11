@@ -1,6 +1,4 @@
-require "vanilla/dynasnip"
-
-class Feed < Dynasnip
+class Feed < Vanilla::Dynasnip
   def handle(*args)
     app.atom_feed({
       :domain => "yourdomain.example.com", # change this

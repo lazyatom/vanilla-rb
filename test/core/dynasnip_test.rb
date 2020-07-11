@@ -1,10 +1,10 @@
 require "test_helper"
 require 'vanilla/dynasnip'
 
-describe Dynasnip do
+describe Vanilla::Dynasnip do
   context "when storing attributes" do
 
-    class TestDyna < Dynasnip
+    class TestDyna < Vanilla::Dynasnip
       attribute :test_attribute, "test attribute content"
     end
 
@@ -29,7 +29,7 @@ describe Dynasnip do
 
   context "determining name" do
     module X
-      class TestDyna < Dynasnip
+      class TestDyna < Vanilla::Dynasnip
         def handle(*args)
           "name: #{snip_name}"
         end
@@ -46,7 +46,7 @@ describe Dynasnip do
   end
 
   context "setting name" do
-    class AnotherDyna < Dynasnip
+    class AnotherDyna < Vanilla::Dynasnip
     end
 
     should "be possible" do
@@ -56,7 +56,7 @@ describe Dynasnip do
   end
 
   context "when rendering usage" do
-    class ::ShowUsage < Dynasnip
+    class ::ShowUsage < Vanilla::Dynasnip
       def handle
         usage
       end

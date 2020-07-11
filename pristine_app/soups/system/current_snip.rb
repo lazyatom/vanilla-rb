@@ -1,6 +1,4 @@
-require 'vanilla/dynasnip'
-
-class CurrentSnip < Dynasnip
+class CurrentSnip < Vanilla::Dynasnip
   usage %|
     The current_snip dyna normally returns the result of rendering the snip named by the
     'snip' value in the parameters. This way, it can be used in templates to place the currently

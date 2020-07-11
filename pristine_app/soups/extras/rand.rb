@@ -1,6 +1,4 @@
-require 'vanilla/dynasnip'
-
-class RandomNumber < Dynasnip
+class RandomNumber < Vanilla::Dynasnip
   snip_name "rand"
   
   usage %|

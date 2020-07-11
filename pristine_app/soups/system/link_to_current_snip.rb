@@ -1,6 +1,4 @@
-require 'vanilla/dynasnip'
-
-class LinkToCurrentSnip < Dynasnip
+class LinkToCurrentSnip < Vanilla::Dynasnip
   usage %|
     Renders a link to the current snip
   |

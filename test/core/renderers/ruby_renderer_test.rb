@@ -3,7 +3,7 @@ require "vanilla/dynasnip"
 
 describe Vanilla::Renderers::Ruby do
   context "when rendering normally" do
-    class ::TestDyna < Dynasnip
+    class ::TestDyna < Vanilla::Dynasnip
       def handle(*args)
         'handle called'
       end
@@ -50,7 +50,7 @@ EOS
   end
 
   context "when responding restfully" do
-    class ::RestishDyna < Dynasnip
+    class ::RestishDyna < Vanilla::Dynasnip
       def get(*args)
         'get called'
       end
@@ -73,7 +73,7 @@ EOS
   end
 
   context "when knowing about enclosing snips" do
-    class ::Encloser < Dynasnip
+    class ::Encloser < Vanilla::Dynasnip
       def handle(*args)
         "enclosing snip is #{enclosing_snip.name}"
       end

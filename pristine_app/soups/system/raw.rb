@@ -1,7 +1,6 @@
-require 'vanilla/dynasnip'
 require 'cgi'
 
-class ShowRawContent < Dynasnip
+class ShowRawContent < Vanilla::Dynasnip
   snip_name "raw"
 
   usage %|
@@ -16,7 +15,7 @@ class ShowRawContent < Dynasnip
 
   def handle(snip_name=nil, part=:content)
     return usage if requesting_this_snip?
-    %{#{Dynasnip.escape_curly_braces(CGI.escapeHTML(app.soup[snip_name].__send__(part || :content)))}}
+    %{#{Vanilla::Dynasnip.escape_curly_braces(CGI.escapeHTML(app.soup[snip_name].__send__(part || :content)))}}
   end
 
   self

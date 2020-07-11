@@ -1,6 +1,4 @@
-require 'vanilla/dynasnip'
-
-class LinkTo < Dynasnip
+class LinkTo < Vanilla::Dynasnip
   usage %|
 The link_to dyna lets you create links between snips: 
 
