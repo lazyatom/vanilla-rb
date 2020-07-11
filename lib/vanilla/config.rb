@@ -24,6 +24,7 @@ module Vanilla
         soup: nil,
         soups: ["soups/base", "soups/system"],
         default_layout_snip: "layout",
+        missing_layout_snip: "404",
         default_renderer: Vanilla::Renderers::Base,
         raise_errors: false,
         renderers: {

@@ -122,12 +122,20 @@ context "When presenting" do
   end
 
   context "and a missing snip is requested" do
-    should "render missing snip content in the main template" do
-      assert_response_body %{<tag>Couldn't find snip "missing_snip"</tag>}, "/missing_snip"
+    should "render missing snip content in the 404 template" do
+      app.soup << {name: "404", content: "404 {current_snip}"}
+      assert_response_body %{404 [snip 'missing_snip' cannot be found]}, "/missing_snip"
     end
 
     should "have a 404 response code" do
       assert_response_status 404, "/missing_snip"
+    end
+  end
+
+  context "and a missing part of an existing snip is requested" do
+    should "have a 404 response code" do
+      create_snip name: "test", content: "this is a test"
+      assert_response_status 404, "/test.missing_part"
     end
   end
 

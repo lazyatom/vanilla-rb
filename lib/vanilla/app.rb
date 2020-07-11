@@ -6,7 +6,7 @@ module Vanilla
   # be subclassed for each instance of Vanilla that you want to run.
   class App
     include Vanilla::Routing
-    class NotFound < RuntimeError; end
+    class FormatNotFound < RuntimeError; end
 
     class << self
       attr_reader :config
@@ -43,7 +43,8 @@ module Vanilla
 
       begin
         output = render_in_format(request.snip, request.part, request.format)
-      rescue NotFound => e
+        @response.status = request.snip ? 200 : 404
+      rescue FormatNotFound => e
         @response.status = 404
         output = e.to_s
       rescue => e
@@ -88,6 +89,10 @@ module Vanilla
 
     def default_layout_snip
       soup[config.default_layout_snip]
+    end
+
+    def missing_layout_snip
+      soup[config.missing_layout_snip]
     end
 
     def register_renderer(klass, *types)
@@ -144,7 +149,7 @@ module Vanilla
       when 'text', 'atom', 'xml'
         render(snip, part)
       else
-        raise NotFound, "Unknown format '#{format}'"
+        raise FormatNotFound, "Unknown format '#{format}'"
       end
     end
 
@@ -152,7 +157,7 @@ module Vanilla
       if snip
         renderer_for(snip).new(self).layout_for(snip)
       else
-        default_layout_snip
+        missing_layout_snip
       end
     end
 
