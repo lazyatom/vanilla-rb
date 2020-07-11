@@ -11,14 +11,16 @@ module Vanilla::Renderers
   # itself), it should be a subclass of Dynasnip (or define an initializer
   # that accepts the context as its first argument).
   class Ruby < Base
+    CLASS_CACHE = {}
+
     def prepare(snip, part=:content, args=[], enclosing_snip=snip)
       @args = args
       @snip = snip
       @enclosing_snip = enclosing_snip
     end
-    
+
     def process_text(content)
-      handler_klass = eval(content, binding, @snip.name)
+      handler_klass = load_class_from(@snip)
       instance = if handler_klass.ancestors.include?(Vanilla::Renderers::Base)
         handler_klass.new(app)
       else
@@ -36,6 +38,10 @@ module Vanilla::Renderers
       else
         instance.send(message, @args).to_s
       end
+    end
+
+    def load_class_from(snip)
+      CLASS_CACHE[snip.hash] ||= eval(snip.content, binding, snip.name)
     end
   end
 end
