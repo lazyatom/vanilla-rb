@@ -125,6 +125,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<mocha>.freeze, [">= 0"])
       s.add_development_dependency(%q<capybara>.freeze, [">= 0"])
       s.add_development_dependency(%q<launchy>.freeze, [">= 0"])
+      s.add_development_dependency(%q<byebug>.freeze, [">= 0"])
     else
       s.add_dependency(%q<rack>.freeze, [">= 0.9.1"])
       s.add_dependency(%q<soup>.freeze, [">= 1.0.13"])
@@ -139,6 +140,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<mocha>.freeze, [">= 0"])
       s.add_dependency(%q<capybara>.freeze, [">= 0"])
       s.add_dependency(%q<launchy>.freeze, [">= 0"])
+      s.add_dependency(%q<byebug>.freeze, [">= 0"])
     end
   else
     s.add_dependency(%q<rack>.freeze, [">= 0.9.1"])
@@ -154,5 +156,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<mocha>.freeze, [">= 0"])
     s.add_dependency(%q<capybara>.freeze, [">= 0"])
     s.add_dependency(%q<launchy>.freeze, [">= 0"])
+    s.add_dependency(%q<byebug>.freeze, [">= 0"])
   end
 end

@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.expand_path("../../../lib"), __FILE__)
 require "kintama"
 require "kintama/mocha"
 require "vanilla/test_helper"
+require 'byebug'
 
 class TestApplication < Vanilla::App
 end
