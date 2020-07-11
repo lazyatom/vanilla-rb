@@ -18,6 +18,37 @@ describe Vanilla::Renderers::Ruby do
     end
   end
 
+  context 'when rendering a shorthand definition' do
+    should 'render as a normal dynasnip' do
+      app.soup << {
+        name: 'test_dyna',
+        render_as: 'ruby',
+        content: <<-EOS
+dynasnip do
+  'welcome to shorthand'
+end
+EOS
+      }
+
+      assert_response_body 'welcome to shorthand', '/test_dyna'
+    end
+
+    should 'allow arguments to be passed' do
+      app.soup << {
+        name: 'test_dyna',
+        render_as: 'ruby',
+        content: <<-EOS
+dynasnip do |name|
+  "Hello, \#{name}"
+end
+EOS
+      }
+      app.soup << { name: 'container', content: '{test_dyna Bob}' }
+
+      assert_response_body 'Hello, Bob', '/container'
+    end
+  end
+
   context "when responding restfully" do
     class ::RestishDyna < Dynasnip
       def get(*args)

@@ -40,6 +40,12 @@ module Vanilla::Renderers
       end
     end
 
+    def dynasnip(&block)
+      Class.new(Dynasnip) do
+        define_method(:handle, &block)
+      end
+    end
+
     def load_class_from(snip)
       CLASS_CACHE[snip.hash] ||= eval(snip.content, binding, snip.name)
     end
