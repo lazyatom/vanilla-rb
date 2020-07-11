@@ -12,4 +12,9 @@ context "The page_title dynasnip" do
     visit "/test"
     assert page.has_css?("head title", text: "This is a test", visible: false), page.source
   end
+
+  should "render error message if the snip was missing" do
+    visit "/missing-snip"
+    assert page.has_css?("head title", text: "Not found", visible: false), page.source
+  end
 end
