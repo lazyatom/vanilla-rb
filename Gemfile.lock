@@ -9,7 +9,7 @@ PATH
       rack (>= 0.9.1)
       rack-test (>= 0.5.7)
       ratom (>= 0.3.5)
-      soup (>= 1.0.13)
+      soup (>= 1.0.15)
 
 GEM
   remote: https://rubygems.org/
@@ -48,7 +48,7 @@ GEM
     ratom (0.9.0)
       libxml-ruby (~> 2.6)
     regexp_parser (1.7.1)
-    soup (1.0.14)
+    soup (1.0.15)
     temple (0.8.2)
     tilt (2.0.10)
     xpath (3.2.0)
