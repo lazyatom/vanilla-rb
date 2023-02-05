@@ -35,12 +35,16 @@ GEM
       addressable (~> 2.7)
     libxml-ruby (2.9.0)
     mini_mime (1.0.2)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.8.1)
     mocha (1.11.2)
-    nokogiri (1.10.10)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.14.1)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
+    nokogiri (1.14.1-x86_64-linux)
+      racc (~> 1.4)
     parslet (2.0.0)
     public_suffix (4.0.5)
+    racc (1.6.2)
     rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -56,6 +60,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   byebug
