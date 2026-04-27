@@ -35,8 +35,14 @@ module Vanilla
       self.class.config
     end
 
-    # Returns a Rack-appropriate 3-element array (via Rack::Response#finish)
+    # Returns a Rack-appropriate 3-element array (via Rack::Response#finish).
+    # A fresh dup is used per request so that @request/@response cannot be
+    # clobbered by concurrent calls on the shared app instance.
     def call(env)
+      dup.call!(env)
+    end
+
+    def call!(env)
       env['vanilla.app'] = self
       @request = Vanilla::Request.new(env, self)
       @response = Rack::Response.new

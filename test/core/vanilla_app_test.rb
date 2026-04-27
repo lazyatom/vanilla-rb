@@ -18,6 +18,13 @@ describe Vanilla::App do
       assert_kind_of Hash, last_response.headers
       assert last_response.body.empty?
     end
+
+    should "not retain per-request state on the shared app instance" do
+      create_snip(name: "test", content: "content")
+      get "/test.text"
+      assert_nil app.instance_variable_get(:@request)
+      assert_nil app.instance_variable_get(:@response)
+    end
   end
 
   context "when detecting the snip renderer" do
